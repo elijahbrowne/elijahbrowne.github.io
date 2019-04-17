@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Elijahswork | portfolio</title>
+    <link rel="icon" href="elijahswork.png"/>
+    <link rel="stylesheet" href="portfolio.css" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Acme|Amatic+SC|Encode+Sans+Condensed|Open+Sans|Press+Start+2P|Roboto|Source+Code+Pro" rel="stylesheet">
+    <script type="text/javascript" src="portfolio.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+
+  <body>
+    <div id="logo">
+        <a href="./index.html"><img src="elijahswork.png" alt="elijahswork" style="width: 40px; height: 40px"></a>
+    </div>
+
+    <div id="nav">
+      <a href="./index.html">Home</a>
+      <a class="active" href="./portfolio.html">Portfolio</a>
+      <a href="./hire.html">Hire Me!</a>
+    </div>
+
+    <h2>Portfolio</h2>
+    <p>My portfolio is constantly growing and I have some more projects coming down the pipeline. My
+    track to becoming a fullstack developer requires me learning a variety of languages and programming
+    styles. What better way to do that then with projects! 
+    </p>
+    <h4>Sort by skill:</h4>
+    <div id="myBtnContainer">
+      <button class="btn active" onclick="filterSelection('all')"> Show all</button>
+      <button class="btn" onclick="filterSelection('media')"> Media</button>
+      <button class="btn" onclick="filterSelection('js')"> javascript</button>
+      <button class="btn" onclick="filterSelection('3D')"> 3D design</button>
+      <button class="btn" onclick="filterSelection('other')"> Other</button>
+    </div>
+    
+    <div class="row">
+      <div class="column js" id="GrapeBot">
+        <div class="content">
+          <img src="GrapeBot.jpg" alt="GrapeBot" style="width:100%">
+          <h4>GrapeBot</h4>
+          <p>Esoteric discord bot that responds to any mention of the "they did surgery of a grape" meme. Coming to a server near you!</p>
+          <button class="btn" onclick="window.open('https://discordapp.com/oauth2/authorize?client_id=516272766689869834&scope=bot','_blank')">Invite</button>
+        </div>
+      </div>
+
+      <div class="column other" id="IFTTT">
+        <div class="content">
+          <img src="IFTTT twitch.png" alt="IFTTT" style="width:100%">
+          <h4>IFTTT bot</h4>
+          <p>A bot that sends twitter notifications everytime you start a stream.</p>
+          <button class="btn" onclick="window.open('https://ifttt.com/applets/96125415d-post-a-notification-to-twitter-when-you-start-a-new-stream','_blank')">View on IFTTT</button>
+        </div>
+      </div>
+
+      <div class="column media" id="Twitch">
+        <div class="content">
+          <img src="cooking.jpg" alt="Twitch" style="width:100%">
+          <h4>My cookbook</h4>
+          <p>I stream vegitarian recipes on twitch at least once a week.</p>
+          <button class="btn" onclick="window.open('https://www.twitch.tv/mycookbook','_blank')">Join the Stream</button>
+        </div>
+      </div>
+
+      <div class="column media" id="micro friends">
+        <div class="content">
+          <img src="comingsoon.jpg" alt="Micro Friends" style="width:100%">
+          <h4>Mico Friends</h4>
+          <p>An instagram page of microbes to help educate people on microbiology.</p>
+          <!--<button onclick="window.open('','_blank')">Join the Stream</button>-->
+        </div>
+      </div>
+
+      <div class="column 3D" id="eggstrom">
+        <div class="content">
+          <img src="eggstrom.png" alt="eggstrom" style="width:100%">
+          <h4>eggstrom</h4>
+          <p>My first dabble with 3D design.</p>
+          <button class="btn" onclick="window.open('https://www.thingiverse.com/thing:2438442','_blank')">View on Thingiverse</button>
+        </div>
+      </div>
+
+      <div class="column js" id="dicesim">
+        <div class="content">
+          <img src="dicesim.png" alt="dicesim" style="width:100%">
+          <h4>DnD dice simulator</h4>
+          <p>A set of virtual DnD dice for remote games.</p>
+          <button class="btn" onclick="window.open('https://elijahbrowne.github.io/dice.html','_blank')">Visit</button>
+        </div>
+      </div>
+
+      <div class="column other" id="cryptfont">
+        <div class="content">
+          <img src="Cryptfont.png" alt="cryptfont" style="width:100%">
+          <h4>Cryptography Font</h4>
+          <p>A font that is based off the cryptography key</p>
+          <a href="Cryptfont.ttf" download>
+            <button class="btn" onclick="download('cryptfont.ttf')">Download font</button>
+          </a>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <footer>
+        <p>Elijahswork is completely staffed by one student who loves to learn!</p>
+        <div id="iconbar">
+          <a href="https://github.com/elijahbrowne" target="_blank"><img src="github-icon-1-logo.png" alt="github" style="width: 25px; height: 25px"></a>
+          <a href="https://stackoverflow.com/users/11321143/elijah-browne" target="_blank"><img src="stackoverflow.png" alt="Stack Overflow" style="width: 25px; height: 25px"></a>
+          <a href="https://www.linkedin.com/in/elijahb0509" target="_blank"><img src="linkedin.png" alt="Linkedin" style="width: 25px; height: 25px"></a>
+          <a href="https://www.thingiverse.com/Elijah_makes/about" target="_blank"><img src="thingiverse.png" alt="Thingiverse" style="width: 25px; height: 25px"></a>
+          <a href="https://www.twitch.tv/mycookbook" target="_blank"><img src="twitch.png" alt="Twitch" style="width: 25px; height: 25px"></a>
+        </div>
+    </footer>
+  </body>

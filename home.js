@@ -34,3 +34,10 @@ var aText = new Array(
    }
   }
   typewriter();
+
+
+if (screen.width <= 699) {
+document.location = "404.html";
+}
+
+
