@@ -1,4 +1,4 @@
-// All copy taken verbatim from elijahbrowne.com (typos in the source are preserved).
+// Site copy, originally from elijahbrowne.com (spelling fixed Sept 2026).
 export const SITE = "https://www.elijahbrowne.com";
 export const RESUME = "https://drive.google.com/uc?export=download&id=1kk28Ex7qMb1l8cZj__4m-AYTnP616Ils";
 export const EMAIL = "mailto:elijahbrowne48@gmail.com?";
@@ -51,9 +51,9 @@ export const PROJECTS = [
   { title: "Turning Shoppers into Cardholders", slug: "turning-shoppers-into-cardholders", img: IMG.shoppers, skills: SKILLS_SHOP, blurb: "I designed and developed an AI-powered sales simulation in Articulate Storyline using Devlin.ai to help retail associates practice realistic customer conversations. The experience moves beyond scripted responses by allowing learners to interact directly with an AI customer, assess the customer’s needs, respond to objections, and determine when to continue or back down from the sale.", cta: "Read More" },
   { title: "Sending a Professional Email", slug: "sending-a-professional-email", img: IMG.email, skills: SKILLS_MAIL, cta: "Read More" },
   { title: "Turning Payment Research Into a Gemini Notebook", slug: "turning-payment-research-into-a-gemini-notebook", img: IMG.payment, skills: "Skills: Gemini Notebook, Instructional Design, AI-Assisted Learning, Source Curation, Generative AI, Learner-Centered Design, Educational Technology", cta: "Read More" },
-  { title: "Building a Gemini Notebook Microlearning Lesson", slug: "building-a-gemini-notebook", img: IMG.microlearning, skills: "Skills: Microlearning Design, Instructional Design, eLearning Development, Articulate Rise 360, Adult Learning, AI-Assisted Learning, Prompt Design, Learner-Centered Designrning", cta: "Read More" },
+  { title: "Building a Gemini Notebook Microlearning Lesson", slug: "building-a-gemini-notebook", img: IMG.microlearning, skills: "Skills: Microlearning Design, Instructional Design, eLearning Development, Articulate Rise 360, Adult Learning, AI-Assisted Learning, Prompt Design, Learner-Centered Design", cta: "Read More" },
   { title: "Understanding Stuart Hall Gemini Notebook", slug: "understanding-stuart-hall-gemini-notebook", img: IMG.stuartHall, skills: "Skills: Gemini Notebook, Instructional Design, Learning Experience Design, AI-Assisted Learning, Media Literacy, Source Curation, Generative AI, Learner-Centered Design, Educational Technology", cta: "Read More" },
-  { title: "Task Monster", slug: "task-monsters", img: IMG.taskMonsters, skills: "Skills: JavaScript, Gamification, Interaction Design, Base44, AI-assisted design, Figma", cta: "Read More" },
+  { title: "Task Monsters", slug: "task-monsters", img: IMG.taskMonsters, skills: "Skills: JavaScript, Gamification, Interaction Design, Base44, AI-assisted design, Figma", cta: "Read More" },
   { title: "SMARTPHONE CONTENT CREATION: MASTERING FRAMING AND AUDIO", slug: "smartphone-content-creation", img: IMG.smartphone, skills: "Skills: Articulate Rise 360, Instructional Design, Video Production, Scenario-Based Learning, User-Centered Design, Assessment Design, Learning Experience Design, ADDIE", cta: "Read More" },
 ];
 export const RESOURCES = [
@@ -92,7 +92,7 @@ export const DETAILS = {
       ["p", "Before building the course, I used [Gemini Notebook](https://notebook.google.com/notebook/569c4cd0-8622-4986-9a23-5534fe341987) to organize resources related to store-card sales and objection handling."],
       ["p", "This helped me move from a broad sales concept to a more specific instructional sequence."],
       ["p", "I then translated the learning objectives into a storyboard and organized the experience around the actual performance:"],
-      ["p", "Assess → Build Repport → Position → Handle Objections → Decide When to Back Down"],
+      ["p", "Assess → Build Rapport → Position → Handle Objections → Decide When to Back Down"],
       ["p", "The instructional content introduced several core techniques, including the 4Ps of Pushback:"],
       ["ul", ["Pause — let the customer finish.", "Probe — ask a clarifying question.", "Paraphrase — confirm the concern.", "Provide — connect the response to the customer's situation."]],
       ["p", "The final activity would then require the learner to apply those ideas rather than simply recall them."],
@@ -143,7 +143,7 @@ export const DETAILS = {
       ["p", "That means the free credits could support roughly 34 completed attempts at the observed usage level."],
       ["p", "But learners do not always succeed on their first attempt."],
       ["p", "I personally needed two attempts to successfully pass the simulation. If every learner required two attempts, the same credit balance would support approximately 17 learners."],
-      ["p", "That made the cost of practice part of the instructional design conversation. The question is not only whether an AI simulation can provide a more realistic practice environment, but also how much interaction is necessary to achieve the learning objective and how that interaction scales across a learner population. Of course, Devlin.ai offers paid plans. Their lowest tier offeres 5,000 credits at $6/month."],
+      ["p", "That made the cost of practice part of the instructional design conversation. The question is not only whether an AI simulation can provide a more realistic practice environment, but also how much interaction is necessary to achieve the learning objective and how that interaction scales across a learner population. Of course, Devlin.ai offers paid plans. Their lowest tier offers 5,000 credits at $6/month."],
       ["h2", "Reflection"],
       ["p", "I built this project in roughly eight hours, from storyboard through visual design, Storyline development, AI simulation, integration, and testing."],
       ["p", "The speed was possible because the learning problem was already clearly defined and the BroadLane brief provided a useful set of constraints and assets."],
@@ -190,7 +190,7 @@ export const DETAILS = {
       ["p", "I also used buttons to reveal information rather than displaying every piece of text at once."],
       ["p", "The goal was to prevent slides from becoming saturated with information while still giving learners access to the additional details they needed."],
       ["p", "These interactions were intentionally used to support the content—not simply to make the course feel more interactive."],
-      ["h3", "Teaching Technical Proccesses"],
+      ["h3", "Teaching Technical Processes"],
       ["p", "One part of the original assignment required learners to create a professional email signature."],
       ["p", "For the Storyline redesign, I created a short, step-by-step video demonstrating the process."],
       ["p", "This was one of my most deliberate instructional decisions."],
@@ -240,7 +240,6 @@ const NORM = {
   "E-Learning Development": "eLearning Development",
   "Articulate Storyline 360": "Articulate Storyline",
   "AI-Assisted Learning Design": "AI-Assisted Learning",
-  "Learner-Centered Designrning": "Learner-Centered Design",
 };
 PROJECTS.forEach((p) => {
   p.skillList = p.skills ? p.skills.replace(/^Skills:\s*/, "").split(/,\s*/).map((s) => NORM[s] || s) : [];
@@ -267,7 +266,7 @@ const F = (alt, cap, src) => ({ alt, cap, src });
 DETAILS["turning-payment-research-into-a-gemini-notebook"] = {
   img: IMG.payment,
   title: "Turning Payment Research Into a Gemini Notebook",
-  sub: "What if Gemini Notebook could streamline your buisness' research phase?",
+  sub: "What if Gemini Notebook could streamline your business' research phase?",
   heroAlt: "Screenshot of a Gemini Notebook titled Payment Systems, with a source list on the left, a chat comparing Stripe and Braintree pricing formulas in the center, and generated notes on the right",
   skills: "Skills: Gemini Notebook, Instructional Design, AI-Assisted Learning, Source Curation, Generative AI, Learner-Centered Design, Educational Technology",
   body: [
@@ -384,7 +383,7 @@ DETAILS["task-monsters"] = {
   sub: "What if your to-do list was a monster?",
   heroAlt: "Task Monsters app start screen with a task input, four battle difficulty cards named Easy, Medium, Hard and Custom, and a pixel-art ghost monster with 400 HP",
   skills: "Skills: JavaScript, Gamification, Interaction Design, Base44, AI-assisted design, Figma",
-  tryIt: "", // TODO: link to the live app
+  tryIt: "https://task-monsters.base44.app/",
   body: [
     ["h2", "Summary"],
     ["p", "Task Monsters is a Pomodoro-based productivity tool designed to support executive function through gamification. Prototyped in Base44, it combines structured work intervals with playful, visual feedback, turning everyday tasks into challenges users can work toward completing."],
@@ -441,8 +440,10 @@ DETAILS["task-monsters"] = {
   ],
 };
 attach("task-monsters", "Summary", "right", F("Hand-drawn journal sketch titled Task Demon, dated 2.12.2023: a fluffy monster with large round eyes saying meep meep, above a progress bar marked in tens with the word Tasks below", "The original paper Task Demon, 2023.", "images/task-monsters/sketch.jpg"));
-attach("task-monsters", "User Interaction Model", "right", { video: "images/task-monsters/demo.mov", alt: "Screen recording of a Task Monsters session: the user enters a task, picks a battle length, and the monster's health drains as the timer counts down", cap: "A battle in progress." });
+attach("task-monsters", "User Interaction Model", "right", F("Flowchart of the Task Monsters user flow. The user starts a session, identifies a task, and chooses a monster sprite. They choose a Pomodoro length: Easy (15-minute sessions), Medium (25 minutes), Hard (30 minutes), each with a 5-minute short break and 4 cycles, or Custom. The monster appears with the timer, and the user works on the task until the timer is complete. A defeated-monster animation plays, and the user is prompted to start a new task: yes returns to identifying a task, no ends the session.", "The user flow wireframe.", "images/task-monsters/wireframe.png"));
+figAfter("task-monsters", "User Interaction Model", ["p", "[View the wireframe in Figma](https://www.figma.com/board/U3qfmojUac8lUoHbXcLmq7/Task-Monsters?node-id=0-1)"]);
 figAfter("task-monsters", "User Interaction Model", ["figs", [
+  { video: "images/task-monsters/demo.mov", alt: "Screen recording of a Task Monsters session: the user enters a task, picks a battle length, and the monster's health drains as the timer counts down", cap: "A battle in progress." },
   F("Task Monsters battle screen for the task Write the case study!, showing a pixel-art ghost at 328 of 400 HP, a 06:50 timer, and Round 1 of 4 marked Focus", "Focus round: the monster loses health as you work.", "images/task-monsters/focus.jpg"),
   F("Task Monsters battle screen during a break, with a blue background, the ghost at 300 of 400 HP, a 04:58 timer, and Round 2 of 4 marked Break", "Break round: the background changes color to signal the switch.", "images/task-monsters/break.jpg"),
 ]]);
@@ -453,7 +454,7 @@ DETAILS["understanding-stuart-hall-gemini-notebook"] = {
   sub: "What if students could have a conversation with the theory instead of just reading about it?",
   heroAlt: "Gemini Notebook titled Understanding Reception Theory, with a source list, a chat explaining why a true-or-false question about Stuart Hall's Encoding/Decoding model is false, and a Communication Flashcards panel",
   skills: "Skills: Gemini Notebook, Instructional Design, Learning Experience Design, AI-Assisted Learning, Media Literacy, Source Curation, Generative AI, Learner-Centered Design, Educational Technology",
-  tryIt: "", // TODO: link to the shared notebook
+  tryIt: "https://notebook.google.com/notebook/e34b57e2-1097-4182-9f3a-0708175f5843",
   body: [
     ["h2", "Summary"],
     ["p", "Understanding Stuart Hall’s Reception Theory is an AI-supported learning experience designed to help learners explore Hall’s Encoding/Decoding Model and develop a deeper understanding of how audiences interpret media."],
@@ -485,7 +486,7 @@ DETAILS["building-a-gemini-notebook"] = {
 attach("sending-a-professional-email", "Summary", "right", F("Page from the original classroom handout titled Anatomy of an Email: a real email with red boxes labeling the subject, sender and recipients, greeting, body, sign off, signature and attachments", "Where it started: the original four-page classroom handout.", "images/email/original-handout.jpg"));
 attach("sending-a-professional-email", "Exploring the Anatomy of an Email", "right", F("Published course slide titled Anatomy of an Email: a phone showing an email with each section outlined in yellow, and a callout explaining what the subject line is for", "Hovering over a section of the email reveals what it does.", "images/email/anatomy.jpg"));
 attach("sending-a-professional-email", "Keeping Slides Focused", "left", F("Articulate Storyline editing the To, CC and BCC slide: a phone showing an email, three buttons, and the text for the To field, with the triggers and slide layers panels on the right", "Each button reveals its own layer instead of putting all the text on the slide at once.", "images/email/to-cc-bcc.jpg"));
-attach("sending-a-professional-email", "Teaching Technical Proccesses", "right", F("Course video slide showing Gmail settings where an email signature is created, with a closed caption at the bottom", "The signature walkthrough video, with closed captions.", "images/email/signature-video.jpg"));
+attach("sending-a-professional-email", "Teaching Technical Processes", "right", F("Course video slide showing Gmail settings where an email signature is created, with a closed caption at the bottom", "The signature walkthrough video, with closed captions.", "images/email/signature-video.jpg"));
 attach("sending-a-professional-email", "Scenario-Based Assessment", "left", F("Course question slide asking which information would normally be appropriate for a professional email signature, with four multiple-choice options", null, "images/email/question.jpg"));
 figAfter("sending-a-professional-email", "Scenario-Based Assessment", ["figs", [
   F("Articulate Storyline editing the Anatomy of an Email slide, with a hotspot over each section of the email and the hover triggers listed on the right", "Behind the scenes: hotspots and hover triggers.", "images/email/storyline-hotspots.jpg"),

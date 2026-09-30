@@ -4,7 +4,6 @@ import {
   PROJECTS, RESOURCES, VIDEOS, DETAILS, SKILL_COUNTS,
 } from "./content";
 
-const MAIL_TO = "elijahbrowne48@gmail.com";
 const HEADLINE = "I turn ideas into meaningful learning experiences.";
 let booted = false; // typing intro plays once per visit
 
@@ -98,63 +97,6 @@ function Typed({ text, start, n, caret, Tag, className }) {
       <span className="sr">{text}</span>
       <span aria-hidden="true">{text.slice(0, k)}{showCaret && <span className="caret" />}<span className="ghosted">{text.slice(k)}</span></span>
     </Tag>
-  );
-}
-
-/* ---------- message window ---------- */
-function MessageModal({ onClose }) {
-  const [state, setState] = useState("idle");
-  const box = useRef(null);
-  useEffect(() => {
-    const prev = document.activeElement;
-    box.current.querySelector("input").focus();
-    const key = (e) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "Tab") {
-        const f = [...box.current.querySelectorAll("button,input,textarea,a[href]")].filter((x) => !x.disabled);
-        const a = f[0], z = f[f.length - 1];
-        if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
-        else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
-      }
-    };
-    addEventListener("keydown", key);
-    return () => { removeEventListener("keydown", key); prev && prev.focus && prev.focus(); };
-  }, []);
-  const send = async (e) => {
-    e.preventDefault();
-    const d = Object.fromEntries(new FormData(e.target));
-    if (d.website) return; // honeypot
-    setState("sending");
-    try {
-      const r = await fetch(`https://formsubmit.co/ajax/${MAIL_TO}`, {
-        method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ name: d.name, email: d.email, message: d.message, _subject: `Portfolio message from ${d.name}`, _captcha: "false" }),
-      });
-      if (!r.ok) throw new Error();
-      setState("sent");
-    } catch {
-      location.href = `mailto:${MAIL_TO}?subject=${encodeURIComponent("Portfolio message from " + d.name)}&body=${encodeURIComponent(d.message + "\n\n" + d.name + " <" + d.email + ">")}`;
-      setState("fallback");
-    }
-  };
-  return (
-    <div className="modal" onClick={onClose}>
-      <div className="box" ref={box} role="dialog" aria-modal="true" aria-labelledby="msg-h" onClick={(e) => e.stopPropagation()}>
-        <h2 id="msg-h">Message</h2>
-        {state === "sent" && <p role="status">Thanks — your message was sent.</p>}
-        {state === "fallback" && <p role="status">Your email app should open with your message ready to send. If it doesn’t, write to {MAIL_TO}.</p>}
-        {(state === "idle" || state === "sending") && (
-          <form onSubmit={send}>
-            <label>Name<input name="name" type="text" autoComplete="name" required /></label>
-            <label>Email<input name="email" type="email" autoComplete="email" required /></label>
-            <label>Message<textarea name="message" rows="5" required /></label>
-            <input name="website" tabIndex="-1" autoComplete="off" className="hp" aria-hidden="true" />
-            <button className="btn" type="submit" disabled={state === "sending"}>{state === "sending" ? "Sending…" : "Send"}</button>
-          </form>
-        )}
-        <button className="btn ghost close" onClick={onClose}>Close</button>
-      </div>
-    </div>
   );
 }
 
@@ -415,7 +357,6 @@ export default function App() {
   const [hash, setHash] = useState(() => location.hash.replace(/^#/, "") || "/");
   const [theme, setTheme] = useState(initTheme);
   const [menu, setMenu] = useState(false);
-  const [msg, setMsg] = useState(false);
   useEffect(() => {
     const f = () => { setHash(location.hash.replace(/^#/, "") || "/"); scrollTo(0, 0); };
     addEventListener("hashchange", f);
@@ -456,11 +397,9 @@ export default function App() {
             <a href={EMAIL}>Contact Me</a>
             <a href={LINKEDIN} target="_blank" rel="noreferrer">LinkedIn</a>
             <a href={RESUME}>Resume</a>
-            <button className="linkbtn" onClick={() => setMsg(true)}>Message</button>
           </div>
         </div>
       </footer>
-      {msg && <MessageModal onClose={() => setMsg(false)} />}
     </div>
   );
 }
@@ -565,7 +504,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--accent)}
 .side-t>:first-child{margin-top:0}
 .figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:1.5rem;margin:2rem 0}
 .fig{margin:0}
-.figimg{width:100%;height:auto;border-radius:12px;display:block}
+.figimg{width:100%;height:auto;border-radius:12px;display:block;background:#fff}
 .figph{min-height:240px;border:2px dashed var(--line);border-radius:12px;display:grid;place-content:center;gap:.5rem;text-align:center;padding:1.25rem;color:var(--mute)}
 .figph span{font-weight:700;color:var(--ink)}.figph small{font-size:.8rem}
 figcaption{font-family:var(--mono);font-weight:300;font-size:.85rem;color:var(--mute);margin-top:.5rem}
@@ -597,20 +536,15 @@ th{font-family:var(--head);font-weight:500}
 .foot{margin-top:6rem;border-top:1px solid var(--line);padding:4rem 0;text-align:center}
 .foot p{color:var(--mute)}
 .fl{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem}
-.modal{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.65);display:grid;place-items:center;padding:1rem;overflow:auto}
-.box{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:14px;max-width:520px;width:100%;padding:1.75rem;max-height:92vh;overflow:auto}
-.box form{display:grid;gap:1rem}.box label{display:grid;gap:.4rem;font-weight:700}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.close{margin-left:0}
-.linkbtn{font:inherit;color:var(--accent);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
 @media(max-width:860px){
  .side{grid-template-columns:1fr;gap:1.25rem}.side.left .fig{order:0}.side .fig{position:static}
  .hero-in{grid-template-columns:1fr;gap:2rem}
  .about{grid-template-columns:1fr;gap:1.5rem}
  .card.big{flex-direction:column}.card.big img,.card.big .ph{width:100%;min-height:0;aspect-ratio:16/9}
  .burger{display:inline-block}
- .nav-r{width:100%;justify-content:flex-end}
- .nav ul{display:none;flex-direction:column;width:100%;gap:.6rem;order:5;padding-top:.4rem}
+ .nav{flex-wrap:nowrap}
+ .nav-r{gap:.6rem}
+ .nav ul{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:.9rem;background:var(--bg);border-bottom:1px solid var(--line);padding:1rem clamp(1rem,4vw,2rem)}
  .nav ul.open{display:flex}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
