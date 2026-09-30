@@ -318,7 +318,8 @@ DETAILS["smartphone-content-creation"] = {
   sub: "What if your smartphone could become the only content-creation tool you need?",
   heroAlt: "Smartphone camera screen in landscape orientation showing a brown and white dog on a couch, with seven numbered callouts marking the camera controls",
   skills: "Skills: Articulate Rise 360, Instructional Design, Video Production, Scenario-Based Learning, User-Centered Design, Assessment Design, Learning Experience Design, ADDIE",
-  cta: ["Try it out!", ""], cta2: ["Try it Yourself!", ""],
+  cta: ["Try it out!", ""], cta2: ["Try it Yourself!", "#/project-page/smartphone-content-creation/lesson"],
+  lesson: ["Smartphone Content Creation (Rise 360 lesson)", "Smartphone%20content%20creation/index.html"], // own page, reachable only via cta2
   body: [
     ["h2", "Summary"],
     ["p", "Smartphones have become powerful content-creation tools, but having access to advanced camera features does not necessarily mean knowing how or when to use them."],

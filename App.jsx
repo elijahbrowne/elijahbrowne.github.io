@@ -19,9 +19,9 @@ const Rich = ({ text }) =>
     const m = s.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
     return m ? <a key={i} href={m[2]} target="_blank" rel="noreferrer">{m[1]}</a> : s;
   });
-const Btn = ({ href, children, ghost }) => {
+const Btn = ({ href, children, ghost, onClick }) => {
   const ext = /^https?:|^mailto:/.test(href);
-  return <a className={"btn" + (ghost ? " ghost" : "")} href={href} {...(ext ? { target: "_blank", rel: "noreferrer" } : {})}>{children}</a>;
+  return <a className={"btn" + (ghost ? " ghost" : "")} href={href} onClick={onClick} {...(ext ? { target: "_blank", rel: "noreferrer" } : {})}>{children}</a>;
 };
 
 /* ---------- kinetic dots: whole home page, desktop only. White in dark mode, grey in light mode ---------- */
@@ -370,8 +370,31 @@ function Detail({ slug }) {
         <p className="skills">{d.skills}</p>
         {d.cta && d.cta[1] && <Btn href={d.cta[1]}>{d.cta[0]}</Btn>}
         {d.body && <div className="dbody">{d.body.map((b, i) => <Block key={i} b={b} />)}</div>}
-        {d.cta2 && d.cta2[1] && <p><Btn href={d.cta2[1]}>{d.cta2[0]}</Btn></p>}
+        {d.cta2 && d.cta2[1] && <p><Btn href={d.cta2[1]} onClick={d.lesson ? () => unlock(slug) : undefined}>{d.cta2[0]}</Btn></p>}
       </article>
+    </div>
+  );
+}
+
+/* ---------- lesson page: header + lesson + footer, opened only from the Try it Yourself button ---------- */
+const lessonKey = (slug) => "lesson:" + slug;
+const unlock = (slug) => { try { sessionStorage.setItem(lessonKey(slug), "1"); } catch (e) {} };
+const unlocked = (slug) => { try { return sessionStorage.getItem(lessonKey(slug)) === "1"; } catch (e) { return false; } };
+function Lesson({ slug }) {
+  const d = DETAILS[slug];
+  const ok = d && d.lesson && unlocked(slug);
+  useEffect(() => {
+    if (!ok) { location.replace("#/project-page/" + slug); return; }
+    const m = document.createElement("meta");
+    m.name = "robots"; m.content = "noindex";
+    document.head.appendChild(m);
+    return () => m.remove();
+  }, [ok]);
+  if (!ok) return null;
+  return (
+    <div className="lesson">
+      <h1 className="sr">{d.lesson[0]}</h1>
+      <iframe src={d.lesson[1]} title={d.lesson[0]} allow="fullscreen" allowFullScreen />
     </div>
   );
 }
@@ -403,7 +426,7 @@ export default function App() {
   const parts = hash.split("/").filter(Boolean);
   let page = <Home />;
   if (parts[0] === "about") page = <About />;
-  else if (parts[0] === "project-page") page = parts[1] ? <Detail slug={parts[1]} /> : <ProjectPage />;
+  else if (parts[0] === "project-page") page = parts[2] === "lesson" ? <Lesson slug={parts[1]} /> : parts[1] ? <Detail slug={parts[1]} /> : <ProjectPage />;
   return (
     <div className="site">
       <style>{CSS}</style>
@@ -555,6 +578,8 @@ th{font-family:var(--head);font-weight:500}
 .about{display:grid;grid-template-columns:1.3fr 1fr;gap:3rem;align-items:center}
 .about-i{width:100%;height:auto;border-radius:14px;display:block}
 .carousel{margin:2rem 0;max-width:900px}
+.lesson iframe{display:block;width:100%;height:calc(100svh - 67px);border:0;background:#fff}
+.lesson+.foot,.site:has(.lesson) .foot{margin-top:0}
 .embed{margin:3rem 0}.detail>.embed{margin:0 0 2.5rem}
 .embed iframe{display:block;width:100%;height:min(80vh,820px);min-height:520px;border:1px solid var(--line);border-radius:14px;background:#fff}
 .embed a{display:inline-block;margin-top:.75rem;font-size:.9rem}
