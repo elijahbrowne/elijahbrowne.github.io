@@ -6,7 +6,7 @@ export const LINKEDIN = "https://www.linkedin.com/in/elijahb0509/";
 export const TAGLINE = "Educator · Learning Experience Designer";
 
 export const IMG = {
-  home: "https://lh7-us.googleusercontent.com/sitesv-images-rt/AMxu72uAziRxV66jIQSEf7PD7l7EwopdjjgJ3Ku_moiijwpUATznKw1muznIG_K8ZiZrZCt17ZjgyxGxVCc_P6KPWz3cLn_b9KQHL_ROcNY5rqr7cSClhnbS_XX0_pJxUPFlKA_cncMB4IqhC_OxfvHZTAbaApiaCpspp6DqbGGetJHJwdH1JFwWufETh5DYC5Jdqq0Onp9sgNfwmiAMwQefMtnIETlkaNKTik3fnYXkVss=w1280",
+  home: "images/headshot.jpg",
   shoppers: "images/shoppers/slide-1.jpg",
   email: "images/email/cover.jpg",
   payment: "images/payment/cover.jpg",
