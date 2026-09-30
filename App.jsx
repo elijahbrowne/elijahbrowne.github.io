@@ -360,6 +360,8 @@ function Detail({ slug }) {
   const d = DETAILS[slug];
   if (!d) return <div className="wrap sec top"><h1 className="pg">Not found</h1><Btn href="#/project-page">Project Page</Btn></div>;
   const alt = d.heroAlt || ALT[slug];
+  // Same button under the skills and at the end of the case study; hidden until the page has a link.
+  const tryIt = d.tryIt && <Btn href={d.tryIt} onClick={d.lesson ? () => unlock(slug) : undefined}>Try it Yourself!</Btn>;
   return (
     <div className="top">
       <article className="wrap detail sec">
@@ -368,9 +370,9 @@ function Detail({ slug }) {
         <h1 className="pg">{d.title}</h1>
         <p className="lead">{d.sub}</p>
         <p className="skills">{d.skills}</p>
-        {d.cta && d.cta[1] && <Btn href={d.cta[1]}>{d.cta[0]}</Btn>}
+        {tryIt}
         {d.body && <div className="dbody">{d.body.map((b, i) => <Block key={i} b={b} />)}</div>}
-        {d.cta2 && d.cta2[1] && <p><Btn href={d.cta2[1]} onClick={d.lesson ? () => unlock(slug) : undefined}>{d.cta2[0]}</Btn></p>}
+        {tryIt && <p>{tryIt}</p>}
       </article>
     </div>
   );
