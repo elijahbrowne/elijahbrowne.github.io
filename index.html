@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Elijah Browne · Learning Experience Designer</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+  <meta name="description" content="Portfolio of Elijah Browne, educator and learning experience designer." />
+  <style>body{margin:0;background:#fff}@media(prefers-color-scheme:dark){body{background:#000}}</style>
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react"
+    }
+  }
+  </script>
+  <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <noscript>This site needs JavaScript. Email elijahbrowne48@gmail.com or see linkedin.com/in/elijahb0509.</noscript>
+  <!-- No build step: compile App.jsx in the browser, point its "./content" import at content.js, then mount. -->
+  <script type="module">
+    import { createElement } from "react";
+    import { createRoot } from "react-dom/client";
+    const root = document.getElementById("root");
+    try {
+      const src = await (await fetch("./App.jsx")).text();
+      const { code } = Babel.transform(src, { filename: "App.jsx", presets: [["react", { runtime: "automatic" }]] });
+      const content = new URL("./content.js", location.href).href;
+      const js = code.replace(/from\s*["']\.\/content(\.js)?["']/g, `from "${content}"`);
+      const { default: App } = await import(URL.createObjectURL(new Blob([js], { type: "text/javascript" })));
+      createRoot(root).render(createElement(App));
+    } catch (e) {
+      console.error(e);
+      root.innerHTML = '<p style="font-family:system-ui;padding:2rem">The site failed to load. If you opened index.html directly, serve the folder instead (e.g. <code>python3 -m http.server</code>).</p>';
+    }
+  </script>
+</body>
+</html>
