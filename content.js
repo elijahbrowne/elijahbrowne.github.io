@@ -69,7 +69,8 @@ export const DETAILS = {
     title: "Turning Shoppers into Cardholders",
     sub: "An AI-powered sales simulation built in Articulate Storyline and Devlin.ai",
     img: "images/shoppers/sim-complete.jpg", heroAlt: "The finished simulation in the Storyline player: the learner says there's no annual fee, and Belle replies Okay, and the $25 comes off today's purchase if I sign up right now? How do I apply?", skills: SKILLS_SHOP,
-    tryIt: "https://na-9911.reach360.com/share/course/8ec2fe27-c705-469d-92fb-74ddc9f664c5",
+    tryIt: "#/project-page/turning-shoppers-into-cardholders/lesson",
+    lesson: ["Turning Shoppers into Cardholders (Storyline course)", "Turning%20Shoppers%20into%20Cardholders%20(1)/story.html"],
     body: [
       ["h2", "Summary"],
       ["p", "I designed and developed an AI-powered sales simulation in Articulate Storyline using Devlin.ai to help retail associates practice realistic customer conversations. The experience moves beyond scripted responses by allowing learners to interact directly with an AI customer, assess the customer’s needs, respond to objections, and determine when to continue or back down from the sale."],
@@ -155,7 +156,8 @@ export const DETAILS = {
     title: "Sending a Professional Email",
     sub: "How do you turn a simple classroom handout into an interactive learning experience?",
     img: IMG.email, skills: SKILLS_MAIL,
-    tryIt: "https://na-9911.reach360.com/share/course/866f4f69-02bb-42ca-995f-7638f7d41b33",
+    tryIt: "#/project-page/sending-a-professional-email/lesson",
+    lesson: ["Sending a Professional Email (Storyline course)", "Sending%20a%20Professional%20Email/story.html"],
     body: [
       ["h2", "Summary"],
       ["p", "I originally created [Sending a Professional Email](https://na-9911.reach360.com/share/course/866f4f69-02bb-42ca-995f-7638f7d41b33) as a classroom assignment for 10th-grade students who struggled with the basics of writing professional emails. Students commonly omitted subject lines, incorrectly formatted the body of an email, or did not know how to create a professional email signature."],

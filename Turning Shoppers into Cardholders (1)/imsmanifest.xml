@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest identifier="_61iuerHSzej" version="1.0" xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+    <lom xmlns="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd">
+      <general>
+        <title>
+          <langstring xml:lang="x-none">Turning Shoppers into Cardholders</langstring>
+        </title>
+      </general>
+      <lifecycle>
+        <version>
+          <langstring xml:lang="x-none">1</langstring>
+        </version>
+        <status>
+          <source>
+            <langstring xml:lang="x-none">LOMv1.0</langstring>
+          </source>
+          <value>
+            <langstring xml:lang="x-none">Final</langstring>
+          </value>
+        </status>
+      </lifecycle>
+      <metametadata>
+        <metadatascheme>ADL SCORM 1.2</metadatascheme>
+      </metametadata>
+      <educational>
+        <typicallearningtime>
+          <datetime>PT0H0M0S</datetime>
+        </typicallearningtime>
+      </educational>
+      <rights>
+        <cost>
+          <source>
+            <langstring xml:lang="x-none">LOMv1.0</langstring>
+          </source>
+          <value>
+            <langstring xml:lang="x-none">yes</langstring>
+          </value>
+        </cost>
+        <copyrightandotherrestrictions>
+          <source>
+            <langstring xml:lang="x-none">LOMv1.0</langstring>
+          </source>
+          <value>
+            <langstring xml:lang="x-none">yes</langstring>
+          </value>
+        </copyrightandotherrestrictions>
+      </rights>
+    </lom>
+  </metadata>
+  <organizations default="Turning_Shoppers_into_Cardholders_ORG">
+    <organization identifier="Turning_Shoppers_into_Cardholders_ORG">
+      <title>Turning Shoppers into Cardholders</title>
+      <item identifier="Untitled1_SCO" isvisible="true" identifierref="__61iuerHSzej_RES">
+        <title>Turning Shoppers into Cardholders</title>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="__61iuerHSzej_RES" type="webcontent" href="index_lms.html" adlcp:scormtype="sco">
+      <file href="story_content/thumbnail.jpg" />
+      <file href="mobile/5pDmdlnDJ4M.png" />
+      <file href="mobile/5Xj0hGFY2wK_P_332_-5_786_800.jpg" />
+      <file href="mobile/6p91C1lomEu.png" />
+      <file href="mobile/64NtigI23Bi.png" />
+      <file href="story_content/6RlZf2YCwih_44100_48_0.mp3" />
+      <file href="story_content/5xUYh2OuoME_captions.js" />
+      <file href="mobile/6XzmEdC0nLU.png" />
+      <file href="story_content/661mDWIrmEc_44100_48_0.mp3" />
+      <file href="story_content/5o3vmUrzYLj_captions.js" />
+      <file href="mobile/6Y3NZvqwLAH.png" />
+      <file href="story_content/5XrlPGqAGqd_44100_48_0.mp3" />
+      <file href="story_content/6dP58OTkqlq_captions.js" />
+      <file href="mobile/6qZOS0SuOQB.png" />
+      <file href="mobile/5ZEepl4RLyf.png" />
+      <file href="mobile/612Q4WI5Kn7.png" />
+      <file href="mobile/6cuLRv7Taf2.png" />
+      <file href="story_content/6VHat9sXeyO_44100_48_0.mp3" />
+      <file href="story_content/5tsRgfnP0sb_captions.js" />
+      <file href="mobile/5excr2LU23y.png" />
+      <file href="mobile/5iBi5CKOXsp.png" />
+      <file href="mobile/6RXcmX8FHeg.png" />
+      <file href="mobile/6NjmMgVHw1F.png" />
+      <file href="mobile/6JJYfUTRxgl.png" />
+      <file href="mobile/5mUAQZgB5BB.png" />
+      <file href="story_content/5eR8I90GRFy_44100_48_0.mp3" />
+      <file href="story_content/62iKCk8srim_captions.js" />
+      <file href="story_content/6VCHSlgsolJ_44100_48_0.mp3" />
+      <file href="story_content/5tLPmndBD1k_captions.js" />
+      <file href="mobile/5xzIQpuNUy2_X.png" />
+      <file href="story_content/6Ot3wAzGVSi_44100_48_0.mp3" />
+      <file href="story_content/67pqFTUrbOT_captions.js" />
+      <file href="story_content/6d6XuV8JfyK_44100_48_0.mp3" />
+      <file href="story_content/5aMmZ4KRO0r_captions.js" />
+      <file href="mobile/6epcx4szTYJ_M_920_920.png" />
+      <file href="mobile/6KYWtE9a5av_M_920_920.png" />
+      <file href="mobile/5du2N8Ia4Cj_M_920_920.png" />
+      <file href="mobile/6nU9hMEvXMx_M_920_920.png" />
+      <file href="mobile/6CBZRmd3eTr5zUIdecpcfJ{Width=603.7692, Height=334}Light.png" />
+      <file href="mobile/6g1fHWqsKhv_P_936_0_639_899.jpg" />
+      <file href="story_content/6OpEdiOpxwZ_44100_48_0.mp3" />
+      <file href="story_content/5WF4WDR1VTx_captions.js" />
+      <file href="meta.xml" />
+      <file href="story_content/triggers.js" />
+      <file href="story_content/user.js" />
+      <file href="mobile/txt__default_61SgCaGa5RD.png" />
+      <file href="mobile/txt__default_6kcRHoraZLy.png" />
+      <file href="mobile/txt__default_5W7KCaJW7rj.png" />
+      <file href="mobile/txt__default_6DV8eVFqDtd.png" />
+      <file href="mobile/txt__default_5xUFXIyWLD5.png" />
+      <file href="mobile/txt__default_6NgnEarTihl.png" />
+      <file href="mobile/txt__default_5s8d6Dvi1Q6.png" />
+      <file href="mobile/txt__default_5kWXky1GT5L.png" />
+      <file href="mobile/txt__default_5XWKQFFxELY.png" />
+      <file href="mobile/txt__default_6YQxtCxt1ed.png" />
+      <file href="mobile/txt__default_6El2UjcKuGE.png" />
+      <file href="html5/data/css/output.min.css" />
+      <file href="html5/data/js/5foqfpzzcvw.js" />
+      <file href="html5/data/js/5jjePJeqsfu.js" />
+      <file href="html5/data/js/5WSYXlOcxzQ.js" />
+      <file href="html5/data/js/5ZnWQJkCmQ8.js" />
+      <file href="html5/data/js/607Ye76Pp0t.js" />
+      <file href="html5/data/js/64NTqT5dXwD.js" />
+      <file href="html5/data/js/6gXX3xohqF0.js" />
+      <file href="html5/data/js/6GZRZzAvkcZ.js" />
+      <file href="html5/data/js/6IzZpVMLNu2.js" />
+      <file href="html5/data/js/6lnTnkIYkyY.js" />
+      <file href="html5/data/js/6R5W0WwdWd8.js" />
+      <file href="html5/data/js/6r7a6SURnUy.js" />
+      <file href="html5/data/js/data.js" />
+      <file href="html5/data/js/frame.js" />
+      <file href="html5/data/js/paths.js" />
+      <file href="html5/lib/scripts/bootstrapper.min.js" />
+      <file href="html5/lib/scripts/frame.desktop.min.js" />
+      <file href="html5/lib/scripts/frame.mobile.min.js" />
+      <file href="html5/lib/scripts/slides.min.js" />
+      <file href="html5/lib/stylesheets/desktop.min.css" />
+      <file href="html5/lib/stylesheets/mobile.min.css" />
+      <file href="html5/lib/stylesheets/mobile-fonts/open-sans-bold.woff" />
+      <file href="html5/lib/stylesheets/mobile-fonts/open-sans-light.woff" />
+      <file href="html5/lib/stylesheets/mobile-fonts/open-sans-regular.woff" />
+      <file href="analytics-frame.html" />
+      <file href="story.html" />
+      <file href="index_lms.html" />
+      <file href="lms/AICCComm.html" />
+      <file href="lms/blank.html" />
+      <file href="lms/browsersniff.js" />
+      <file href="lms/goodbye.html" />
+      <file href="lms/scormdriver.js" />
+    </resource>
+  </resources>
+</manifest>
