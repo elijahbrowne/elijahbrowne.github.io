@@ -178,17 +178,17 @@ function About() {
 
 function ProjectPage() {
   const [q, setQ] = useState("");
-  const [active, setActive] = useState([]);
+  const [active, setActive] = useState(null); // one skill at a time
   const query = q.trim().toLowerCase();
   const featured = SKILL_COUNTS.filter(([, c]) => c >= 2).map(([s]) => s);
   const pool = query ? SKILL_COUNTS.map(([s]) => s).filter((s) => s.toLowerCase().includes(query)) : featured;
-  const chips = [...new Set([...active, ...pool])];
-  const filtering = active.length > 0 || query.length > 0;
+  const chips = [...new Set([...(active ? [active] : []), ...pool])];
+  const filtering = !!active || query.length > 0;
   const shown = PROJECTS.filter((p) =>
-    active.length ? active.every((s) => p.skillList.includes(s))
+    active ? p.skillList.includes(active)
     : query ? p.title.toLowerCase().includes(query) || p.skillList.some((s) => s.toLowerCase().includes(query))
     : true);
-  const toggle = (s) => setActive(active.includes(s) ? active.filter((x) => x !== s) : [...active, s]);
+  const toggle = (s) => setActive(active === s ? null : s);
   const count = (s) => (SKILL_COUNTS.find(([k]) => k === s) || [0, 0])[1];
   return (
     <div className="wrap sec top">
@@ -200,18 +200,18 @@ function ProjectPage() {
         </label>
         <div className="chips" role="group" aria-label="Skills">
           {chips.map((s) => (
-            <button key={s} type="button" className="chip" aria-pressed={active.includes(s)} onClick={() => toggle(s)}>
+            <button key={s} type="button" className="chip" aria-pressed={active === s} onClick={() => toggle(s)}>
               {s} <span>{count(s)}</span>
             </button>
           ))}
           {chips.length === 0 && <p>No skills match “{q}”.</p>}
         </div>
-        {filtering && <button type="button" className="btn ghost sm" onClick={() => { setActive([]); setQ(""); }}>Clear</button>}
+        {filtering && <button type="button" className="btn ghost sm" onClick={() => { setActive(null); setQ(""); }}>Clear</button>}
         <p role="status" className="count">{filtering ? `${shown.length} of ${PROJECTS.length} projects` : ""}</p>
       </section>
       {filtering || !shown.length ? null : <Card p={shown[0]} big />}
       <div className="grid">{(filtering ? shown : shown.slice(1)).map((p) => <Card key={p.title} p={p} />)}</div>
-      {filtering && shown.length === 0 && <p>No projects match those skills together.</p>}
+      {filtering && shown.length === 0 && <p>No projects match that skill.</p>}
       <h2 className="gap">Classroom resources</h2>
       <div className="grid">
         {RESOURCES.map((r) => (

@@ -3,7 +3,7 @@ export const SITE = "https://www.elijahbrowne.com";
 export const RESUME = "https://drive.google.com/uc?export=download&id=1kk28Ex7qMb1l8cZj__4m-AYTnP616Ils";
 export const EMAIL = "mailto:elijahbrowne48@gmail.com?";
 export const LINKEDIN = "https://www.linkedin.com/in/elijahb0509/";
-export const TAGLINE = "Educator · Learning Experience Designer";
+export const TAGLINE = "Educator · Instructional Designer";
 
 export const IMG = {
   home: "images/headshot.jpg",
@@ -30,7 +30,7 @@ export const PUBLICATIONS = [
 export const CERTS = [
   { t: "How to Conduct a Learning Needs Analysis", sub: "Udemy · 2026", href: "https://www.udemy.com/certificate/UC-2a0d90ba-74b5-49ee-b369-a3f7ab8031a2/" },
   { t: "Learning and Development (L&D) with Generative AI", sub: "Udemy · 2026", href: "https://www.udemy.com/certificate/UC-ac92c8cc-e8c6-4563-991c-21dcf7d8d29a/" },
-  { t: "xAPI Fundamentals - Track Learning with Greater Detail", sub: "Udemy · 2026", href: "https://www.udemy.com/certificate/UC-ac92c8cc-e8c6-4563-991c-21dcf7d8d29a/" },
+  { t: "xAPI Fundamentals - Track Learning with Greater Detail", sub: "Udemy · 2026", href: "https://www.udemy.com/certificate/UC-fd624d8c-e995-44aa-8237-6b4de0d0b103/" },
   { t: "Let's Create a Course in Articulate Storyline 3 / 360", sub: "Udemy · 2026", href: "https://www.udemy.com/certificate/UC-f3b1b77e-19f1-4108-822e-06e7d4c3c6a4/" },
   { t: "Accessible Elearning in Articulate 360", sub: "LinkedIn Learning · 2026" },
   { t: "Elearning Essentials: Instructional Design", sub: "LinkedIn Learning · 2026" },
@@ -43,18 +43,16 @@ export const AWARDS = [
 ];
 
 const P = SITE + "/project-page/";
-const SKILLS_SHOP = "Skills: Instructional Design, Learning Experience Design, Scenario-Based Learning, AI Simulation Design, Articulate Storyline, Devlin.ai, eLearning Development, Branching Scenarios, Conversational Learning, Learner Assessment, Feedback Design, Just-in-Time Learning, Accessibility, Multimedia Learning, Storyboarding, Canva, JavaScript, AI-Assisted Learning Design";
-const SKILLS_MAIL = "Skills: Articulate Storyline 360, Canva, DaVinci Resolve, Instructional Design, E-Learning Development, Scenario-Based Learning, Assessment Design, Accessibility, Adult Learning, Bloom’s Taxonomy, WCAG 2.1";
 
 // Project page cards. `slug` => built-in detail page; `ext` => opens original site page.
 export const PROJECTS = [
-  { title: "Turning Shoppers into Cardholders", slug: "turning-shoppers-into-cardholders", img: IMG.shoppers, skills: SKILLS_SHOP, blurb: "I designed and developed an AI-powered sales simulation in Articulate Storyline using Devlin.ai to help retail associates practice realistic customer conversations. The experience moves beyond scripted responses by allowing learners to interact directly with an AI customer, assess the customer’s needs, respond to objections, and determine when to continue or back down from the sale.", cta: "Read More" },
-  { title: "Sending a Professional Email", slug: "sending-a-professional-email", img: IMG.email, skills: SKILLS_MAIL, cta: "Read More" },
-  { title: "Turning Payment Research Into a Gemini Notebook", slug: "turning-payment-research-into-a-gemini-notebook", img: IMG.payment, skills: "Skills: Gemini Notebook, Instructional Design, AI-Assisted Learning, Source Curation, Generative AI, Learner-Centered Design, Educational Technology", cta: "Read More" },
-  { title: "Building a Gemini Notebook Microlearning Lesson", slug: "building-a-gemini-notebook", img: IMG.microlearning, skills: "Skills: Microlearning Design, Instructional Design, eLearning Development, Articulate Rise 360, Adult Learning, AI-Assisted Learning, Prompt Design, Learner-Centered Design", cta: "Read More" },
-  { title: "Understanding Reception Theory Notebook", slug: "understanding-stuart-hall-gemini-notebook", img: IMG.stuartHall, skills: "Skills: Gemini Notebook, Instructional Design, Learning Experience Design, AI-Assisted Learning, Media Literacy, Source Curation, Generative AI, Learner-Centered Design, Educational Technology", cta: "Read More" },
-  { title: "Task Monsters", slug: "task-monsters", img: IMG.taskMonsters, skills: "Skills: JavaScript, Gamification, Interaction Design, Base44, AI-assisted design, Figma", cta: "Read More" },
-  { title: "Smartphone Content Creation: Mastering Framing and Audio", slug: "smartphone-content-creation", img: IMG.smartphone, skills: "Skills: Articulate Rise 360, Instructional Design, Video Production, Scenario-Based Learning, User-Centered Design, Assessment Design, Learning Experience Design, ADDIE", cta: "Read More" },
+  { title: "Turning Shoppers into Cardholders", slug: "turning-shoppers-into-cardholders", img: IMG.shoppers, skills: ["Learning Experience Design", "Scenario-Based Learning", "AI Simulation Design", "Articulate Storyline 360", "Devlin.ai", "eLearning Development", "Branching Scenarios", "Assessment Design", "Feedback Design", "Just-in-Time Learning", "Accessibility", "Multimedia Learning", "Storyboarding", "Canva", "JavaScript"], blurb: "I designed and developed an AI-powered sales simulation in Articulate Storyline using Devlin.ai to help retail associates practice realistic customer conversations. The experience moves beyond scripted responses by allowing learners to interact directly with an AI customer, assess the customer’s needs, respond to objections, and determine when to continue or back down from the sale.", cta: "Read More" },
+  { title: "Sending a Professional Email", slug: "sending-a-professional-email", img: IMG.email, skills: ["Articulate Storyline 360", "eLearning Development", "Scenario-Based Learning", "Assessment Design", "Accessibility", "Adult Learning", "Bloom’s Taxonomy", "Canva", "DaVinci Resolve"], cta: "Read More" },
+  { title: "Turning Payment Research Into a Gemini Notebook", slug: "turning-payment-research-into-a-gemini-notebook", img: IMG.payment, skills: ["Gemini Notebook", "AI-Assisted Learning"], cta: "Read More" },
+  { title: "Building a Gemini Notebook Microlearning Lesson", slug: "building-a-gemini-notebook", img: IMG.microlearning, skills: ["Microlearning Design", "eLearning Development", "Articulate Rise 360", "Adult Learning", "AI-Assisted Learning", "Prompt Design"], cta: "Read More" },
+  { title: "Understanding Reception Theory Notebook", slug: "understanding-stuart-hall-gemini-notebook", img: IMG.stuartHall, skills: ["Gemini Notebook", "Learning Experience Design", "AI-Assisted Learning", "Media Literacy"], cta: "Read More" },
+  { title: "Task Monsters", slug: "task-monsters", img: IMG.taskMonsters, skills: ["JavaScript", "Gamification", "Interaction Design", "Base44", "AI-Assisted Design", "Figma"], cta: "Read More" },
+  { title: "Smartphone Content Creation: Mastering Framing and Audio", slug: "smartphone-content-creation", img: IMG.smartphone, skills: ["Articulate Rise 360", "Video Production", "Scenario-Based Learning", "User-Centered Design", "Assessment Design", "Learning Experience Design", "ADDIE"], cta: "Read More" },
 ];
 export const RESOURCES = [
   { title: "Media Literacy Tools for the Classroom", img: "images/resources/media-literacy.jpg", alt: "Top of the Media Literacy Tools for the Classroom resource, with the heading What is Media Literacy? and an introductory paragraph", text: "This resource introduces key media literacy concepts and provides practical classroom strategies, activities, and resources to help students identify credible information, recognize bias and misinformation, and become more thoughtful consumers and creators of media.", href: "https://canva.link/33i5scxo70mvwf8" },
@@ -68,7 +66,7 @@ export const DETAILS = {
   "turning-shoppers-into-cardholders": {
     title: "Turning Shoppers into Cardholders",
     sub: "An AI-powered sales simulation built in Articulate Storyline and Devlin.ai",
-    img: "images/shoppers/sim-complete.jpg", heroAlt: "The finished simulation in the Storyline player: the learner says there's no annual fee, and Belle replies Okay, and the $25 comes off today's purchase if I sign up right now? How do I apply?", skills: SKILLS_SHOP,
+    img: "images/shoppers/sim-complete.jpg", heroAlt: "The finished simulation in the Storyline player: the learner says there's no annual fee, and Belle replies Okay, and the $25 comes off today's purchase if I sign up right now? How do I apply?",
     tryIt: "#/project-page/turning-shoppers-into-cardholders/lesson",
     lesson: ["Turning Shoppers into Cardholders (Storyline course)", "Turning%20Shoppers%20into%20Cardholders%20(1)/story.html"],
     body: [
@@ -155,7 +153,7 @@ export const DETAILS = {
   "sending-a-professional-email": {
     title: "Sending a Professional Email",
     sub: "How do you turn a simple classroom handout into an interactive learning experience?",
-    img: IMG.email, skills: SKILLS_MAIL,
+    img: IMG.email,
     tryIt: "#/project-page/sending-a-professional-email/lesson",
     lesson: ["Sending a Professional Email (Storyline course)", "Sending%20a%20Professional%20Email/story.html"],
     body: [
@@ -235,14 +233,10 @@ export const ALT = {
   "building-a-gemini-notebook": "Rise lesson card titled Studio Panel, explaining what the Gemini Notebook Studio Panel does, over a notebook screenshot",
 };
 
-// Skills parsed from each project's "Skills:" line, with near-duplicates merged so they can be counted.
-const NORM = {
-  "E-Learning Development": "eLearning Development",
-  "Articulate Storyline 360": "Articulate Storyline",
-  "AI-Assisted Learning Design": "AI-Assisted Learning",
-};
+// Each project's skills are listed once (in PROJECTS); cards and case studies both display them.
 PROJECTS.forEach((p) => {
-  p.skillList = p.skills ? p.skills.replace(/^Skills:\s*/, "").split(/,\s*/).map((s) => NORM[s] || s) : [];
+  p.skillList = p.skills;
+  p.skills = "Skills: " + p.skills.join(", ");
 });
 const counts = {};
 PROJECTS.forEach((p) => p.skillList.forEach((s) => (counts[s] = (counts[s] || 0) + 1)));
@@ -268,7 +262,6 @@ DETAILS["turning-payment-research-into-a-gemini-notebook"] = {
   title: "Turning Payment Research Into a Gemini Notebook",
   sub: "What if Gemini Notebook could streamline your business' research phase?",
   heroAlt: "Screenshot of a Gemini Notebook titled Payment Systems, with a source list on the left, a chat comparing Stripe and Braintree pricing formulas in the center, and generated notes on the right",
-  skills: "Skills: Gemini Notebook, Instructional Design, AI-Assisted Learning, Source Curation, Generative AI, Learner-Centered Design, Educational Technology",
   body: [
     ["h2", "The Challenge"],
     ["p", "Researching payment processors can quickly become overwhelming."],
@@ -316,7 +309,6 @@ DETAILS["smartphone-content-creation"] = {
   title: "Smartphone Content Creation: Mastering Framing and Audio",
   sub: "What if your smartphone could become the only content-creation tool you need?",
   heroAlt: "Smartphone camera screen in landscape orientation showing a brown and white dog on a couch, with seven numbered callouts marking the camera controls",
-  skills: "Skills: Articulate Rise 360, Instructional Design, Video Production, Scenario-Based Learning, User-Centered Design, Assessment Design, Learning Experience Design, ADDIE",
   tryIt: "#/project-page/smartphone-content-creation/lesson",
   lesson: ["Smartphone Content Creation (Rise 360 lesson)", "Smartphone%20content%20creation/index.html"], // own page, reachable only via the Try it Yourself buttons
   body: [
@@ -382,7 +374,6 @@ DETAILS["task-monsters"] = {
   title: "Task Monsters",
   sub: "What if your to-do list was a monster?",
   heroAlt: "Task Monsters app start screen with a task input, four battle difficulty cards named Easy, Medium, Hard and Custom, and a pixel-art ghost monster with 400 HP",
-  skills: "Skills: JavaScript, Gamification, Interaction Design, Base44, AI-assisted design, Figma",
   tryIt: "https://task-monsters.base44.app/",
   body: [
     ["h2", "Summary"],
@@ -453,7 +444,6 @@ DETAILS["understanding-stuart-hall-gemini-notebook"] = {
   title: "Understanding Reception Theory Notebook",
   sub: "What if students could have a conversation with the theory instead of just reading about it?",
   heroAlt: "Gemini Notebook titled Understanding Reception Theory, with a source list, a chat explaining why a true-or-false question about Stuart Hall's Encoding/Decoding model is false, and a Communication Flashcards panel",
-  skills: "Skills: Gemini Notebook, Instructional Design, Learning Experience Design, AI-Assisted Learning, Media Literacy, Source Curation, Generative AI, Learner-Centered Design, Educational Technology",
   tryIt: "https://notebook.google.com/notebook/e34b57e2-1097-4182-9f3a-0708175f5843",
   body: [
     ["h2", "Summary"],
@@ -479,7 +469,6 @@ DETAILS["building-a-gemini-notebook"] = {
   tryIt: "https://na-9911.reach360.com/share/course/6588b4ce-5c0b-4b2d-965b-3c339e57dc63",
   title: "Building a Gemini Notebook",
   sub: "A microlearning lesson on setting up a shared Gemini Notebook for team research",
-  skills: PROJECTS.find((p) => p.slug === "building-a-gemini-notebook").skills,
 };
 
 // Images beside the text on desktop; they stack under the text on phones.
@@ -510,3 +499,6 @@ figAfter("turning-shoppers-into-cardholders", "Building the AI customer", ["figs
   F("Storyline results slide showing Status: Pass, Score: 75, and scrolling written feedback, with Try Again and Continue buttons", "The result passed back into Storyline.", "images/shoppers/storyline-feedback.jpg"),
   F("Devlin.ai conversation detail showing a Pass result with a score of 100 out of 120 and feedback on each scoring criterion", "Reviewing a learner's session in Devlin.ai.", "images/shoppers/devlin-score.jpg"),
 ]]);
+
+// Case studies show the same skills as their project card.
+PROJECTS.forEach((p) => { if (p.slug && DETAILS[p.slug]) DETAILS[p.slug].skills = p.skills; });
