@@ -159,7 +159,8 @@ function Home() {
 
 function About() {
   return (
-    <>
+    <div className="home">
+      <DotGrid />
       <section className="wrap sec top">
         <div className="about">
           <div>
@@ -172,7 +173,7 @@ function About() {
       <Entries title="Publications and Presentations" items={PUBLICATIONS} />
       <Entries title="Certifications" items={CERTS} />
       <Entries title="Awards" items={AWARDS} />
-    </>
+    </div>
   );
 }
 
@@ -191,6 +192,8 @@ function ProjectPage() {
   const toggle = (s) => setActive(active === s ? null : s);
   const count = (s) => (SKILL_COUNTS.find(([k]) => k === s) || [0, 0])[1];
   return (
+    <div className="home">
+    <DotGrid />
     <div className="wrap sec top">
       <h1 className="pg">Projects</h1>
       <section className="finder" aria-labelledby="sk-h">
@@ -231,6 +234,7 @@ function ProjectPage() {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 }
