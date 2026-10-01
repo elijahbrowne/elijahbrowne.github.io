@@ -159,8 +159,7 @@ function Home() {
 
 function About() {
   return (
-    <div className="home">
-      <DotGrid />
+    <>
       <section className="wrap sec top">
         <div className="about">
           <div>
@@ -173,7 +172,7 @@ function About() {
       <Entries title="Publications and Presentations" items={PUBLICATIONS} />
       <Entries title="Certifications" items={CERTS} />
       <Entries title="Awards" items={AWARDS} />
-    </div>
+    </>
   );
 }
 
@@ -513,7 +512,7 @@ h2{font-size:clamp(1.6rem,3vw,2.2rem)}
 .card.big{flex-direction:row}
 .card.big img,.card.big .ph{width:45%;aspect-ratio:auto;height:100%;min-height:280px}
 .card.big h3{font-size:1.6rem}
-.finder{margin:2rem 0;padding:1.5rem;border:1px solid var(--line);border-radius:14px}
+.finder{margin:2rem 0;padding:1.5rem;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
 .srch{display:grid;gap:.4rem;font-weight:700;max-width:420px}
 input,textarea{font:inherit;padding:.8rem 1rem;border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%}
 input:focus,textarea:focus{outline:0;border-color:var(--accent)}
