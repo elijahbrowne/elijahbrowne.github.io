@@ -26,7 +26,7 @@ export const PUBLICATIONS = [
   { t: "#SEEDTalks: Election 2024", sub: "SEED Coalition · 2024" },
   { t: "The For-Against-Neutral Assignment", sub: "News Literacy Across the Undergraduate Curriculum/ Bloomsbury Publishing · 2024", href: "https://www.bloomsbury.com/us/news-literacy-across-the-undergraduate-curriculum-9798216172130/" },
   { t: "For-Against-Neutral Assignment", sub: "2024 EDUCAUSE Horizon Report | Teaching and Learning Edition · 2024", href: "https://library.educause.edu/resources/2024/5/2024-educause-horizon-report-teaching-and-learning-edition" },
-  { t: "An Introduction to Urban Soil Contaminants of Concern", sub: "New York Hall of Science · 2025", href: "https://bronxriver.org/resource/an-introduction-to-urban-soil-contaminants-of-concern" },
+  { t: "An Introduction to Urban Soil Contaminants of Concern", sub: "New York Hall of Science · 2018", href: "https://bronxriver.org/resource/an-introduction-to-urban-soil-contaminants-of-concern" },
 ];
 export const CERTS = [
   { t: "How to Conduct a Learning Needs Analysis", sub: "Udemy · 2026", href: "https://www.udemy.com/certificate/UC-2a0d90ba-74b5-49ee-b369-a3f7ab8031a2/" },
