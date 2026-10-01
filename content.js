@@ -433,11 +433,11 @@ DETAILS["task-monsters"] = {
 attach("task-monsters", "Summary", "right", F("Hand-drawn journal sketch titled Task Demon, dated 2.12.2023: a fluffy monster with large round eyes saying meep meep, above a progress bar marked in tens with the word Tasks below", "The original paper Task Demon, 2023.", "images/task-monsters/sketch.jpg"));
 attach("task-monsters", "User Interaction Model", "right", F("Flowchart of the Task Monsters user flow. The user starts a session, identifies a task, and chooses a monster sprite. They choose a Pomodoro length: Easy (15-minute sessions), Medium (25 minutes), Hard (30 minutes), each with a 5-minute short break and 4 cycles, or Custom. The monster appears with the timer, and the user works on the task until the timer is complete. A defeated-monster animation plays, and the user is prompted to start a new task: yes returns to identifying a task, no ends the session.", "The user flow wireframe.", "images/task-monsters/wireframe.png"));
 figAfter("task-monsters", "User Interaction Model", ["p", "[View the wireframe in Figma](https://www.figma.com/board/U3qfmojUac8lUoHbXcLmq7/Task-Monsters?node-id=0-1)"]);
-figAfter("task-monsters", "User Interaction Model", ["figs", [
+figAfter("task-monsters", "User Interaction Model", ["carousel", "Task Monsters screens", [
   { video: "images/task-monsters/demo.mov", alt: "Screen recording of a Task Monsters session: the user enters a task, picks a battle length, and the monster's health drains as the timer counts down", cap: "A battle in progress." },
   F("Task Monsters battle screen for the task Write the case study!, showing a pixel-art ghost at 328 of 400 HP, a 06:50 timer, and Round 1 of 4 marked Focus", "Focus round: the monster loses health as you work.", "images/task-monsters/focus.jpg"),
   F("Task Monsters battle screen during a break, with a blue background, the ghost at 300 of 400 HP, a 04:58 timer, and Round 2 of 4 marked Break", "Break round: the background changes color to signal the switch.", "images/task-monsters/break.jpg"),
-]]);
+], { auto: true }]);
 
 DETAILS["understanding-stuart-hall-gemini-notebook"] = {
   img: IMG.stuartHall,

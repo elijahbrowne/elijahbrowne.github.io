@@ -248,25 +248,39 @@ function Fig({ f }) {
     </figure>
   );
 }
-function Carousel({ label, slides }) {
+function Carousel({ label, slides, auto }) {
   const [i, setI] = useState(0);
-  const go = (d) => setI((i + d + slides.length) % slides.length);
-  const key = (e) => { if (e.key === "ArrowLeft") go(-1); if (e.key === "ArrowRight") go(1); };
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const [playing, setPlaying] = useState(!!auto && !reduce);
+  const [hold, setHold] = useState(false); // paused while hovered or focused
+  const go = (d) => setI((n) => (n + d + slides.length) % slides.length);
   const f = slides[i];
+  // Images advance every 5s; a video slide advances when the video ends.
+  useEffect(() => {
+    if (!playing || hold || f.video) return;
+    const t = setTimeout(() => go(1), 5000);
+    return () => clearTimeout(t);
+  }, [i, playing, hold]);
+  const key = (e) => { if (e.key === "ArrowLeft") go(-1); if (e.key === "ArrowRight") go(1); };
   return (
-    <section className="carousel" aria-roledescription="carousel" aria-label={label} onKeyDown={key}>
-      <div className="car-stage" aria-live="polite">
-        <img src={f.src} alt={f.alt} key={f.src} />
+    <section className="carousel" aria-roledescription="carousel" aria-label={label} onKeyDown={key}
+      onMouseEnter={() => setHold(true)} onMouseLeave={() => setHold(false)}
+      onFocus={() => setHold(true)} onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setHold(false); }}>
+      <div className="car-stage" aria-live={playing ? "off" : "polite"}>
+        {f.video
+          ? <video src={f.video} key={f.video} aria-label={f.alt} muted playsInline autoPlay={playing} controls onEnded={() => playing && go(1)} />
+          : <img src={f.src} alt={f.alt} key={f.src} />}
       </div>
-      {slides.map((s, k) => Math.abs(k - i) === 1 && <link key={s.src} rel="prefetch" href={s.src} />)}
+      {slides.map((s, k) => Math.abs(k - i) === 1 && s.src && <link key={s.src} rel="prefetch" href={s.src} />)}
       <div className="car-bar">
+        {auto && <button type="button" className="icon" onClick={() => setPlaying(!playing)} aria-label={playing ? "Pause slideshow" : "Play slideshow"}>{playing ? "❚❚" : "▶"}</button>}
         <button type="button" className="icon" onClick={() => go(-1)} aria-label="Previous slide">←</button>
         <p className="car-cap"><span>{i + 1} / {slides.length}</span> {f.cap}</p>
         <button type="button" className="icon" onClick={() => go(1)} aria-label="Next slide">→</button>
       </div>
       <div className="car-dots">
         {slides.map((s, k) => (
-          <button type="button" key={s.src} aria-label={`Slide ${k + 1}: ${s.cap}`} aria-current={k === i} onClick={() => setI(k)} />
+          <button type="button" key={s.src || s.video} aria-label={`Slide ${k + 1}: ${s.cap}`} aria-current={k === i} onClick={() => setI(k)} />
         ))}
       </div>
     </section>
@@ -287,7 +301,7 @@ function Block({ b }) {
     </table></div>
   );
   if (t === "fig") return <Fig f={v} />;
-  if (t === "carousel") return <Carousel label={v} slides={w} />;
+  if (t === "carousel") return <Carousel label={v} slides={w} auto={x && x.auto} />;
   if (t === "embed") return (
     <div className="embed">
       <iframe src={w} title={v} loading="lazy" allow="fullscreen" allowFullScreen />
@@ -544,7 +558,8 @@ th{font-family:var(--head);font-weight:500}
 .embed iframe{display:block;width:100%;height:min(80vh,820px);min-height:520px;border:1px solid var(--line);border-radius:14px;background:#fff}
 .embed a{display:inline-block;margin-top:.75rem;font-size:.9rem}
 .car-stage{border:1px solid var(--line);border-radius:12px;overflow:hidden;aspect-ratio:16/9;background:var(--line)}
-.car-stage img{width:100%;height:100%;object-fit:contain;display:block}
+.car-stage img,.car-stage video{width:100%;height:100%;object-fit:contain;display:block;background:#fff}
+.car-bar .icon{font-size:.85rem}
 .car-bar{display:flex;align-items:center;gap:1rem;margin-top:.75rem}
 .car-bar .icon{flex:none;font-size:1.1rem}
 .car-cap{flex:1;margin:0;text-align:center;font-family:var(--mono);font-weight:300;font-size:.85rem;color:var(--mute)}
