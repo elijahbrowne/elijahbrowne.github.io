@@ -23,6 +23,7 @@ export const ABOUT = [
 ];
 
 export const PUBLICATIONS = [
+  { t: "An Introduction to Urban Soil Contaminants of Concern", sub: "Bronx River Alliance · 2025", href: "https://bronxriver.org/resource/an-introduction-to-urban-soil-contaminants-of-concern" },
   { t: "#SEEDTalks: Election 2024", sub: "SEED Coalition · 2024" },
   { t: "The For-Against-Neutral Assignment", sub: "News Literacy Across the Undergraduate Curriculum/ Bloomsbury Publishing · 2024", href: "https://www.bloomsbury.com/us/news-literacy-across-the-undergraduate-curriculum-9798216172130/" },
   { t: "For-Against-Neutral Assignment", sub: "2024 EDUCAUSE Horizon Report | Teaching and Learning Edition · 2024", href: "https://library.educause.edu/resources/2024/5/2024-educause-horizon-report-teaching-and-learning-edition" },
