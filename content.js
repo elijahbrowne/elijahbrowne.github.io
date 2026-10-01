@@ -466,7 +466,6 @@ DETAILS["understanding-stuart-hall-gemini-notebook"] = {
 
 DETAILS["building-a-gemini-notebook"] = {
   embed: ["Building a Gemini Notebook (Rise 360 lesson)", "Building%20a%20Gemini%20Notebook/index.html"], // shown in place of the hero image
-  tryIt: "https://na-9911.reach360.com/share/course/6588b4ce-5c0b-4b2d-965b-3c339e57dc63",
   title: "Building a Gemini Notebook",
   sub: "A microlearning lesson on setting up a shared Gemini Notebook for team research",
 };
