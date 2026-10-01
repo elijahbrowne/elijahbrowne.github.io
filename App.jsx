@@ -303,7 +303,8 @@ function Detail({ slug }) {
   if (!d) return <div className="wrap sec top"><h1 className="pg">Not found</h1><Btn href="#/project-page">Project Page</Btn></div>;
   const alt = d.heroAlt || ALT[slug];
   // Same button under the skills and at the end of the case study; hidden until the page has a link.
-  const tryIt = d.tryIt && <Btn href={d.tryIt} onClick={d.lesson ? () => unlock(slug) : undefined}>Try it Yourself!</Btn>;
+  const tryClick = () => { if (d.lesson) unlock(slug); track("event", "try_it_yourself", { project: d.title }); };
+  const tryIt = d.tryIt && <Btn href={d.tryIt} onClick={tryClick}>Try it Yourself!</Btn>;
   return (
     <div className="top">
       <article className="wrap detail sec">
@@ -353,6 +354,18 @@ const initTheme = () => {
 const Sun = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>;
 const Moon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>;
 
+/* ---------- analytics: one page view per #/ route, plus Try it Yourself clicks ---------- */
+const track = (...args) => { if (window.gtag) window.gtag(...args); };
+const pageName = (parts) => {
+  if (!parts.length) return "Home";
+  if (parts[0] === "about") return "About Me";
+  if (parts[0] !== "project-page") return "Not found";
+  if (!parts[1]) return "Projects";
+  const d = DETAILS[parts[1]];
+  if (!d) return "Not found";
+  return parts[2] === "lesson" ? d.title + " (lesson)" : d.title;
+};
+
 export default function App() {
   const [hash, setHash] = useState(() => location.hash.replace(/^#/, "") || "/");
   const [theme, setTheme] = useState(initTheme);
@@ -367,6 +380,12 @@ export default function App() {
     try { localStorage.setItem("theme", theme); } catch (e) {}
   }, [theme]);
   const parts = hash.split("/").filter(Boolean);
+  useEffect(() => {
+    if (parts[2] === "lesson" && !unlocked(parts[1])) return; // about to redirect to the case study
+    const name = pageName(parts);
+    document.title = name === "Home" ? "Elijah Browne · Instructional Designer" : `${name} · Elijah Browne`;
+    track("event", "page_view", { page_title: name, page_location: location.href, page_path: "/" + parts.join("/") });
+  }, [hash]);
   let page = <Home />;
   if (parts[0] === "about") page = <About />;
   else if (parts[0] === "project-page") page = parts[2] === "lesson" ? <Lesson slug={parts[1]} /> : parts[1] ? <Detail slug={parts[1]} /> : <ProjectPage />;

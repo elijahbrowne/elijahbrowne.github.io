@@ -18,6 +18,14 @@
   }
   </script>
   <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+  <!-- Google Analytics. Page views are sent by App.jsx because the site changes pages via #/ routes. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MJVHQ802M"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-7MJVHQ802M", { send_page_view: false });
+  </script>
 </head>
 <body>
   <div id="root"></div>
