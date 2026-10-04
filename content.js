@@ -16,6 +16,9 @@ export const IMG = {
   smartphone: "images/smartphone/cover.jpg",
 };
 
+// Home page short intro, shown above the "In this portfolio" cards.
+export const INTRO = "I’m an educator and instructional designer with three years of instructional design experience and three years of teaching high school. I design learning that starts with the learner: clear objectives, real-world practice, and technology used with purpose.";
+
 // Home page "In this portfolio" cards.
 export const HIGHLIGHTS = [
   { icon: "🎯", lead: "Scenario-based eLearning", text: "built in Articulate Storyline and Rise, where learners practice real decisions, from customer conversations to workplace email." },

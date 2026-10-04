@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
-  RESUME, EMAIL, LINKEDIN, TAGLINE, IMG, ALT, HIGHLIGHTS, ABOUT, PUBLICATIONS, CERTS, AWARDS,
+  RESUME, EMAIL, LINKEDIN, TAGLINE, IMG, ALT, INTRO, HIGHLIGHTS, ABOUT, PUBLICATIONS, CERTS, AWARDS,
   PROJECTS, RESOURCES, VIDEOS, DETAILS, SKILL_COUNTS,
 } from "./content";
 
@@ -151,6 +151,11 @@ function Home() {
           </div>
         </div>
       </header>
+      <section className="wrap sec">
+        <h2>About me</h2>
+        <p className="intro">{INTRO}</p>
+        <a className="more" href="#/about">More about me</a>
+      </section>
       <section className="wrap sec">
         <h2>In this portfolio, you’ll find examples of:</h2>
         <div className="highlights">
@@ -508,11 +513,12 @@ h2{font-size:clamp(1.6rem,3vw,2.2rem)}
 .btn:disabled{opacity:.6}
 .center{text-align:center;margin-top:2rem}
 .hero-btns{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
-.highlights{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-top:1.5rem}
-.hl{border:1px solid var(--line);border-radius:14px;padding:1.5rem;background:var(--bg);transition:border-color .25s,transform .25s}
+.highlights{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.25rem}
+.intro{max-width:760px;font-size:1.15rem;margin:0 0 .75rem}
+.hl{border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;background:var(--bg);transition:border-color .25s,transform .25s}
 .hl:hover{border-color:var(--accent);transform:translateY(-3px)}
-.hl-i{font-size:1.8rem;line-height:1;display:block;margin-bottom:.75rem}
-.hl p{margin:0;font-size:1.05rem}
+.hl-i{font-size:1.3rem;line-height:1;display:block;margin-bottom:.5rem}
+.hl p{margin:0;font-size:.92rem;line-height:1.5}
 .hl strong{font-family:var(--head);font-weight:500;color:var(--accent)}
 .prose{max-width:760px}.prose p{font-size:1.15rem}
 .pg{font-size:clamp(2rem,5vw,3.2rem)}
@@ -598,7 +604,7 @@ th{font-family:var(--head);font-weight:500}
  .side{grid-template-columns:1fr;gap:1.25rem}.side.left .fig{order:0}.side .fig{position:static}
  .hero-in{grid-template-columns:1fr;gap:2rem}
  .about{grid-template-columns:1fr;gap:1.5rem}
- .highlights{grid-template-columns:1fr}
+ .highlights{grid-template-columns:1fr 1fr}
  .card.big{flex-direction:column}.card.big img,.card.big .ph{width:100%;min-height:0;aspect-ratio:16/9}
  .burger{display:inline-block}
  .nav{flex-wrap:nowrap}
@@ -606,5 +612,6 @@ th{font-family:var(--head);font-weight:500}
  .nav ul{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:.9rem;background:var(--bg);border-bottom:1px solid var(--line);padding:1rem clamp(1rem,4vw,2rem)}
  .nav ul.open{display:flex}
 }
+@media(max-width:520px){.highlights{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 `;
