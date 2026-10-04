@@ -351,6 +351,7 @@ function Detail({ slug }) {
         <h1 className="pg">{d.title}</h1>
         <p className="lead">{d.sub}</p>
         <p className="skills">{d.skills}</p>
+        {!d.embed && tryIt}
         {d.body && <div className="dbody">{d.body.map((b, i) => <Block key={i} b={b} />)}</div>}
         {tryIt && <p>{tryIt}</p>}
       </article>
