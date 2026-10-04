@@ -24,7 +24,7 @@ export const HIGHLIGHTS = [
   { icon: "🎯", lead: "Scenario-based eLearning", text: "built in Articulate Storyline and Rise, where learners practice real decisions, from customer conversations to workplace email." },
   { icon: "🤖", lead: "AI-assisted learning", text: "designed with intention: AI simulations and Gemini Notebooks that keep learners practicing and educators in control." },
   { icon: "🏫", lead: "Classroom-tested curriculum", text: "shaped by years of teaching media literacy, life skills, and financial literacy to real students." },
-  { icon: "🎬", lead: "Video and multimedia", text: "from award-winning documentary editing to instructional videos that make complex ideas clear." },
+  { icon: "🎬", lead: "Video and multimedia", text: "from award-winning documentary editing to video storytelling that brings ideas to life." },
 ];
 
 export const ABOUT = [
@@ -79,8 +79,8 @@ export const DETAILS = {
     title: "Turning Shoppers into Cardholders",
     sub: "An AI-powered sales simulation built in Articulate Storyline and Devlin.ai",
     img: "images/shoppers/sim-complete.jpg", heroAlt: "The finished simulation in the Storyline player: the learner says there's no annual fee, and Belle replies Okay, and the $25 comes off today's purchase if I sign up right now? How do I apply?",
-    tryIt: "#/project-page/turning-shoppers-into-cardholders/lesson",
-    lesson: ["Turning Shoppers into Cardholders (Storyline course)", "Turning%20Shoppers%20into%20Cardholders%20(1)/story.html"],
+    embed: ["Turning Shoppers into Cardholders (Storyline course)", "Turning%20Shoppers%20into%20Cardholders%20(1)/story.html"],
+    tryIt: "top",
     body: [
       ["h2", "Summary"],
       ["p", "I designed and developed an AI-powered sales simulation in Articulate Storyline using Devlin.ai to help retail associates practice realistic customer conversations. The experience moves beyond scripted responses by allowing learners to interact directly with an AI customer, assess the customer’s needs, respond to objections, and determine when to continue or back down from the sale."],
@@ -166,8 +166,8 @@ export const DETAILS = {
     title: "Sending a Professional Email",
     sub: "How do you turn a simple classroom handout into an interactive learning experience?",
     img: IMG.email,
-    tryIt: "#/project-page/sending-a-professional-email/lesson",
-    lesson: ["Sending a Professional Email (Storyline course)", "Sending%20a%20Professional%20Email/story.html"],
+    embed: ["Sending a Professional Email (Storyline course)", "Sending%20a%20Professional%20Email/story.html"],
+    tryIt: "top",
     body: [
       ["h2", "Summary"],
       ["p", "I originally created [Sending a Professional Email](https://na-9911.reach360.com/share/course/866f4f69-02bb-42ca-995f-7638f7d41b33) as a classroom assignment for 10th-grade students who struggled with the basics of writing professional emails. Students commonly omitted subject lines, incorrectly formatted the body of an email, or did not know how to create a professional email signature."],
@@ -321,8 +321,8 @@ DETAILS["smartphone-content-creation"] = {
   title: "Smartphone Content Creation: Mastering Framing and Audio",
   sub: "What if your smartphone could become the only content-creation tool you need?",
   heroAlt: "Smartphone camera screen in landscape orientation showing a brown and white dog on a couch, with seven numbered callouts marking the camera controls",
-  tryIt: "#/project-page/smartphone-content-creation/lesson",
-  lesson: ["Smartphone Content Creation (Rise 360 lesson)", "Smartphone%20content%20creation/index.html"], // own page, reachable only via the Try it Yourself buttons
+  embed: ["Smartphone Content Creation (Rise 360 lesson)", "Smartphone%20content%20creation/index.html"],
+  tryIt: "top",
   body: [
     ["h2", "Summary"],
     ["p", "Smartphones have become powerful content-creation tools, but having access to advanced camera features does not necessarily mean knowing how or when to use them."],
@@ -477,7 +477,7 @@ DETAILS["understanding-stuart-hall-gemini-notebook"] = {
 };
 
 DETAILS["building-a-gemini-notebook"] = {
-  embed: ["Building a Gemini Notebook (Rise 360 lesson)", "Building%20a%20Gemini%20Notebook/index.html"], // shown in place of the hero image
+  embed: ["Building a Gemini Notebook (Rise 360 lesson)", "Building%20a%20Gemini%20Notebook/index.html"],
   title: "Building a Gemini Notebook",
   sub: "A microlearning lesson on setting up a shared Gemini Notebook for team research",
 };

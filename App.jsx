@@ -327,7 +327,7 @@ function Block({ b }) {
   if (t === "embed") return (
     <div className="embed">
       <iframe src={w} title={v} loading="lazy" allow="fullscreen" allowFullScreen />
-      <a href={w} target="_blank" rel="noreferrer">Open the lesson in a new tab</a>
+      <a href={w} target="_blank" rel="noreferrer">Open in a new tab</a>
     </div>
   );
   if (t === "figs") return <div className="figs">{v.map((f, i) => <Fig key={i} f={f} />)}</div>;
@@ -338,9 +338,11 @@ function Detail({ slug }) {
   const d = DETAILS[slug];
   if (!d) return <div className="wrap sec top"><h1 className="pg">Not found</h1><Btn href="#/project-page">Project Page</Btn></div>;
   const alt = d.heroAlt || ALT[slug];
-  // Same button under the skills and at the end of the case study; hidden until the page has a link.
-  const tryClick = () => { if (d.lesson) unlock(slug); track("event", "try_it_yourself", { project: d.title }); };
-  const tryIt = d.tryIt && <Btn href={d.tryIt} onClick={tryClick}>Try it Yourself!</Btn>;
+  // Button at the end of the case study: scrolls back up to the embedded project ("top"), or opens it elsewhere.
+  const tryClick = () => track("event", "try_it_yourself", { project: d.title });
+  const toTop = () => { tryClick(); scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); };
+  const tryIt = d.tryIt === "top" ? <button type="button" className="btn" onClick={toTop}>Try it Yourself!</button>
+    : d.tryIt && <Btn href={d.tryIt} onClick={tryClick}>Try it Yourself!</Btn>;
   return (
     <div className="top">
       <article className="wrap detail sec">
@@ -349,33 +351,9 @@ function Detail({ slug }) {
         <h1 className="pg">{d.title}</h1>
         <p className="lead">{d.sub}</p>
         <p className="skills">{d.skills}</p>
-        {tryIt}
         {d.body && <div className="dbody">{d.body.map((b, i) => <Block key={i} b={b} />)}</div>}
         {tryIt && <p>{tryIt}</p>}
       </article>
-    </div>
-  );
-}
-
-/* ---------- lesson page: header + lesson + footer, opened only from the Try it Yourself button ---------- */
-const lessonKey = (slug) => "lesson:" + slug;
-const unlock = (slug) => { try { sessionStorage.setItem(lessonKey(slug), "1"); } catch (e) {} };
-const unlocked = (slug) => { try { return sessionStorage.getItem(lessonKey(slug)) === "1"; } catch (e) { return false; } };
-function Lesson({ slug }) {
-  const d = DETAILS[slug];
-  const ok = d && d.lesson && unlocked(slug);
-  useEffect(() => {
-    if (!ok) { location.replace("#/project-page/" + slug); return; }
-    const m = document.createElement("meta");
-    m.name = "robots"; m.content = "noindex";
-    document.head.appendChild(m);
-    return () => m.remove();
-  }, [ok]);
-  if (!ok) return null;
-  return (
-    <div className="lesson">
-      <h1 className="sr">{d.lesson[0]}</h1>
-      <iframe src={d.lesson[1]} title={d.lesson[0]} allow="fullscreen" allowFullScreen />
     </div>
   );
 }
@@ -399,7 +377,7 @@ const pageName = (parts) => {
   if (!parts[1]) return "Projects";
   const d = DETAILS[parts[1]];
   if (!d) return "Not found";
-  return parts[2] === "lesson" ? d.title + " (lesson)" : d.title;
+  return d.title;
 };
 
 export default function App() {
@@ -417,14 +395,13 @@ export default function App() {
   }, [theme]);
   const parts = hash.split("/").filter(Boolean);
   useEffect(() => {
-    if (parts[2] === "lesson" && !unlocked(parts[1])) return; // about to redirect to the case study
     const name = pageName(parts);
     document.title = name === "Home" ? "Elijah Browne · Instructional Designer" : `${name} · Elijah Browne`;
     track("event", "page_view", { page_title: name, page_location: location.href, page_path: "/" + parts.join("/") });
   }, [hash]);
   let page = <Home />;
   if (parts[0] === "about") page = <About />;
-  else if (parts[0] === "project-page") page = parts[2] === "lesson" ? <Lesson slug={parts[1]} /> : parts[1] ? <Detail slug={parts[1]} /> : <ProjectPage />;
+  else if (parts[0] === "project-page") page = parts[1] ? <Detail slug={parts[1]} /> : <ProjectPage />;
   return (
     <div className="site">
       <style>{CSS}</style>
@@ -445,6 +422,7 @@ export default function App() {
       </nav>
       <main id="main" tabIndex="-1">{page}</main>
       <footer className="foot">
+        <DotGrid />
         <div className="wrap">
           <h2>Elijah Browne</h2>
           <p>{TAGLINE}</p>
@@ -582,8 +560,6 @@ th{font-family:var(--head);font-weight:500}
 .about{display:grid;grid-template-columns:1.3fr 1fr;gap:3rem;align-items:center}
 .about-i{width:100%;height:auto;border-radius:14px;display:block}
 .carousel{margin:2rem 0;max-width:900px}
-.lesson iframe{display:block;width:100%;height:calc(100svh - 67px);border:0;background:#fff}
-.lesson+.foot,.site:has(.lesson) .foot{margin-top:0}
 .embed{margin:3rem 0}.detail>.embed{margin:0 0 2.5rem}
 .embed iframe{display:block;width:100%;height:min(80vh,820px);min-height:520px;border:1px solid var(--line);border-radius:14px;background:#fff}
 .embed a{display:inline-block;margin-top:.75rem;font-size:.9rem}
@@ -597,7 +573,8 @@ th{font-family:var(--head);font-weight:500}
 .car-dots{display:flex;justify-content:center;gap:.5rem;margin-top:.5rem}
 .car-dots button{width:10px;height:10px;padding:0;border-radius:50%;border:1px solid var(--mute);background:transparent;cursor:pointer}
 .car-dots button[aria-current="true"]{background:var(--accent);border-color:var(--accent)}
-.foot{margin-top:6rem;border-top:1px solid var(--line);padding:4rem 0;text-align:center}
+.foot>.wrap{position:relative;z-index:1}
+.foot{position:relative;overflow:hidden;margin-top:6rem;border-top:1px solid var(--line);padding:4rem 0;text-align:center}
 .foot p{color:var(--mute)}
 .fl{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem}
 @media(max-width:860px){
