@@ -1,6 +1,6 @@
 // Site copy, originally from elijahbrowne.com (spelling fixed Sept 2026).
 export const SITE = "https://www.elijahbrowne.com";
-export const RESUME = "https://drive.google.com/uc?export=download&id=1kk28Ex7qMb1l8cZj__4m-AYTnP616Ils";
+export const RESUME = "Browne_Elijah_Resume.pdf";
 export const EMAIL = "mailto:elijahbrowne48@gmail.com?";
 export const LINKEDIN = "https://www.linkedin.com/in/elijahb0509/";
 export const TAGLINE = "Educator · Instructional Designer";
@@ -15,6 +15,14 @@ export const IMG = {
   taskMonsters: "images/task-monsters/cover.jpg",
   smartphone: "images/smartphone/cover.jpg",
 };
+
+// Home page "In this portfolio" cards.
+export const HIGHLIGHTS = [
+  { icon: "🎯", lead: "Scenario-based eLearning", text: "built in Articulate Storyline and Rise, where learners practice real decisions, from customer conversations to workplace email." },
+  { icon: "🤖", lead: "AI-assisted learning", text: "designed with intention: AI simulations and Gemini Notebooks that keep learners practicing and educators in control." },
+  { icon: "🏫", lead: "Classroom-tested curriculum", text: "shaped by years of teaching media literacy, life skills, and financial literacy to real students." },
+  { icon: "🎬", lead: "Video and multimedia", text: "from award-winning documentary editing to instructional videos that make complex ideas clear." },
+];
 
 export const ABOUT = [
   "I’m an educator and learning experience designer who enjoys bringing together education, technology, and creativity to create meaningful learning experiences.",

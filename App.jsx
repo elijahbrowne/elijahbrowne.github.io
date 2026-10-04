@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
-  RESUME, EMAIL, LINKEDIN, TAGLINE, IMG, ALT, ABOUT, PUBLICATIONS, CERTS, AWARDS,
+  RESUME, EMAIL, LINKEDIN, TAGLINE, IMG, ALT, HIGHLIGHTS, ABOUT, PUBLICATIONS, CERTS, AWARDS,
   PROJECTS, RESOURCES, VIDEOS, DETAILS, SKILL_COUNTS,
 } from "./content";
 
@@ -144,10 +144,24 @@ function Home() {
           </div>
           <div className="hero-r">
             <Img className="hero-i" src={IMG.home} alt={ALT.home} />
-            <Btn href="#/project-page">Portfolio Projects</Btn>
+            <div className="hero-btns">
+              <Btn href="#/project-page">Portfolio Projects</Btn>
+              <a className="btn ghost" href={RESUME} download>Download Resume</a>
+            </div>
           </div>
         </div>
       </header>
+      <section className="wrap sec">
+        <h2>In this portfolio, you’ll find examples of:</h2>
+        <div className="highlights">
+          {HIGHLIGHTS.map((h) => (
+            <div className="hl" key={h.lead}>
+              <span className="hl-i" aria-hidden="true">{h.icon}</span>
+              <p><strong>{h.lead}</strong> {h.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
       <section className="wrap sec">
         <h2>Selected work</h2>
         <div className="grid">{sel.map((p) => <Card key={p.title} p={{ ...p, blurb: undefined, skills: undefined }} />)}</div>
@@ -432,7 +446,7 @@ export default function App() {
           <div className="fl">
             <a href={EMAIL}>Contact Me</a>
             <a href={LINKEDIN} target="_blank" rel="noreferrer">LinkedIn</a>
-            <a href={RESUME}>Resume</a>
+            <a href={RESUME} download>Resume</a>
           </div>
         </div>
       </footer>
@@ -493,6 +507,13 @@ h2{font-size:clamp(1.6rem,3vw,2.2rem)}
 .btn.sm{padding:.4rem 1rem;font-size:.9rem}
 .btn:disabled{opacity:.6}
 .center{text-align:center;margin-top:2rem}
+.hero-btns{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
+.highlights{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;margin-top:1.5rem}
+.hl{border:1px solid var(--line);border-radius:14px;padding:1.5rem;background:var(--bg);transition:border-color .25s,transform .25s}
+.hl:hover{border-color:var(--accent);transform:translateY(-3px)}
+.hl-i{font-size:1.8rem;line-height:1;display:block;margin-bottom:.75rem}
+.hl p{margin:0;font-size:1.05rem}
+.hl strong{font-family:var(--head);font-weight:500;color:var(--accent)}
 .prose{max-width:760px}.prose p{font-size:1.15rem}
 .pg{font-size:clamp(2rem,5vw,3.2rem)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:1.5rem;margin-top:1.5rem}
@@ -577,6 +598,7 @@ th{font-family:var(--head);font-weight:500}
  .side{grid-template-columns:1fr;gap:1.25rem}.side.left .fig{order:0}.side .fig{position:static}
  .hero-in{grid-template-columns:1fr;gap:2rem}
  .about{grid-template-columns:1fr;gap:1.5rem}
+ .highlights{grid-template-columns:1fr}
  .card.big{flex-direction:column}.card.big img,.card.big .ph{width:100%;min-height:0;aspect-ratio:16/9}
  .burger{display:inline-block}
  .nav{flex-wrap:nowrap}
