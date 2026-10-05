@@ -343,8 +343,8 @@ function Detail({ slug }) {
   const toTop = () => { tryClick(); scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); };
   const toStoryboard = () => document.getElementById(d.storyboard)?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   const storyboardBtn = d.storyboard && <button type="button" className="btn ghost" onClick={toStoryboard}>Storyboard</button>;
-  const tryIt = d.tryIt === "top" ? <button type="button" className="btn" onClick={toTop}>Try it Yourself!</button>
-    : d.tryIt && <Btn href={d.tryIt} onClick={tryClick}>Try it Yourself!</Btn>;
+  const tryIt = d.tryIt === "top" ? <button type="button" className="btn" onClick={toTop}>Try It</button>
+    : d.tryIt && <Btn href={d.tryIt} onClick={tryClick}>Try It</Btn>;
   return (
     <div className="top">
       <article className="wrap detail sec">
