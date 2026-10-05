@@ -270,7 +270,7 @@ function Fig({ f }) {
     </figure>
   );
 }
-function Carousel({ label, slides, auto }) {
+function Carousel({ label, slides, auto, id, wide }) {
   const [i, setI] = useState(0);
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const [playing, setPlaying] = useState(!!auto && !reduce);
@@ -285,7 +285,7 @@ function Carousel({ label, slides, auto }) {
   }, [i, playing, hold]);
   const key = (e) => { if (e.key === "ArrowLeft") go(-1); if (e.key === "ArrowRight") go(1); };
   return (
-    <section className="carousel" aria-roledescription="carousel" aria-label={label} onKeyDown={key}
+    <section id={id} className={"carousel" + (wide ? " wide" : "")} aria-roledescription="carousel" aria-label={label} onKeyDown={key}
       onMouseEnter={() => setHold(true)} onMouseLeave={() => setHold(false)}
       onFocus={() => setHold(true)} onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setHold(false); }}>
       <div className="car-stage" aria-live={playing ? "off" : "polite"}>
@@ -297,12 +297,12 @@ function Carousel({ label, slides, auto }) {
       <div className="car-bar">
         {auto && <button type="button" className="icon" onClick={() => setPlaying(!playing)} aria-label={playing ? "Pause slideshow" : "Play slideshow"}>{playing ? "❚❚" : "▶"}</button>}
         <button type="button" className="icon" onClick={() => go(-1)} aria-label="Previous slide">←</button>
-        <p className="car-cap"><span>{i + 1} / {slides.length}</span> {f.cap}</p>
+        <p className="car-cap"><span>{i + 1} / {slides.length}</span> {f.cap || ""}</p>
         <button type="button" className="icon" onClick={() => go(1)} aria-label="Next slide">→</button>
       </div>
       <div className="car-dots">
         {slides.map((s, k) => (
-          <button type="button" key={s.src || s.video} aria-label={`Slide ${k + 1}: ${s.cap}`} aria-current={k === i} onClick={() => setI(k)} />
+          <button type="button" key={s.src || s.video} aria-label={s.cap ? `Slide ${k + 1}: ${s.cap}` : `Slide ${k + 1}`} aria-current={k === i} onClick={() => setI(k)} />
         ))}
       </div>
     </section>
@@ -323,7 +323,7 @@ function Block({ b }) {
     </table></div>
   );
   if (t === "fig") return <Fig f={v} />;
-  if (t === "carousel") return <Carousel label={v} slides={w} auto={x && x.auto} />;
+  if (t === "carousel") return <Carousel label={v} slides={w} {...(x || {})} />;
   if (t === "embed") return (
     <div className="embed">
       <iframe src={w} title={v} loading="lazy" allow="fullscreen" allowFullScreen />
@@ -341,6 +341,8 @@ function Detail({ slug }) {
   // Button at the end of the case study: scrolls back up to the embedded project ("top"), or opens it elsewhere.
   const tryClick = () => track("event", "try_it_yourself", { project: d.title });
   const toTop = () => { tryClick(); scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); };
+  const toStoryboard = () => document.getElementById(d.storyboard)?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  const storyboardBtn = d.storyboard && <button type="button" className="btn ghost" onClick={toStoryboard}>Storyboard</button>;
   const tryIt = d.tryIt === "top" ? <button type="button" className="btn" onClick={toTop}>Try it Yourself!</button>
     : d.tryIt && <Btn href={d.tryIt} onClick={tryClick}>Try it Yourself!</Btn>;
   return (
@@ -351,9 +353,9 @@ function Detail({ slug }) {
         <h1 className="pg">{d.title}</h1>
         <p className="lead">{d.sub}</p>
         <p className="skills">{d.skills}</p>
-        {!d.embed && tryIt}
+        {!d.embed && tryIt && <div className="btn-row">{tryIt}{storyboardBtn}</div>}
         {d.body && <div className="dbody">{d.body.map((b, i) => <Block key={i} b={b} />)}</div>}
-        {tryIt && <p>{tryIt}</p>}
+        {tryIt && <div className="btn-row">{tryIt}{storyboardBtn}</div>}
       </article>
     </div>
   );
@@ -560,7 +562,9 @@ th{font-family:var(--head);font-weight:500}
 .dhero.ph{min-height:280px}
 .about{display:grid;grid-template-columns:1.3fr 1fr;gap:3rem;align-items:center}
 .about-i{width:100%;height:auto;border-radius:14px;display:block}
-.carousel{margin:2rem 0;max-width:900px}
+.carousel{margin:2rem 0;max-width:900px;scroll-margin-top:6rem}
+.carousel.wide{max-width:none}
+.btn-row{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
 .embed{margin:3rem 0}.detail>.embed{margin:0 0 2.5rem}
 .embed iframe{display:block;width:100%;height:min(80vh,820px);min-height:520px;border:1px solid var(--line);border-radius:14px;background:#fff}
 .embed a{display:inline-block;margin-top:.75rem;font-size:.9rem}

@@ -81,6 +81,7 @@ export const DETAILS = {
     img: "images/shoppers/sim-complete.jpg", heroAlt: "The finished simulation in the Storyline player: the learner says there's no annual fee, and Belle replies Okay, and the $25 comes off today's purchase if I sign up right now? How do I apply?",
     embed: ["Turning Shoppers into Cardholders (Storyline course)", "Turning%20Shoppers%20into%20Cardholders%20(1)/story.html"],
     tryIt: "top",
+    storyboard: "storyboard",
     body: [
       ["h2", "Summary"],
       ["p", "I designed and developed an AI-powered sales simulation in Articulate Storyline using Devlin.ai to help retail associates practice realistic customer conversations. The experience moves beyond scripted responses by allowing learners to interact directly with an AI customer, assess the customer’s needs, respond to objections, and determine when to continue or back down from the sale."],
@@ -492,17 +493,11 @@ figAfter("sending-a-professional-email", "Scenario-Based Assessment", ["figs", [
   F("Articulate Storyline editing the Anatomy of an Email slide, with a hotspot over each section of the email and the hover triggers listed on the right", "Behind the scenes: hotspots and hover triggers.", "images/email/storyline-hotspots.jpg"),
   F("Articulate Storyline showing the base layer of the To, CC and BCC slide with the timeline of buttons below", "Behind the scenes: the button layers on the timeline.", "images/email/storyline-buttons.jpg"),
 ]]);
-figAfter("turning-shoppers-into-cardholders", "Summary", ["carousel", "Course slides", [
-  F("Title slide reading Broadlane: Turning Shoppers into Cardholders, beside a photo of a cashier bagging groceries at a checkout", "Title slide", "images/shoppers/slide-1.jpg"),
-  F("Purpose slide: associates are expected to sell at least 2 Broadlane Preferred Cards per day, followed by six lesson objectives", "Purpose and objectives", "images/shoppers/slide-2.jpg"),
-  F("Slide titled What is the Broadlane Preferred Card?, listing $25 off when you sign up, cash back, exclusive coupons, special sales and no annual fee, beside a red Broadlane card", "The product", "images/shoppers/slide-3.jpg"),
-  F("Slide titled Anatomy of a Good Checkout: five arrows reading Assess, Rapport, Position, Objections and Close", "Anatomy of a good checkout", "images/shoppers/slide-4.jpg"),
-  F("Slide titled Assessing the Customer with three cards: Big Ticket Items, Full Cart and Quick Trip, each with a motivation and a strategy", "Assessing the customer", "images/shoppers/slide-5.jpg"),
-  F("Slide titled Rapport First, Pitch Second: Talk to the customer, not at them. An Engage column (notice, ask, listen) points to a Pivot column (connect the purchase to a benefit, make it relevant)", "Rapport first, pitch second", "images/shoppers/slide-6.jpg"),
-  F("Slide titled Handling Objections with five tabs: Price/Value, Lack-of-Need, Lack-of-Urgency, Trust/Information and Resistance/Trust. Trust/Information is selected", "Handling objections", "images/shoppers/slide-7.jpg"),
-  F("Slide titled 4P's of Pushback: a loop of Pause, Probe, Paraphrase and Provide around the words The Objection Loop", "The 4Ps of pushback", "images/shoppers/slide-8.jpg"),
-  F("Slide titled When to Sell the Card and When to Back Down: a traffic light with Proceed, Pivot and Stop, each paired with customer signals and an action", "When to back down", "images/shoppers/slide-9.jpg"),
-]]);
+// Storyboard: its own section after the Summary; the "Storyboard" button jumps here.
+figAfter("turning-shoppers-into-cardholders", "Summary", ["h2", "Storyboard"]);
+figAfter("turning-shoppers-into-cardholders", "Storyboard", ["carousel", "Storyboard",
+  Array.from({ length: 12 }, (_, i) => ({ src: `images/shoppers/storyboard/${i + 1}.jpg`, alt: `Storyboard page ${i + 1} of 12` })),
+  { id: "storyboard", wide: true }]);
 attach("turning-shoppers-into-cardholders", "Why Use an AI Simulation?", "right", F("The simulation in Storyline: Belle says I'm just grabbing a few things today, and the learner types Did you find everything ok? into a chat box, with a Help button below", "The learner types what they would actually say.", "images/shoppers/sim-chat.jpg"));
 attach("turning-shoppers-into-cardholders", "In-Simulation Support", "right", F("Help panel from the simulation showing the customer Belle, a frequent shopper with $400 of gardening supplies in checkout, and a five-step process: Assess, Rapport, Position, Objections, Close", "The Help panel, available without leaving the conversation.", "images/shoppers/help-panel.jpg"));
 figAfter("turning-shoppers-into-cardholders", "Building the AI customer", ["figs", [
