@@ -169,6 +169,7 @@ export const DETAILS = {
     img: IMG.email,
     embed: ["Sending a Professional Email (Storyline course)", "Sending%20a%20Professional%20Email/story.html"],
     tryIt: "top",
+    storyboard: "storyboard",
     body: [
       ["h2", "Summary"],
       ["p", "I originally created [Sending a Professional Email](https://na-9911.reach360.com/share/course/866f4f69-02bb-42ca-995f-7638f7d41b33) as a classroom assignment for 10th-grade students who struggled with the basics of writing professional emails. Students commonly omitted subject lines, incorrectly formatted the body of an email, or did not know how to create a professional email signature."],
@@ -489,6 +490,11 @@ attach("sending-a-professional-email", "Exploring the Anatomy of an Email", "rig
 attach("sending-a-professional-email", "Keeping Slides Focused", "left", F("Articulate Storyline editing the To, CC and BCC slide: a phone showing an email, three buttons, and the text for the To field, with the triggers and slide layers panels on the right", "Each button reveals its own layer instead of putting all the text on the slide at once.", "images/email/to-cc-bcc.jpg"));
 attach("sending-a-professional-email", "Teaching Technical Processes", "right", F("Course video slide showing Gmail settings where an email signature is created, with a closed caption at the bottom", "The signature walkthrough video, with closed captions.", "images/email/signature-video.jpg"));
 attach("sending-a-professional-email", "Scenario-Based Assessment", "left", F("Course question slide asking which information would normally be appropriate for a professional email signature, with four multiple-choice options", null, "images/email/question.jpg"));
+// Storyboard: its own section after the Summary; the "Storyboard" button jumps here.
+figAfter("sending-a-professional-email", "Summary", ["h2", "Storyboard"]);
+figAfter("sending-a-professional-email", "Storyboard", ["carousel", "Storyboard",
+  Array.from({ length: 10 }, (_, i) => ({ src: `images/email/storyboard/${i + 1}.jpg`, alt: `Storyboard page ${i + 1} of 10` })),
+  { id: "storyboard", wide: true }]);
 figAfter("sending-a-professional-email", "Scenario-Based Assessment", ["figs", [
   F("Articulate Storyline editing the Anatomy of an Email slide, with a hotspot over each section of the email and the hover triggers listed on the right", "Behind the scenes: hotspots and hover triggers.", "images/email/storyline-hotspots.jpg"),
   F("Articulate Storyline showing the base layer of the To, CC and BCC slide with the timeline of buttons below", "Behind the scenes: the button layers on the timeline.", "images/email/storyline-buttons.jpg"),
