@@ -563,7 +563,7 @@ th{font-family:var(--head);font-weight:500}
 .about{display:grid;grid-template-columns:1.3fr 1fr;gap:3rem;align-items:center}
 .about-i{width:100%;height:auto;border-radius:14px;display:block}
 .carousel{margin:2rem 0;max-width:900px;scroll-margin-top:6rem}
-.carousel.wide{max-width:none}
+.carousel.wide{max-width:min(100%,calc((100svh - 12rem) * 16 / 9));margin-left:auto;margin-right:auto} /* whole slide plus the arrows fit on screen */
 .btn-row{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
 .embed{margin:3rem 0}.detail>.embed{margin:0 0 2.5rem}
 .embed iframe{display:block;width:100%;height:min(80vh,820px);min-height:520px;border:1px solid var(--line);border-radius:14px;background:#fff}
