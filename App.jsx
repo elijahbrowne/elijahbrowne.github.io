@@ -496,8 +496,7 @@ h2{font-size:clamp(1.6rem,3vw,2.2rem)}
 .hero-btns{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
 .highlights{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.25rem}
 .intro{max-width:760px;font-size:1.15rem;margin:0 0 .75rem}
-.hl{border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;background:var(--bg);transition:border-color .25s,transform .25s}
-.hl:hover{border-color:var(--accent);transform:translateY(-3px)}
+.hl{border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;background:var(--bg)}
 .hl-i{font-size:1.3rem;line-height:1;display:block;margin-bottom:.5rem}
 .hl p{margin:0;font-size:.92rem;line-height:1.5}
 .hl strong{font-family:var(--head);font-weight:500;color:var(--accent)}
