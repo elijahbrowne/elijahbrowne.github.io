@@ -156,7 +156,7 @@ function Home() {
         <p className="intro">{INTRO}</p>
         <a className="more" href="#/about">More about me</a>
       </section>
-      <section className="wrap sec">
+      <section className="wrap sec tight">
         <h2>In this portfolio, you’ll find examples of:</h2>
         <div className="highlights">
           {HIGHLIGHTS.map((h) => (
@@ -460,6 +460,7 @@ main:focus{outline:0}
 .site a[href^="#"]:not(.brand):hover::after{transform:translateX(3px)}
 .wrap{max-width:1120px;margin:0 auto;padding:0 clamp(1rem,4vw,2rem)}
 .sec{padding-top:4.5rem;padding-bottom:1rem}
+.sec.tight{padding-top:2rem}
 .top{padding-top:3rem}
 h1,h2,h3,.brand{font-family:var(--head);font-weight:500}
 h1,h2,h3{line-height:1.15;margin:0 0 1rem}
