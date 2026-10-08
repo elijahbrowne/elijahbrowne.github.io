@@ -239,7 +239,7 @@ export const DETAILS = {
 export const ALT = {
   home: "Portrait of Elijah Browne",
   "turning-shoppers-into-cardholders": "Title slide reading Broadlane: Turning Shoppers into Cardholders, beside a photo of a cashier bagging groceries at a checkout",
-  "sending-a-professional-email": "Title slide of the Sending a Professional Email course in the Storyline player, with the course menu on the left",
+  "sending-a-professional-email": "Title slide reading Sending a Professional Email, beside an illustration of a desktop computer with a keyboard and mouse",
   "turning-payment-research-into-a-gemini-notebook": "Gemini Notebook titled Payment Systems, with a source list on the left and a chat breaking down the Stripe and Braintree price formulas",
   "understanding-stuart-hall-gemini-notebook": "Gemini Notebook titled Understanding Reception Theory, with sources, a chat explaining a flashcard answer, and a Communication Flashcards panel",
   "task-monsters": "Task Monsters start screen with a task input, battle difficulty choices and a pixel-art ghost with 400 HP",
