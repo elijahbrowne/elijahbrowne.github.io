@@ -132,7 +132,7 @@ function Card({ p, big }) {
 /* ---------- pages ---------- */
 function Home() {
   const [n, caret] = useTyping();
-  const sel = [PROJECTS[0], PROJECTS[1], PROJECTS[6]];
+  const sel = ["turning-shoppers-into-cardholders", "patient-information-confidentiality-policy-review", "smartphone-content-creation"].map((s) => PROJECTS.find((p) => p.slug === s));
   return (
     <div className="home">
       <DotGrid />
@@ -341,8 +341,11 @@ function Detail({ slug }) {
   // Button at the end of the case study: scrolls back up to the embedded project ("top"), or opens it elsewhere.
   const tryClick = () => track("event", "try_it_yourself", { project: d.title });
   const toTop = () => { tryClick(); scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); };
-  const toStoryboard = () => document.getElementById(d.storyboard)?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-  const storyboardBtn = d.storyboard && <button type="button" className="btn ghost" onClick={toStoryboard}>Storyboard</button>;
+  const jump = (id) => document.getElementById(id)?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  const storyboardBtn = <>
+    {d.storyboard && <button type="button" className="btn ghost" onClick={() => jump(d.storyboard)}>Storyboard</button>}
+    {d.slides && <button type="button" className="btn ghost" onClick={() => jump(d.slides)}>Slide Deck</button>}
+  </>;
   const tryIt = d.tryIt === "top" ? <button type="button" className="btn" onClick={toTop}>Try It</button>
     : d.tryIt && <Btn href={d.tryIt} onClick={tryClick}>Try It</Btn>;
   return (

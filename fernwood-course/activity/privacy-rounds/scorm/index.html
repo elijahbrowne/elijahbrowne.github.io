@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patient Privacy Rounds (SCORM launcher)</title>
+
+<!--
+  This page is the whole SCORM package, apart from the manifest.
+  It does three things and nothing else:
+
+    1. finds the LMS's SCORM API,
+    2. shows the real course in an iframe (the URL comes from config.js),
+    3. turns messages from that course into SCORM calls.
+
+  Because the course itself lives at a URL you control, you can edit it
+  any time and every LMS that has this package picks up the change on
+  the next launch. No re-upload.
+-->
+
+<script>
+  // Pick the config file before anything else runs.
+  // ?local=1 is for the automated rehearsal rig in ../test-harness/.
+  (function () {
+    var useLocal = /[?&]local=1(&|$)/.test(window.location.search);
+    document.write('<scr' + 'ipt src="' + (useLocal ? 'config.local.js' : 'config.js') + '"><\/scr' + 'ipt>');
+  }());
+</script>
+
+<style>
+  html,body{margin:0;padding:0;height:100%}
+  body{
+    background:#2f2a26;
+    color:#fcfaf4;
+    font:13px/1.4 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    display:flex;
+    flex-direction:column;
+  }
+  #course-frame{
+    flex:1 1 auto;
+    width:100%;
+    border:0;
+    display:block;
+    background:#fcfaf4;
+  }
+  #status{
+    flex:0 0 auto;
+    display:flex;
+    gap:18px;
+    align-items:center;
+    flex-wrap:wrap;
+    padding:8px 14px;
+    background:#241f1c;
+    border-top:2px solid #9a5a3c;
+  }
+  #status b{font-weight:700}
+  .dot{
+    display:inline-block;
+    width:9px;height:9px;
+    border-radius:50%;
+    background:#8c3626;
+    margin-right:6px;
+    vertical-align:middle;
+  }
+  .dot.on{background:#52b07a}
+  #last{
+    font-family:Consolas,"SF Mono",Menlo,monospace;
+    color:#e8c99a;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    max-width:60ch;
+  }
+  #ver{margin-left:auto;color:#8a8177}
+  .diag{font-size:11px;color:#6b645c}
+  #fallback{padding:20px;color:#fcfaf4}
+  #fallback a{color:#e8c99a}
+</style>
+</head>
+<body>
+
+<iframe id="course-frame" title="Patient Privacy Rounds" allowfullscreen></iframe>
+
+<div id="status" role="status" aria-live="polite">
+  <span><span class="dot" id="dot"></span>Connected to LMS: <b id="conn">checking&hellip;</b></span>
+  <span>Standard: <b id="std">&mdash;</b></span>
+  <span>Last call: <span id="last">&mdash;</span></span>
+  <span class="diag" id="diag" title="For support triage: how this page was framed.">&mdash;</span>
+  <span id="ver">shell 1.0</span>
+</div>
+
+<script>
+/* ==================================================================
+   1. FIND THE LMS API
+
+   Hardened the same way as the Courageous Conversations launcher: a
+   plain parent walk misses an LMS that opens the SCO in its own window
+   (Absorb can do this), and stopping at the first cross-origin frame
+   misses everything above it. See README "Good to know".
+   ================================================================== */
+
+var API      = null;   // the SCORM 1.2 API object, if we find one
+var API2004  = null;   // the SCORM 2004 API object, if we find one
+var VERSION  = null;   // "1.2" | "2004" | null
+var started  = false;  // did Initialize succeed?
+var interactionCount = 0;
+
+// Course events that arrive before the LMS API is ready (discovery is
+// still polling, or Initialize has not returned yet) are queued here
+// instead of dropped, and replayed in order the moment the attempt
+// starts (section 4). Declared here, ahead of `attemptDiscovery()`,
+// because a fake/instant LMS can resolve on the very first synchronous
+// discovery pass, before section 4 below would otherwise have run.
+var pendingCourseEvents = [];
+
+var DISCOVER_DEPTH    = 20;   // levels of `parent` to climb
+var SEARCH_TIMEOUT_MS = 10000; // give up and call it standalone after this long
+var SEARCH_EVERY_MS   = 250;   // how often to look again while waiting
+
+// Walk one window's own `parent` chain, up to `depth` levels. A
+// cross-origin parent throws on the property read -- that is not the
+// end of the chain, `parent` itself is always readable, so keep
+// climbing past it instead of stopping.
+function climbParents(win, prop, depth) {
+  var current = win;
+  var i, next;
+  for (i = 0; i < depth && current; i++) {
+    try {
+      if (current[prop]) { return current[prop]; }
+    } catch (e) {
+      // Cross-origin: cannot read this one, can still climb past it.
+    }
+    next = null;
+    try { next = current.parent; } catch (e) { break; }
+    if (!next || next === current) { break; }
+    current = next;
+  }
+  return null;
+}
+
+// Look for one property name: this window's own parent chain first,
+// then -- if something opened this window, which is how an LMS can
+// launch a SCO in a new window -- the opener's parent chain too. The
+// opener is often itself a frame inside the LMS shell, so its own
+// chain matters, not just `opener` by itself.
+function findApi(prop) {
+  var found = climbParents(window, prop, DISCOVER_DEPTH);
+  if (found) { return found; }
+
+  var opener = null;
+  try { if (window.opener && !window.opener.closed) { opener = window.opener; } } catch (e) {}
+  if (opener) {
+    found = climbParents(opener, prop, DISCOVER_DEPTH);
+    if (found) { return found; }
+  }
+  return null;
+}
+
+// One discovery pass. 2004 first, so a dual-standard LMS gets the
+// richer data model. Returns true the moment either is found.
+function discoverAPI() {
+  var found = findApi("API_1484_11");
+  if (found) { API2004 = found; VERSION = "2004"; return true; }
+  found = findApi("API");
+  if (found) { API = found; VERSION = "1.2"; return true; }
+  return false;
+}
+
+/* ==================================================================
+   2. THIN WRAPPER OVER THE TWO STANDARDS
+   ================================================================== */
+
+var lastCallEl = document.getElementById("last");
+var callLog = [];
+
+function note(text) {
+  callLog.push(text);
+  lastCallEl.textContent = text;
+  lastCallEl.title = text;
+}
+
+function initialize() {
+  if (VERSION === "2004") {
+    var r = API2004.Initialize("");
+    note('Initialize("") -> ' + r);
+    started = (String(r) === "true");
+  } else if (VERSION === "1.2") {
+    var r12 = API.LMSInitialize("");
+    note('LMSInitialize("") -> ' + r12);
+    started = (String(r12) === "true");
+  }
+  return started;
+}
+
+function getValue(name) {
+  if (!started) { return ""; }
+  var r;
+  if (VERSION === "2004") {
+    r = API2004.GetValue(name);
+    note('GetValue("' + name + '") -> "' + r + '"');
+  } else {
+    r = API.LMSGetValue(name);
+    note('LMSGetValue("' + name + '") -> "' + r + '"');
+  }
+  return r == null ? "" : String(r);
+}
+
+function setValue(name, value) {
+  if (!started) { return "false"; }
+  var r;
+  if (VERSION === "2004") {
+    r = API2004.SetValue(name, String(value));
+    note('SetValue("' + name + '", "' + value + '") -> ' + r);
+  } else {
+    r = API.LMSSetValue(name, String(value));
+    note('LMSSetValue("' + name + '", "' + value + '") -> ' + r);
+  }
+  return r;
+}
+
+function commit() {
+  if (!started) { return "false"; }
+  var r;
+  if (VERSION === "2004") {
+    r = API2004.Commit("");
+    note('Commit("") -> ' + r);
+  } else {
+    r = API.LMSCommit("");
+    note('LMSCommit("") -> ' + r);
+  }
+  return r;
+}
+
+var finished = false;
+function finish() {
+  if (!started || finished) { return; }
+  finished = true;
+  if (VERSION === "2004") {
+    note('Terminate("") -> ' + API2004.Terminate(""));
+  } else {
+    note('LMSFinish("") -> ' + API.LMSFinish(""));
+  }
+}
+
+/* SCORM 1.2 wants HH:MM:SS(.SS); SCORM 2004 wants an ISO timestamp. */
+function nowTime12() {
+  var d = new Date();
+  function p(n) { return (n < 10 ? "0" : "") + n; }
+  return p(d.getHours()) + ":" + p(d.getMinutes()) + ":" + p(d.getSeconds());
+}
+function nowTime2004() {
+  return new Date().toISOString().replace(/\.\d{3}Z$/, "");
+}
+
+/* ==================================================================
+   3. START UP
+   ================================================================== */
+
+var connEl = document.getElementById("conn");
+var stdEl  = document.getElementById("std");
+var dotEl  = document.getElementById("dot");
+var diagEl = document.getElementById("diag");
+
+// Where is this page actually running? Read once and shown small in the
+// status strip -- the one fact a support call cannot look up any other
+// way, because the person on the phone is looking at the LMS, not a
+// console.
+(function renderDiagnostics() {
+  var ancestorsLen = 0;
+  try { ancestorsLen = (window.location.ancestorOrigins && window.location.ancestorOrigins.length) || 0; } catch (e) {}
+  var referrerHost = "none";
+  try { referrerHost = document.referrer ? new URL(document.referrer).host : "none"; } catch (e) { referrerHost = "unreadable"; }
+  var hasOpener = false;
+  try { hasOpener = !!(window.opener && !window.opener.closed); } catch (e) {}
+  diagEl.textContent = "ancestors " + ancestorsLen + " · referrer " + referrerHost + " · opener " + (hasOpener ? "yes" : "no");
+}());
+
+/* ------------------------------------------------------------------
+   Who is taking this? The LMS already knows, so ask it once and hand
+   the answer to the course. Two ways, because the timing differs:
+
+     - as ?learner_id=/?learner_name= on the iframe's own URL, when the
+       LMS answered before the frame was pointed anywhere (the usual
+       case), so the course's very first recorded row already has it;
+     - as a { type:'shell', event:'learner' } message once the frame has
+       loaded, for an LMS that attaches late and is only readable after
+       the course is already on screen.
+
+   A name next to click data is personal data. The shell only passes on
+   what the LMS already holds; it invents nothing and stores nothing.
+   ------------------------------------------------------------------ */
+var learner = { id: "", name: "" };
+var frameLoaded = false;
+
+function readLearner() {
+  try {
+    if (VERSION === "2004") {
+      learner.id = getValue("cmi.learner_id");
+      learner.name = getValue("cmi.learner_name");
+    } else if (VERSION === "1.2") {
+      learner.id = getValue("cmi.core.student_id");
+      learner.name = getValue("cmi.core.student_name");
+    }
+  } catch (e) {
+    /* An LMS is allowed to refuse these; the course simply stays anonymous. */
+  }
+}
+
+function learnerQueryString() {
+  var parts = [];
+  if (learner.id) { parts.push("learner_id=" + encodeURIComponent(learner.id)); }
+  if (learner.name) { parts.push("learner_name=" + encodeURIComponent(learner.name)); }
+  if (!parts.length) { return ""; }
+  return parts.join("&");
+}
+
+function postLearnerToCourse() {
+  if (!frameLoaded || !learner.id && !learner.name) { return; }
+  var f = document.getElementById("course-frame");
+  if (!f || !f.contentWindow) { return; }
+  try {
+    f.contentWindow.postMessage({
+      type: "shell",
+      event: "learner",
+      data: { id: learner.id, name: learner.name }
+    }, "*");
+  } catch (e) {
+    /* Not being able to tell the course who it is never breaks the course. */
+  }
+}
+
+// Mark the attempt as started.
+function markAttemptStarted() {
+  if (VERSION === "2004") {
+    setValue("cmi.completion_status", "incomplete");
+    setValue("cmi.success_status", "unknown");
+  } else {
+    setValue("cmi.core.lesson_status", "incomplete");
+  }
+  commit();
+}
+
+// Look for the LMS API right away, then keep looking every 250ms for up
+// to 10s before concluding there is none. Some LMS players (and a SCO
+// opened in a new window) attach the API a beat after this page starts
+// loading, so a single synchronous check at load is the fragile part.
+// Initialize the moment it is found, and replay any course events that
+// arrived while we were still looking (see section 4).
+var searchStartedAt = Date.now();
+
+function attemptDiscovery() {
+  if (discoverAPI()) {
+    initialize();
+    connEl.textContent = started ? "yes" : "found, but Initialize failed";
+    stdEl.textContent  = VERSION === "2004" ? "SCORM 2004" : "SCORM 1.2";
+    if (started) {
+      dotEl.className = "dot on";
+      readLearner();
+      markAttemptStarted();
+      flushPendingCourseEvents();
+      postLearnerToCourse();
+    }
+    return;
+  }
+  if (Date.now() - searchStartedAt < SEARCH_TIMEOUT_MS) {
+    window.setTimeout(attemptDiscovery, SEARCH_EVERY_MS);
+    return;
+  }
+  connEl.textContent = "no (running outside an LMS)";
+  stdEl.textContent  = "none";
+  note("no SCORM API found after polling for " + (SEARCH_TIMEOUT_MS / 1000) + "s");
+}
+
+attemptDiscovery();
+
+// Point the iframe at the hosted course.
+var COURSE_URL = (typeof window.COURSE_URL === "string" && window.COURSE_URL) ? window.COURSE_URL : "";
+var frame = document.getElementById("course-frame");
+
+if (!COURSE_URL || COURSE_URL.indexOf("REPLACE_WITH") === 0) {
+  frame.remove();
+  var f = document.createElement("div");
+  f.id = "fallback";
+  f.innerHTML = "<h2>COURSE_URL is not set</h2>" +
+    "<p>Open <code>config.js</code> in this package and set " +
+    "<code>window.COURSE_URL</code> to the address of your hosted course, " +
+    "for example <code>https://your-site.netlify.app/index.html</code>.</p>";
+  document.body.insertBefore(f, document.getElementById("status"));
+} else {
+  frame.addEventListener("load", function () {
+    frameLoaded = true;
+    postLearnerToCourse();
+  }, false);
+
+  // If the LMS answered on the first synchronous discovery pass - which is
+  // the common case - the learner is already known here, so it travels in
+  // the URL and the course has it before it records anything.
+  var qs = learnerQueryString();
+  frame.src = qs ? (COURSE_URL + (COURSE_URL.indexOf("?") === -1 ? "?" : "&") + qs) : COURSE_URL;
+}
+
+// Which origins we trust course messages from. Rehearsal (?local=1) and
+// a file/relative COURSE_URL cannot be checked against event.origin the
+// normal way -- a file:// frame's postMessage origin is often "null" --
+// so both are treated as local and allowed from any origin. A real
+// hosted course is pinned to its own origin.
+var useLocal = /[?&]local=1(&|$)/.test(window.location.search);
+var courseOrigin = null;
+if (!useLocal && COURSE_URL && /^https?:\/\//i.test(COURSE_URL)) {
+  try { courseOrigin = new URL(COURSE_URL, window.location.href).origin; } catch (e) { courseOrigin = null; }
+}
+
+/* ==================================================================
+   4. LISTEN TO THE COURSE AND TRANSLATE INTO SCORM
+   ================================================================== */
+
+// A slow-attaching LMS should not lose the "started" note or an early
+// screen/answer that fired while this shell was still looking; see
+// `pendingCourseEvents` above (section 1) and `flushPendingCourseEvents`
+// below.
+
+function processCourseMessage(msg) {
+  var data = msg.data || {};
+
+  if (msg.event === "started") {
+    // The course is alive. Nothing extra to record; the attempt is
+    // already marked incomplete above.
+    note("course started (" + (data.version || "?") + ")");
+    return;
+  }
+
+  if (msg.event === "screen") {
+    // Where the learner is, so a resume can send them back here.
+    if (VERSION === "2004") {
+      setValue("cmi.location", data.id);
+    } else {
+      setValue("cmi.core.lesson_location", data.id);
+    }
+    return;
+  }
+
+  if (msg.event === "answer") {
+    var n = interactionCount++;
+    if (VERSION === "2004") {
+      setValue("cmi.interactions." + n + ".id", data.id);
+      setValue("cmi.interactions." + n + ".type", "choice");
+      setValue("cmi.interactions." + n + ".learner_response", data.choice);
+      setValue("cmi.interactions." + n + ".result", data.correct ? "correct" : "incorrect");
+      setValue("cmi.interactions." + n + ".timestamp", nowTime2004());
+    } else {
+      setValue("cmi.interactions." + n + ".id", data.id);
+      setValue("cmi.interactions." + n + ".type", "choice");
+      setValue("cmi.interactions." + n + ".student_response", data.choice);
+      setValue("cmi.interactions." + n + ".result", data.correct ? "correct" : "wrong");
+      setValue("cmi.interactions." + n + ".time", nowTime12());
+    }
+    commit();
+    return;
+  }
+
+  if (msg.event === "completed") {
+    var score = Number(data.score) || 0;
+    var passed = score >= 70;               // mastery score, matches the manifest
+
+    if (VERSION === "2004") {
+      setValue("cmi.score.raw", score);
+      setValue("cmi.score.min", 0);
+      setValue("cmi.score.max", 100);
+      setValue("cmi.score.scaled", (score / 100).toFixed(2));
+      setValue("cmi.completion_status", "completed");
+      setValue("cmi.success_status", passed ? "passed" : "failed");
+    } else {
+      setValue("cmi.core.score.raw", score);
+      setValue("cmi.core.score.min", 0);
+      setValue("cmi.core.score.max", 100);
+      setValue("cmi.core.lesson_status", passed ? "passed" : "completed");
+    }
+    commit();
+    return;
+  }
+}
+
+function flushPendingCourseEvents() {
+  var queued = pendingCourseEvents;
+  pendingCourseEvents = [];
+  for (var i = 0; i < queued.length; i++) {
+    processCourseMessage(queued[i]);
+  }
+}
+
+window.addEventListener("message", function (ev) {
+  var msg = ev.data;
+  if (!msg || msg.type !== "course") { return; }
+
+  // Only accept messages from the frame we opened.
+  if (frame && frame.contentWindow && ev.source !== frame.contentWindow) { return; }
+
+  // ...and only from the course's own origin, unless this is a local
+  // rehearsal (?local=1) or the course URL is a file/relative path that
+  // cannot be compared against event.origin the normal way (see
+  // courseOrigin in section 3).
+  if (courseOrigin && ev.origin !== courseOrigin) { return; }
+
+  if (!started) {
+    pendingCourseEvents.push(msg);
+    return;
+  }
+  processCourseMessage(msg);
+}, false);
+
+// Close the attempt cleanly when the window goes away.
+window.addEventListener("unload", finish, false);
+window.addEventListener("pagehide", finish, false);
+
+// Handy for rehearsal and automated checks.
+window.SHELL = {
+  version: function () { return VERSION; },
+  connected: function () { return started; },
+  learner: function () { return { id: learner.id, name: learner.name }; },
+  log: callLog,
+  finish: finish
+};
+</script>
+</body>
+</html>

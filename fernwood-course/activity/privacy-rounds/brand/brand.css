@@ -1,0 +1,10 @@
+/* Fernwood Health Clinic (fictional) */
+:root {
+  --brand-accent: #1F6B5C;
+  --brand-ink: #17282B;
+  --brand-surface: #FFFFFF;
+  --brand-bg: #F2F7F5;
+  --brand-radius: 12px;
+  --brand-font: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --brand-accent-2: #F4B740;
+}

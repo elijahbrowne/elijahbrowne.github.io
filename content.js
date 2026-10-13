@@ -14,6 +14,7 @@ export const IMG = {
   stuartHall: "images/stuart-hall/cover.jpg",
   taskMonsters: "images/task-monsters/cover.jpg",
   smartphone: "images/smartphone/cover.jpg",
+  fernwood: "images/fernwood/call.jpg",
 };
 
 // Home page short intro, shown above the "In this portfolio" cards.
@@ -59,6 +60,7 @@ const P = SITE + "/project-page/";
 // Project page cards. `slug` => built-in detail page; `ext` => opens original site page.
 export const PROJECTS = [
   { title: "Turning Shoppers into Cardholders", slug: "turning-shoppers-into-cardholders", img: IMG.shoppers, skills: ["Learning Experience Design", "Scenario-Based Learning", "AI Simulation Design", "Articulate Storyline 360", "Devlin.ai", "eLearning Development", "Branching Scenarios", "Assessment Design", "Feedback Design", "Just-in-Time Learning", "Accessibility", "Multimedia Learning", "Storyboarding", "Canva", "JavaScript", "Gemini Notebook"], blurb: "I designed and developed an AI-powered sales simulation in Articulate Storyline using Devlin.ai to help retail associates practice realistic customer conversations. The experience moves beyond scripted responses by allowing learners to interact directly with an AI customer, assess the customer’s needs, respond to objections, and determine when to continue or back down from the sale.", cta: "Read More" },
+  { title: "Patient Information Confidentiality Policy Review", slug: "patient-information-confidentiality-policy-review", img: IMG.fernwood, skills: ["Scenario-Based Learning", "Gamification", "Action Mapping", "eLearning Development", "Feedback Design", "Assessment Design", "Interaction Design", "User-Centered Design", "Storyboarding", "Claude Code", "JavaScript", "Canva"], cta: "Read More" },
   { title: "Sending a Professional Email", slug: "sending-a-professional-email", img: IMG.email, skills: ["Articulate Storyline 360", "eLearning Development", "Scenario-Based Learning", "Assessment Design", "Accessibility", "Adult Learning", "Bloom’s Taxonomy", "Canva", "DaVinci Resolve"], cta: "Read More" },
   { title: "Turning Payment Research Into a Gemini Notebook", slug: "turning-payment-research-into-a-gemini-notebook", img: IMG.payment, skills: ["Gemini Notebook", "AI-Assisted Learning"], cta: "Read More" },
   { title: "Building a Gemini Notebook Microlearning Lesson", slug: "building-a-gemini-notebook", img: IMG.microlearning, skills: ["Microlearning Design", "eLearning Development", "Articulate Rise 360", "Adult Learning", "AI-Assisted Learning", "Prompt Design"], cta: "Read More" },
@@ -244,6 +246,7 @@ export const ALT = {
   "understanding-stuart-hall-gemini-notebook": "Gemini Notebook titled Understanding Reception Theory, with sources, a chat explaining a flashcard answer, and a Communication Flashcards panel",
   "task-monsters": "Task Monsters start screen with a task input, battle difficulty choices and a pixel-art ghost with 400 HP",
   "smartphone-content-creation": "Rise lesson with a smartphone camera screen framing a dog on a couch, with seven numbered callouts on the camera controls",
+  "patient-information-confidentiality-policy-review": "Patient Privacy Rounds game: on a pixel-art clinic floor, Priya at the front desk phones asks what to tell a son who wants his mom's lab results, with three numbered answers to choose from",
   "building-a-gemini-notebook": "Rise lesson card titled Studio Panel, explaining what the Gemini Notebook Studio Panel does, over a notebook screenshot",
 };
 
@@ -483,6 +486,116 @@ DETAILS["building-a-gemini-notebook"] = {
   title: "Building a Gemini Notebook",
   sub: "A microlearning lesson on setting up a shared Gemini Notebook for team research",
 };
+
+DETAILS["patient-information-confidentiality-policy-review"] = {
+  title: "Patient Information Confidentiality Policy Review",
+  sub: "Making privacy training something people want to play",
+  img: IMG.fernwood,
+  embed: ["Patient Privacy Rounds (browser game)", "fernwood-course/activity/privacy-rounds/index.html"],
+  tryIt: "top",
+  storyboard: "storyboard",
+  slides: "slides",
+  body: [
+    ["h2", "Summary"],
+    ["p", "I turned an 11-page patient privacy policy into a 7-minute game that staff can play in their browser."],
+    ["p", "The learner spends one workday on the floor at Fernwood Health Clinic. Five coworkers each bring one privacy question. Every call has a cost, and every right answer traces back to a line in the policy."],
+    ["p", "Fernwood is a fictional clinic I created for this project. The policy, the people, and the problems are invented, but they are modeled on the privacy situations real clinic staff face every day."],
+    ["h2", "The Challenge"],
+    ["p", "Fernwood's privacy policy is 11 pages long. It covers everything. Release forms, caller verification, printed records, workstation security, incident reporting. It is accurate and complete."],
+    ["p", "And almost nobody reads it."],
+    ["p", "Staff sign an acknowledgment once a year. They scroll to the bottom, check the box, and go back to work. The policy exists, but it doesn't live on the floor."],
+    ["h2", "Designing the Experience"],
+    ["h3", "1. One shift, five calls"],
+    ["p", "The learner plays a supervisor on the clinic floor from 9:00 to 5:00. Coworkers sit at their desks and call out when they need help: \"Jo, got a sec?\""],
+    ["fig", F("Patient Privacy Rounds clinic floor in pixel art at 9:00: four offices along the top, a printer station, a conference table and a waiting area, with coworkers at their desks. A status bar reads Priya needs you. Walk over, or tap Priya.", "The clinic floor at 9:00. Coworkers call out when they need you.", "images/fernwood/floor.jpg")],
+    ["p", "The learner walks over and hears the situation. Each call has three choices."],
+    ["table", ["Call", "Coworker", "Situation", "Right call"], [
+      ["1", "Priya, front desk phones", "A son wants his mom's lab results. No release on file.", "Don't confirm she's a patient. She can call or sign a release."],
+      ["2", "Theo, patient phone line", "A caller says she's the patient.", "Ask her to say her full name and date of birth."],
+      ["3", "Marcus, rooming patients", "Someone else's charts are sitting in the printer.", "Check the cover sheet, lock them in the pickup bin, message the team."],
+      ["4", "Maya, triage", "Two nurses are discussing a patient by the waiting room door.", "Step over and suggest the nurses' station."],
+      ["5", "Owen, check-in desk", "A coworker walked away with a patient record open.", "Lock it with Windows + L and tell her when she's back."],
+    ]],
+    ["h3", "2. Realistic Choices"],
+    ["p", "I didn't want one obvious answer and two silly ones. Every option is something a reasonable person might do."],
+    ["p", "Each call has a right answer, a near miss, and a wrong answer. The near miss protects the patient but stops short, like standing guard by an unlocked screen instead of locking it. The wrong answer is usually the one that feels kind or efficient, like reading a chart to figure out whose it is."],
+    ["h3", "3. Consequences you can see"],
+    ["p", "After every choice, the coworker responds in character. A near miss sounds like: \"I put her on hold to ask Lena. She was with a patient, and we lost half an hour.\""],
+    ["p", "A sign then appears over their desk for the rest of the day. \"Family isn't automatic access\" for a right call. \"Whole chart read to route it\" for a wrong one. By 5:00, the floor is a map of every decision you made."],
+    ["h3", "4. A coach, not a quiz"],
+    ["p", "After a wrong call, Lena walks across the floor to talk it through. She doesn't just say \"incorrect.\" She names what was right about the instinct, then the rule: \"Returning them is right, but reading the whole chart isn't. Read only what you need to route it.\""],
+    ["h3", "5. The end-of-day newsletter"],
+    ["p", "The day ends with a mock internal newsletter. The headline changes with your score, from \"The floor held today\" to \"A tough shift on the floor.\""],
+    ["p", "Below it, every call is listed with your answer next to the right one. That recap is where the learning sticks."],
+    ["h2", "Design Choices"],
+    ["p", "The game looks simple, but each piece is there for a reason."],
+    ["dl", [
+      ["Action mapping.", "I started from what staff need to do on the floor, not what the policy says. Five behaviors made the cut. Everything else in the 11 pages stayed in the policy."],
+      ["Scenario-based learning.", "Every question is a moment from a real workday, told by a coworker in their own words. Learners practice the decision in the context where they'll actually make it."],
+      ["Plausible distractors.", "Wrong answers are written as the things good people do for good reasons. If the wrong choice isn't tempting, the practice isn't real."],
+      ["Immediate, intrinsic feedback.", "The learner sees the result of a choice before being told it was wrong. Time disappears from the clock, a coworker reacts, a sign goes up. The consequence does the teaching."],
+      ["Coaching after errors.", "Lena's walk-over turns a wrong answer into a short conversation. She respects the instinct and corrects the action."],
+      ["Memorable rules.", "Each right call carries a short phrase: \"Family isn't automatic access.\" \"Two identifiers, every time.\" \"Step away, lock it.\" These are short enough to remember at the front desk."],
+      ["Low-stakes practice.", "No one is graded on their first try. \"Play the day again\" is one click, and the closing screen reminds staff that reporting your own mistake carries no penalty. The game models that culture."],
+    ]],
+    ["h2", "Building It: A Claude Skill for Learning Games"],
+    ["p", "I wrote a Claude skill that turns a set of rules into this kind of game. The office, the walking, the clock, the coworkers, and the end screen stay the same. The scenario changes. Feed it a different policy and a different workplace, and it produces a new game."],
+    ["p", "The skill also checks its own work. Once the game is drafted, it compares every right answer against the source document. If an answer can't be traced back to a line in the policy, it doesn't ship."],
+    ["p", "That check matters. AI can write a convincing scenario that is wrong, and in privacy training a wrong rule is worse than no training at all."],
+    ["p", "The skill got me a working draft fast. I rewrote lines so they sounded like Fernwood, matched the policy's exact terms, and made sure each coworker sounded like a real person and not a quiz question."],
+    ["p", "The whole project took about 7 hours, including a storyboard, then a Canva slide deck, then the game."],
+    ["h2", "Built for an LMS"],
+    ["p", "Training is only useful to a clinic if the clinic can see who finished it. So the game ships with a SCORM package."],
+    ["p", "SCORM is the standard most learning management systems use. The package is a small launcher: three files that get uploaded to the LMS once. The launcher opens the game from wherever it's hosted and passes results back. It works with both SCORM 1.2 and SCORM 2004."],
+    ["p", "Here's what the LMS gets:"],
+    ["dl", [
+      ["Who took it.", "The LMS passes in the learner's name, so the name box on the title screen disappears and coworkers greet them by name."],
+      ["Completion.", "The attempt is marked in progress at the start and complete at the end of the day."],
+      ["A score.", "Right calls out of five, as a percentage. Passing is 70%, so four of five right passes and three does not, the same bar as Lena's sign-off."],
+      ["Every answer.", "Each call is recorded with the choice the learner made and whether it was right."],
+    ]],
+    ["p", "That last one is the part I care about most. An LMS usually tells you who passed. This tells you which call people miss. If half the staff read the chart to figure out whose it is, that's a training gap the privacy officer can act on."],
+    ["p", "The launcher also means the game can be updated without touching the LMS. Fix a line in the scenario, publish it to the same address, and every learner sees the new version on their next launch."],
+    ["p", "Tracking is off by default outside the LMS. No learner data goes anywhere until the clinic decides what it needs and tells staff."],
+    ["p", "The next step is hosting the game and testing it in a live LMS."],
+    ["h2", "Playtesting"],
+    ["p", "I had someone play it with no instructions from me. I watched where they got stuck and fixed those spots."],
+    ["p", "The biggest change: feedback moved to the end screen. In the first version, the full explanation came right after each choice, which interrupted the flow of the shift. Now the moment-to-moment feedback stays short and in character. The full breakdown, your call next to the right call, waits for the end of the day, when the learner is ready to reflect."],
+    ["table", ["What I saw", "What I changed"], [
+      ["They weren't sure what \"winning\" meant", "A goal chip on screen: 4 of 5 right calls and Lena signs you off"],
+      ["Wrong answers had no visible weight", "A sign over the coworker's desk for the rest of the day"],
+      ["Feedback blended into the conversation", "Each coworker's reply became its own speech bubble"],
+      ["The office felt empty", "Coworkers sit at their desks and call out when they need you"],
+      ["The coaching felt abrupt", "Lena physically walks across the floor before she talks"],
+      ["It felt generic", "The learner's name replaces \"Jo\" in every line"],
+      ["The rule got lost mid-shift", "The end screen recaps every call with the right answer beside yours"],
+    ]],
+    ["h2", "Reflection"],
+    ["p", "I built this project in about 7 hours, from storyboard through slide deck, game development, and testing."],
+    ["p", "The speed was possible because I wasn't building the game from scratch. My skill handled the engine, which left my time for the design decisions: which behaviors mattered, how each wrong answer should tempt the learner, and what each coworker should say."],
+    ["p", "The more important takeaway was not how quickly I could build a game. It was learning what makes someone want to finish compliance training."],
+    ["p", "Most compliance training is something people are tasked with. They click through it to check a box. A game doesn't change that on its own. What changes it is giving the learner real decisions, with consequences, in a setting that looks like their job."],
+    ["p", "The biggest challenge was keeping the game true to the policy. AI can write a scenario that sounds right but isn't. Checking every right answer against the source document, and rewriting the language to match Fernwood's policy, is what made the game trustworthy."],
+    ["p", "Ultimately, this project reinforced that effective learning design starts with what the learner needs to do, not with the document they're required to read."],
+  ],
+};
+attach("patient-information-confidentiality-policy-review", "2. Realistic Choices", "right", F("Priya, front desk phones, Call 1 of 5: Elijah, got a minute? Line 2 is a man named Daniel asking for his mom Ruth's blood work results, with no signed release on file. Three answers: share them, don't confirm she's a patient and say Ruth can call or sign a release, or say you can't say and hang up.", "Call 1: three answers a reasonable person might pick.", "images/fernwood/call.jpg"));
+attach("patient-information-confidentiality-policy-review", "5. The end-of-day newsletter", "right", F("End-of-day internal newsletter headlined A tough shift on the floor: 3 of 5 right calls, shift covered at 10:30, a Play the day again button, and each call listed with a check or cross, your call, and the right call for misses.", "The end-of-day newsletter recaps every call.", "images/fernwood/newsletter.jpg"));
+attach("patient-information-confidentiality-policy-review", "Built for an LMS", "left", F("Patient Privacy Rounds title screen: the goal to keep patient information safe until the clinic closes at 5:00, four rules about the calls and the clock, an optional name box noting that a learning system fills it in, and a Let's start button.", "Outside an LMS the learner types their name. Inside one, the LMS fills it in.", "images/fernwood/title.jpg"));
+// Storyboard and slide deck: their own sections after the Summary; the buttons jump here.
+figAfter("patient-information-confidentiality-policy-review", "Summary", ["h2", "Storyboard"]);
+figAfter("patient-information-confidentiality-policy-review", "Storyboard", ["carousel", "Storyboard",
+  Array.from({ length: 6 }, (_, i) => ({ src: `images/fernwood/storyboard/${i + 1}.jpg`, alt: `Storyboard page ${i + 1} of 6` })),
+  { id: "storyboard", wide: true }]);
+figAfter("patient-information-confidentiality-policy-review", "Storyboard", ["h2", "Slide Deck"]);
+figAfter("patient-information-confidentiality-policy-review", "Slide Deck", ["carousel", "Slide deck", [
+  { src: "images/fernwood/deck/1.jpg", alt: "Title slide: Patient Information Confidentiality Policy Review, Fernwood Health Clinic Patient Privacy Training, white text on dark green beside a pattern of ferns" },
+  { src: "images/fernwood/deck/2.jpg", alt: "Slide: Importance of Maintaining Patient Information Confidentiality. Last spring's mock audit logged 11 preventable privacy incidents in one quarter, followed by four learning objectives, beside a photo of a nurse talking with colleagues in a clinic hallway" },
+  { src: "images/fernwood/deck/3.jpg", alt: "Slide: Discussing Patient Information at the Clinic. Move the talk inside: discuss patients only where others can't overhear, speak up and suggest a private space, tell the Privacy Officer if it keeps happening, and call patients by first name only. Photo of two nurses looking at a tablet" },
+  { src: "images/fernwood/deck/4.jpg", alt: "Slide: Discussing Patient Information Over the Phone. Calls about another person: family isn't automatic access. Verifying a patient on the phone: two identifiers, every time, full name and date of birth, said by the caller" },
+  { src: "images/fernwood/deck/5.jpg", alt: "Slide: Practicing Good Patient Record Hygiene. Printed records: read only what you need to route it, use the locked pickup bin, shred, never recycle. Workstations: step away, lock it with Windows + L, and tell the owner when they return" },
+  { src: "images/fernwood/deck/6.jpg", alt: "Slide: Takeaways. If something slips, report it the same day: tell the Privacy Officer, early reports are how we fix problems, and you will not be penalized for reporting your own mistake. Photo of two clinicians talking in a hallway" },
+], { id: "slides", wide: true }]);
 
 // Images beside the text on desktop; they stack under the text on phones.
 attach("sending-a-professional-email", "Summary", "right", F("Page from the original classroom handout titled Anatomy of an Email: a real email with red boxes labeling the subject, sender and recipients, greeting, body, sign off, signature and attachments", "Where it started: the original four-page classroom handout.", "images/email/original-handout.jpg"));

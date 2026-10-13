@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 64" width="260" height="64" role="img" aria-label="Fernwood Health Clinic">
+  <title>Fernwood Health Clinic</title>
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="#1F6B5C"/>
+  <path d="M32 52 C32 38 31 24 32 12" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+  <g fill="#FFFFFF">
+    <path d="M32 44 C24 44 18 40 15 35 C22 34 28 37 32 44z"/>
+    <path d="M32 44 C40 44 46 40 49 35 C42 34 36 37 32 44z"/>
+    <path d="M32 34 C25 34 20 30 18 25 C24 24.5 29 27.5 32 34z"/>
+    <path d="M32 34 C39 34 44 30 46 25 C40 24.5 35 27.5 32 34z"/>
+    <path d="M32 24.5 C27 24 23.5 21 22.5 17 C27 17 30.5 19.5 32 24.5z"/>
+    <path d="M32 24.5 C37 24 40.5 21 41.5 17 C37 17 33.5 19.5 32 24.5z"/>
+  </g>
+  <circle cx="32" cy="11" r="3" fill="#F4B740"/>
+  <text x="76" y="31" font-family="'Atkinson Hyperlegible', 'Segoe UI', system-ui, sans-serif" font-size="26" font-weight="700" fill="#17282B">Fernwood</text>
+  <text x="77" y="52" font-family="'Atkinson Hyperlegible', 'Segoe UI', system-ui, sans-serif" font-size="13" letter-spacing="2.4" fill="#1F6B5C">HEALTH CLINIC</text>
+</svg>

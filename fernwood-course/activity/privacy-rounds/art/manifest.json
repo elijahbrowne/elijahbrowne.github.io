@@ -1,0 +1,20 @@
+{
+  "_meta": {
+    "style": "8-bit pixel art, flat colours with a dark outline, drawn procedurally for Fernwood Health Clinic",
+    "frameSize": [64, 80],
+    "frameCount": 16,
+    "frameOrder": ["down-stand","down-stepL","down-stand2","down-stepR","left-stand","left-stepL","left-stand2","left-stepR","right-stand","right-stepL","right-stand2","right-stepR","up-stand","up-stepL","up-stand2","up-stepR"],
+    "feetY": 76,
+    "artPixel": "2x2 screen pixels on sprites, 8x8 on portraits, 4x4 world units on the floor",
+    "floor": "office-floor.webp is a clinic (exam bays, nurses' station, copy room, front desk, waiting area) drawn on the engine's 1120x760 world grid at 2x; desks, dividers and chairs keep the engine's SOLIDS and chair positions",
+    "cast": {
+      "jo": "the learner, a nurse in ceil-blue scrubs with a stethoscope",
+      "lena": "charge nurse, navy scrubs",
+      "priya": "front desk, plum scrubs",
+      "theo": "front desk, light-blue scrubs",
+      "marcus": "medical assistant, green scrubs",
+      "maya": "nurse, lavender scrubs",
+      "owen": "check-in desk, dark-teal scrubs"
+    }
+  }
+}
