@@ -231,7 +231,7 @@ function ProjectPage() {
         <p role="status" className="count">{filtering ? `${shown.length} of ${PROJECTS.length} projects` : ""}</p>
       </section>
       {filtering || !shown.length ? null : <Card p={shown[0]} big />}
-      <div className="grid">{(filtering ? shown : shown.slice(1)).map((p) => <Card key={p.title} p={p} />)}</div>
+      <div className="grid">{(filtering ? shown : shown.slice(1)).map((p) => <Card key={p.title} p={{ ...p, blurb: undefined }} />)}</div>
       {filtering && shown.length === 0 && <p>No projects match that skill.</p>}
       <h2 className="gap">Classroom resources</h2>
       <div className="grid">
