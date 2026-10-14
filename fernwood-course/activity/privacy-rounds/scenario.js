@@ -74,7 +74,7 @@ window.SCENARIO = {
       "Five coworkers will call you over, one at a time, each with one privacy question.",
       "Pick one of three replies. If you make a wrong call, Lena walks over to talk it through.",
       "Don't keep people waiting. Head over when someone calls you.",
-      "Make four or more right calls and the floor holds."
+      "Get at least four of the five calls right and the floor holds."
     ],
     win:  "The floor held today.",
     lose: "A tough shift on the floor."
