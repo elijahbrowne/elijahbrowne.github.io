@@ -89,8 +89,8 @@ canvas{image-rendering:pixelated;image-rendering:crisp-edges}
 .screen:focus,.screen:focus-visible{outline:none}
 
 /* ---------- title card ---------- */
-.titlecard{justify-content:center;align-items:center;padding:28px 22px;gap:0;overflow:auto}
-.titlecard .inner{max-width:620px;width:100%}
+.titlecard{justify-content:flex-start;align-items:center;padding:28px 22px;gap:0;overflow:auto}
+.titlecard .inner{max-width:620px;width:100%;margin:auto 0} /* centred when it fits, scrolls from the top when it doesn't */
 .titlecard img.logo{height:44px;width:auto;display:block;margin:0 0 18px;image-rendering:auto}
 .titlecard .eyebrow{margin:0 0 10px;font:800 12px/1.3 var(--brand-font);letter-spacing:.18em;
   color:color-mix(in srgb,var(--brand-ink) 68%,var(--brand-surface))}
