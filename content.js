@@ -498,7 +498,7 @@ DETAILS["patient-information-confidentiality-policy-review"] = {
   body: [
     ["h2", "Summary"],
     ["p", "I turned an 11-page patient privacy policy into a 7-minute game that staff can play in their browser."],
-    ["p", "The learner spends one workday on the floor at Fernwood Health Clinic. Five coworkers each bring one privacy question. Every call has a cost, and every right answer traces back to a line in the policy."],
+    ["p", "The learner spends one workday on the floor at Fernwood Health Clinic. Five coworkers each bring one privacy question. Every call has a consequence, and every right answer traces back to a line in the policy."],
     ["p", "Fernwood is a fictional clinic I created for this project. The policy, the people, and the problems are invented, but they are modeled on the privacy situations real clinic staff face every day."],
     ["h2", "The Challenge"],
     ["p", "Fernwood's privacy policy is 11 pages long. It covers everything. Release forms, caller verification, printed records, workstation security, incident reporting. It is accurate and complete."],
@@ -506,7 +506,7 @@ DETAILS["patient-information-confidentiality-policy-review"] = {
     ["p", "Staff sign an acknowledgment once a year. They scroll to the bottom, check the box, and go back to work. The policy exists, but it doesn't live on the floor."],
     ["h2", "Designing the Experience"],
     ["h3", "1. One shift, five calls"],
-    ["p", "The learner plays a supervisor on the clinic floor from 9:00 to 5:00. Coworkers sit at their desks and call out when they need help: \"Jo, got a sec?\""],
+    ["p", "The learner plays a supervisor on the clinic floor for one shift. Coworkers sit at their desks and call out when they need help: \"Jo, got a sec?\""],
     ["fig", F("Patient Privacy Rounds clinic floor in pixel art at 9:00: four offices along the top, a printer station, a conference table and a waiting area, with coworkers at their desks. A status bar reads Priya needs you. Walk over, or tap Priya.", "The clinic floor at 9:00. Coworkers call out when they need you.", "images/fernwood/floor.jpg")],
     ["p", "The learner walks over and hears the situation. Each call has three choices."],
     ["table", ["Call", "Coworker", "Situation", "Right call"], [
@@ -520,8 +520,8 @@ DETAILS["patient-information-confidentiality-policy-review"] = {
     ["p", "I didn't want one obvious answer and two silly ones. Every option is something a reasonable person might do."],
     ["p", "Each call has a right answer, a near miss, and a wrong answer. The near miss protects the patient but stops short, like standing guard by an unlocked screen instead of locking it. The wrong answer is usually the one that feels kind or efficient, like reading a chart to figure out whose it is."],
     ["h3", "3. Consequences you can see"],
-    ["p", "After every choice, the coworker responds in character. A near miss sounds like: \"I put her on hold to ask Lena. She was with a patient, and we lost half an hour.\""],
-    ["p", "A sign then appears over their desk for the rest of the day. \"Family isn't automatic access\" for a right call. \"Whole chart read to route it\" for a wrong one. By 5:00, the floor is a map of every decision you made."],
+    ["p", "After every choice, the coworker responds in character. A right call gets a reply that says why it holds. A near miss gets a reply that names what was missed. A wrong call gets a coworker who simply goes along with it."],
+    ["p", "A sign then appears over their desk for the rest of the day. \"Family isn't automatic access\" for a right call. \"Whole chart read to route it\" for a wrong one. By the last call, the floor is a map of every decision you made."],
     ["h3", "4. A coach, not a quiz"],
     ["p", "After a wrong call, Lena walks across the floor to talk it through. She doesn't just say \"incorrect.\" She names what was right about the instinct, then the rule: \"Returning them is right, but reading the whole chart isn't. Read only what you need to route it.\""],
     ["h3", "5. The end-of-day newsletter"],
@@ -533,7 +533,7 @@ DETAILS["patient-information-confidentiality-policy-review"] = {
       ["Action mapping.", "I started from what staff need to do on the floor, not what the policy says. Five behaviors made the cut. Everything else in the 11 pages stayed in the policy."],
       ["Scenario-based learning.", "Every question is a moment from a real workday, told by a coworker in their own words. Learners practice the decision in the context where they'll actually make it."],
       ["Plausible distractors.", "Wrong answers are written as the things good people do for good reasons. If the wrong choice isn't tempting, the practice isn't real."],
-      ["Immediate, intrinsic feedback.", "The learner sees the result of a choice before being told it was wrong. Time disappears from the clock, a coworker reacts, a sign goes up. The consequence does the teaching."],
+      ["Immediate, intrinsic feedback.", "The learner sees the result of a choice before being told it was wrong. A coworker reacts, and a sign goes up over their desk. The consequence does the teaching."],
       ["Coaching after errors.", "Lena's walk-over turns a wrong answer into a short conversation. She respects the instinct and corrects the action."],
       ["Memorable rules.", "Each right call carries a short phrase: \"Family isn't automatic access.\" \"Two identifiers, every time.\" \"Step away, lock it.\" These are short enough to remember at the front desk."],
       ["Low-stakes practice.", "No one is graded on their first try. \"Play the day again\" is one click, and the closing screen reminds staff that reporting your own mistake carries no penalty. The game models that culture."],
@@ -559,16 +559,13 @@ DETAILS["patient-information-confidentiality-policy-review"] = {
     ["p", "Tracking is off by default outside the LMS. No learner data goes anywhere until the clinic decides what it needs and tells staff."],
     ["p", "The next step is hosting the game and testing it in a live LMS."],
     ["h2", "Playtesting"],
-    ["p", "I had someone play it with no instructions from me. I watched where they got stuck and fixed those spots."],
+    ["p", "I had a few friends review the training deck and play the game with no instructions from me, and I watched where they got stuck. I also posted it in The eLearning Designer's Academy community and received feedback from professional instructional designers."],
     ["p", "The biggest change: feedback moved to the end screen. In the first version, the full explanation came right after each choice, which interrupted the flow of the shift. Now the moment-to-moment feedback stays short and in character. The full breakdown, your call next to the right call, waits for the end of the day, when the learner is ready to reflect."],
-    ["table", ["What I saw", "What I changed"], [
-      ["They weren't sure what \"winning\" meant", "A goal chip on screen: 4 of 5 right calls and Lena signs you off"],
+    ["table", ["Feedback", "What I changed"], [
+      ["Not sure what \"winning\" means for this game", "A goal chip on screen: 4 of 5 right calls and Lena signs you off"],
       ["Wrong answers had no visible weight", "A sign over the coworker's desk for the rest of the day"],
       ["Feedback blended into the conversation", "Each coworker's reply became its own speech bubble"],
-      ["The office felt empty", "Coworkers sit at their desks and call out when they need you"],
-      ["The coaching felt abrupt", "Lena physically walks across the floor before she talks"],
-      ["It felt generic", "The learner's name replaces \"Jo\" in every line"],
-      ["The rule got lost mid-shift", "The end screen recaps every call with the right answer beside yours"],
+      ["The colors aren't WCAG compliant", "I updated the skill to check for non-compliant colors and find the nearest compliant match."],
     ]],
     ["h2", "Reflection"],
     ["p", "I built this project in about 7 hours, from storyboard through slide deck, game development, and testing."],
@@ -580,8 +577,8 @@ DETAILS["patient-information-confidentiality-policy-review"] = {
   ],
 };
 attach("patient-information-confidentiality-policy-review", "2. Realistic Choices", "right", F("Priya, front desk phones, Call 1 of 5: Elijah, got a minute? Line 2 is a man named Daniel asking for his mom Ruth's blood work results, with no signed release on file. Three answers: share them, don't confirm she's a patient and say Ruth can call or sign a release, or say you can't say and hang up.", "Call 1: three answers a reasonable person might pick.", "images/fernwood/call.jpg"));
-attach("patient-information-confidentiality-policy-review", "5. The end-of-day newsletter", "right", F("End-of-day internal newsletter headlined A tough shift on the floor: 3 of 5 right calls, shift covered at 10:30, a Play the day again button, and each call listed with a check or cross, your call, and the right call for misses.", "The end-of-day newsletter recaps every call.", "images/fernwood/newsletter.jpg"));
-attach("patient-information-confidentiality-policy-review", "Built for an LMS", "left", F("Patient Privacy Rounds title screen: the goal to keep patient information safe until the clinic closes at 5:00, four rules about the calls and the clock, an optional name box noting that a learning system fills it in, and a Let's start button.", "The learner inputs their name, and it’s tracked through the LMS.", "images/fernwood/title.jpg"));
+attach("patient-information-confidentiality-policy-review", "5. The end-of-day newsletter", "right", F("End-of-day internal newsletter headlined The floor held today: 4 of 5 right calls, a Play the day again button, and each call listed with a check or cross and your call. Call 5 is marked wrong, with the right call, lock it with Windows + L, shown beneath.", "The end-of-day newsletter recaps every call.", "images/fernwood/newsletter.jpg"));
+attach("patient-information-confidentiality-policy-review", "Built for an LMS", "left", F("Patient Privacy Rounds title screen: the goal to keep patient information safe on the floor, four rules about the five calls and getting at least four right, an optional name box filled in with Elijah Browne and a note that a learning system fills it in, and a Let's start button.", "The learner inputs their name, and it’s tracked through the LMS.", "images/fernwood/title.jpg"));
 // Storyboard and slide deck: their own sections after the Summary; the buttons jump here.
 figAfter("patient-information-confidentiality-policy-review", "Summary", ["h2", "Storyboard"]);
 figAfter("patient-information-confidentiality-policy-review", "Storyboard", ["carousel", "Storyboard",
