@@ -270,8 +270,6 @@ canvas{image-rendering:pixelated;image-rendering:crisp-edges}
   border-radius:calc(var(--brand-radius) / 3);color:#FFFFFF;background:var(--brand-accent)}
 .tag.soft{background:color-mix(in srgb,var(--brand-accent-2) 90%,var(--brand-ink));color:var(--brand-ink)}
 .tag.bad{background:color-mix(in srgb,var(--brand-ink) 78%,var(--brand-surface))}
-.cost{font:900 13px/1 var(--brand-font);letter-spacing:.04em;
-  color:color-mix(in srgb,var(--brand-ink) 66%,var(--brand-surface))}
 .verdict .vtext{margin:0 0 13px;font-size:15px;line-height:1.5}
 .verdict .vtext::before{content:"\201C"}
 .verdict .vtext::after{content:"\201D"}
@@ -419,7 +417,7 @@ canvas{image-rendering:pixelated;image-rendering:crisp-edges}
               <p class="ask" id="talk-ask"></p>
               <div class="opts" id="talk-opts" role="group" aria-labelledby="talk-heading"></div>
               <div class="verdict" id="talk-verdict" hidden>
-                <p class="vrow" id="verdict-row"><span class="tag" id="verdict-tag"></span><span class="cost" id="verdict-cost"></span></p>
+                <p class="vrow" id="verdict-row"><span class="tag" id="verdict-tag"></span></p>
                 <p class="vtext" id="verdict-text"></p>
                 <button class="btn btn-primary" type="button" id="continue-btn">Continue</button>
               </div>
@@ -1716,7 +1714,6 @@ function pick(def, c, p){
   var tag = byId("verdict-tag");
   tag.className = "tag" + (tone === "soft" ? " soft" : tone === "bad" ? " bad" : "");
   tag.textContent = tone === "good" ? "RIGHT CALL" : tone === "soft" ? "NEAR MISS" : "WRONG CALL";
-  byId("verdict-cost").textContent = "+" + cost + " min" + (tone === "soft" ? "  ·  waiting on " + LENA.name : "");
   byId("verdict-text").textContent = personalize(c.consequence);
   byId("verdict-row").hidden = false;
 
