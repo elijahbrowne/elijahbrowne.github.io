@@ -565,6 +565,7 @@ DETAILS["patient-information-confidentiality-policy-review"] = {
       ["Not sure what \"winning\" means for this game", "A goal chip on screen: 4 of 5 right calls and Lena signs you off"],
       ["Wrong answers had no visible weight", "A sign over the coworker's desk for the rest of the day"],
       ["Feedback blended into the conversation", "Each coworker's reply became its own speech bubble"],
+      ["The time costs were confusing, and the clock never decided anything", "I removed time from the directions, the feedback, and the end screen. Passing depends only on right calls."],
       ["The colors aren't WCAG compliant", "I updated the skill to check for non-compliant colors and find the nearest compliant match."],
     ]],
     ["h2", "Reflection"],
