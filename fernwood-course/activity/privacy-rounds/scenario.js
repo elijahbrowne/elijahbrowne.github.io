@@ -69,12 +69,12 @@ window.SCENARIO = {
   },
 
   goal: {
-    line: "Keep patient information safe on the floor until the clinic closes at 5:00.",
+    line: "Keep patient information safe on the floor.",
     how: [
       "Five coworkers will call you over, one at a time, each with one privacy question.",
-      "A right call costs no time. A near miss costs 30 minutes. A wrong call costs an hour, and Lena walks over to talk it through.",
-      "Don't keep people waiting. If their patience bar runs out, that costs 10 minutes.",
-      "Make four or more right calls by 5:00 and the floor holds."
+      "Pick one of three replies. If you make a wrong call, Lena walks over to talk it through.",
+      "Don't keep people waiting. Head over when someone calls you.",
+      "Make four or more right calls and the floor holds."
     ],
     win:  "The floor held today.",
     lose: "A tough shift on the floor."

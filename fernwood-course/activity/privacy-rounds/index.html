@@ -1077,7 +1077,7 @@ function officeLife(dt){
       clockFrom = shownMin; clockTo = minutes; clockAt = now;
       q.anim = { kind:"shrug", t0:now, dur:900 };
       popBubble(q, personalize("Jo, I've been waiting ages!"), true, 2200);
-      byId("hint-line").textContent = q.name + " waited too long. That cost " + WAIT_COST + " minutes.";
+      byId("hint-line").textContent = q.name + " waited too long.";
       q.openAt = now;
     } else if (now - q.openAt > NUDGE_MS){
       q.openAt = now; q.anim = { kind:"bob", t0:now, dur:700 };
