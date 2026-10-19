@@ -59,14 +59,14 @@ const P = SITE + "/project-page/";
 
 // Project page cards. `slug` => built-in detail page; `ext` => opens original site page.
 export const PROJECTS = [
-  { title: "Turning Shoppers into Cardholders", slug: "turning-shoppers-into-cardholders", img: IMG.shoppers, skills: ["Learning Experience Design", "Scenario-Based Learning", "AI Simulation Design", "Articulate Storyline 360", "Devlin.ai", "eLearning Development", "Branching Scenarios", "Assessment Design", "Feedback Design", "Just-in-Time Learning", "Accessibility", "Multimedia Learning", "Storyboarding", "Canva", "JavaScript", "Gemini Notebook"], blurb: "I designed and developed an AI-powered sales simulation in Articulate Storyline using Devlin.ai to help retail associates practice realistic customer conversations. The experience moves beyond scripted responses by allowing learners to interact directly with an AI customer, assess the customer’s needs, respond to objections, and determine when to continue or back down from the sale.", cta: "Read More" },
-  { title: "Patient Information Confidentiality Policy Review", slug: "patient-information-confidentiality-policy-review", img: IMG.fernwood, skills: ["Scenario-Based Learning", "Gamification", "Action Mapping", "eLearning Development", "Feedback Design", "Assessment Design", "Interaction Design", "User-Centered Design", "Storyboarding", "Claude Code", "JavaScript", "Canva"], cta: "Read More" },
-  { title: "Sending a Professional Email", slug: "sending-a-professional-email", img: IMG.email, skills: ["Articulate Storyline 360", "eLearning Development", "Scenario-Based Learning", "Assessment Design", "Accessibility", "Bloom’s Taxonomy", "Canva", "DaVinci Resolve"], cta: "Read More" },
-  { title: "Turning Payment Research Into a Gemini Notebook", slug: "turning-payment-research-into-a-gemini-notebook", img: IMG.payment, skills: ["Gemini Notebook", "AI-Assisted Learning"], cta: "Read More" },
-  { title: "Building a Gemini Notebook Microlearning Lesson", slug: "building-a-gemini-notebook", img: IMG.microlearning, skills: ["Microlearning Design", "eLearning Development", "Articulate Rise 360", "AI-Assisted Learning", "Prompt Design"], cta: "Read More" },
-  { title: "Understanding Reception Theory Notebook", slug: "understanding-stuart-hall-gemini-notebook", img: IMG.stuartHall, skills: ["Gemini Notebook", "Learning Experience Design", "AI-Assisted Learning", "Media Literacy"], cta: "Read More" },
-  { title: "Task Monsters", slug: "task-monsters", img: IMG.taskMonsters, skills: ["JavaScript", "Gamification", "Interaction Design", "Base44", "AI-Assisted Design", "Figma"], cta: "Read More" },
-  { title: "Smartphone Content Creation: Mastering Framing and Audio", slug: "smartphone-content-creation", img: IMG.smartphone, skills: ["Articulate Rise 360", "Video Production", "Scenario-Based Learning", "User-Centered Design", "Assessment Design", "Learning Experience Design", "ADDIE"], cta: "Read More" },
+  { title: "Turning Shoppers into Cardholders", slug: "turning-shoppers-into-cardholders", img: IMG.shoppers, skills: ["Scenario-Based Learning", "AI Simulation Design", "Feedback Design", "Storyboarding", "Accessibility"], tools: ["Articulate Storyline 360", "Devlin.ai", "Gemini Notebook", "Canva", "JavaScript"], blurb: "I designed and developed an AI-powered sales simulation in Articulate Storyline using Devlin.ai to help retail associates practice realistic customer conversations. The experience moves beyond scripted responses by allowing learners to interact directly with an AI customer, assess the customer’s needs, respond to objections, and determine when to continue or back down from the sale.", cta: "Read More" },
+  { title: "Patient Information Confidentiality Policy Review", slug: "patient-information-confidentiality-policy-review", img: IMG.fernwood, skills: ["Scenario-Based Learning", "Action Mapping", "Gamification", "Feedback Design", "Storyboarding"], tools: ["Claude Code", "JavaScript", "Canva", "SCORM"], cta: "Read More" },
+  { title: "Sending a Professional Email", slug: "sending-a-professional-email", img: IMG.email, skills: ["Scenario-Based Learning", "Assessment Design", "Accessibility", "Video Production", "Storyboarding"], tools: ["Articulate Storyline 360", "Canva", "DaVinci Resolve"], cta: "Read More" },
+  { title: "Turning Payment Research Into a Gemini Notebook", slug: "turning-payment-research-into-a-gemini-notebook", img: IMG.payment, skills: ["AI-Assisted Learning", "Performance Support", "Stakeholder Collaboration"], tools: ["Gemini Notebook"], cta: "Read More" },
+  { title: "Building a Gemini Notebook Microlearning Lesson", slug: "building-a-gemini-notebook", img: IMG.microlearning, skills: ["Microlearning", "AI-Assisted Learning", "Prompt Design", "eLearning Development"], tools: ["Articulate Rise 360", "Gemini Notebook"], cta: "Read More" },
+  { title: "Understanding Reception Theory Notebook", slug: "understanding-stuart-hall-gemini-notebook", img: IMG.stuartHall, skills: ["AI-Assisted Learning", "Blended Learning", "Curriculum Design", "Media Literacy"], tools: ["Gemini Notebook"], cta: "Read More" },
+  { title: "Task Monsters", slug: "task-monsters", img: IMG.taskMonsters, skills: ["Gamification", "Interaction Design", "User-Centered Design", "Prototyping", "AI-Assisted Design"], tools: ["Base44", "Figma", "JavaScript"], cta: "Read More" },
+  { title: "Smartphone Content Creation: Mastering Framing and Audio", slug: "smartphone-content-creation", img: IMG.smartphone, skills: ["Scenario-Based Learning", "Backward Design", "Assessment Design", "Video Production", "ADDIE"], tools: ["Articulate Rise 360", "Canva"], cta: "Read More" },
 ];
 export const RESOURCES = [
   { title: "Media Literacy Tools for the Classroom", img: "images/resources/media-literacy.jpg", alt: "Top of the Media Literacy Tools for the Classroom resource, with the heading What is Media Literacy? and an introductory paragraph", text: "This resource introduces key media literacy concepts and provides practical classroom strategies, activities, and resources to help students identify credible information, recognize bias and misinformation, and become more thoughtful consumers and creators of media.", href: "https://canva.link/33i5scxo70mvwf8" },
@@ -264,11 +264,12 @@ export const ALT = {
 
 // Each project's skills are listed once (in PROJECTS); cards and case studies both display them.
 PROJECTS.forEach((p) => {
-  p.skillList = p.skills;
+  p.skillList = [...p.skills, ...(p.tools || [])]; // tools are searchable but not shown
   p.skills = "Skills: " + p.skills.join(", ");
 });
 const counts = {};
 PROJECTS.forEach((p) => p.skillList.forEach((s) => (counts[s] = (counts[s] || 0) + 1)));
+export const TOOLS = new Set(PROJECTS.flatMap((p) => p.tools || []));
 export const SKILL_COUNTS = Object.entries(counts).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 
 /* ===== Layout helpers + the four new project pages (text from the PDFs) =====

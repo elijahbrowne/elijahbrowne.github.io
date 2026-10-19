@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   RESUME, EMAIL, LINKEDIN, TAGLINE, IMG, ALT, INTRO, HIGHLIGHTS, ABOUT, PUBLICATIONS, CERTS, AWARDS,
-  PROJECTS, RESOURCES, VIDEOS, DETAILS, SKILL_COUNTS, GLANCE,
+  PROJECTS, RESOURCES, VIDEOS, DETAILS, SKILL_COUNTS, GLANCE, TOOLS,
 } from "./content";
 
 const HEADLINE = "I turn ideas into meaningful learning experiences.";
@@ -198,8 +198,9 @@ function About() {
 function ProjectPage() {
   const [q, setQ] = useState("");
   const [active, setActive] = useState(null); // one skill at a time
+  const [open, setOpen] = useState(false); // skill chips stay folded away so the projects lead the page
   const query = q.trim().toLowerCase();
-  const featured = SKILL_COUNTS.filter(([, c]) => c >= 2).map(([s]) => s);
+  const featured = SKILL_COUNTS.filter(([s, c]) => c >= 2 && !TOOLS.has(s)).map(([s]) => s);
   const pool = query ? SKILL_COUNTS.map(([s]) => s).filter((s) => s.toLowerCase().includes(query)) : featured;
   const chips = [...new Set([...(active ? [active] : []), ...pool])];
   const filtering = !!active || query.length > 0;
@@ -215,11 +216,15 @@ function ProjectPage() {
     <div className="wrap sec top">
       <h1 className="pg">Projects</h1>
       <section className="finder" aria-labelledby="sk-h">
-        <h2 id="sk-h">Search by skill</h2>
-        <label className="srch">Search skills
-          <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="e.g. Accessibility" />
-        </label>
-        <div className="chips" role="group" aria-label="Skills">
+        <h2 id="sk-h" className="sr">Find a project</h2>
+        <div className="finder-row">
+          <label className="srch"><span className="sr">Search skills and tools</span>
+            <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search skills or tools, e.g. Storyline" />
+          </label>
+          <button type="button" className="btn ghost sm" aria-expanded={open || !!query} aria-controls="sk-chips" onClick={() => setOpen(!open)}>{open ? "Hide skills" : "Browse skills"}</button>
+          {filtering && <button type="button" className="btn ghost sm" onClick={() => { setActive(null); setQ(""); }}>Clear</button>}
+        </div>
+        <div id="sk-chips" className="chips" role="group" aria-label="Skills" hidden={!(open || query || active)}>
           {chips.map((s) => (
             <button key={s} type="button" className="chip" aria-pressed={active === s} onClick={() => toggle(s)}>
               {s} <span>{count(s)}</span>
@@ -227,7 +232,6 @@ function ProjectPage() {
           ))}
           {chips.length === 0 && <p>No skills match “{q}”.</p>}
         </div>
-        {filtering && <button type="button" className="btn ghost sm" onClick={() => { setActive(null); setQ(""); }}>Clear</button>}
         <p role="status" className="count">{filtering ? `${shown.length} of ${PROJECTS.length} projects` : ""}</p>
       </section>
       {filtering || !shown.length ? null : <Card p={shown[0]} big />}
@@ -544,11 +548,12 @@ h2{font-size:clamp(1.6rem,3vw,2.2rem)}
 .card.big{flex-direction:row}
 .card.big img,.card.big .ph{width:45%;aspect-ratio:auto;height:100%;min-height:280px}
 .card.big h3{font-size:1.6rem}
-.finder{margin:2rem 0;padding:1.5rem;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
-.srch{display:grid;gap:.4rem;font-weight:700;max-width:420px}
+.finder{margin:1.5rem 0 2rem}
+.finder-row{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
+.srch{flex:1 1 260px;max-width:420px}
 input,textarea{font:inherit;padding:.8rem 1rem;border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%}
 input:focus,textarea:focus{outline:0;border-color:var(--accent)}
-.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0}.chips[hidden]{display:none}
 .chip{font-size:.9rem;background:transparent;border:1px solid var(--line);border-radius:999px;padding:.35rem .9rem;cursor:pointer}
 .chip span{color:var(--mute);font-size:.8em;margin-left:.3em}
 .chip:hover{border-color:var(--accent)}
