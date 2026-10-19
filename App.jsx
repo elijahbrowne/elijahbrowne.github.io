@@ -556,7 +556,7 @@ h2{font-size:clamp(1.6rem,3vw,2.2rem)}
 .card.big{flex-direction:row}
 .card.big img,.card.big .ph{width:45%;aspect-ratio:auto;height:100%;min-height:280px}
 .card.big h3{font-size:1.6rem}
-.finder{margin:1.5rem 0 2rem}
+.finder{margin:1.5rem 0 2rem;background:var(--bg)} /* solid so the dot grid stays behind the chips */
 .finder-row{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
 .srch{flex:1 1 260px;max-width:420px}
 input,textarea{font:inherit;padding:.8rem 1rem;border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%}
