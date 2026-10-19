@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   RESUME, EMAIL, LINKEDIN, TAGLINE, IMG, ALT, INTRO, HIGHLIGHTS, ABOUT, PUBLICATIONS, CERTS, AWARDS,
-  PROJECTS, RESOURCES, VIDEOS, DETAILS, SKILL_COUNTS,
+  PROJECTS, RESOURCES, VIDEOS, DETAILS, SKILL_COUNTS, GLANCE,
 } from "./content";
 
 const HEADLINE = "I turn ideas into meaningful learning experiences.";
@@ -356,6 +356,12 @@ function Detail({ slug }) {
         <h1 className="pg">{d.title}</h1>
         <p className="lead">{d.sub}</p>
         <p className="skills">{d.skills}</p>
+        {GLANCE[slug] && (
+          <section className="glance" aria-labelledby="glance-h">
+            <h2 id="glance-h">At a glance</h2>
+            <dl>{Object.entries(GLANCE[slug]).map(([k, v]) => [<dt key={k}>{k}</dt>, <dd key={k + "-v"}>{v}</dd>])}</dl>
+          </section>
+        )}
         {!d.embed && tryIt && <div className="btn-row">{tryIt}{storyboardBtn}</div>}
         {d.body && <div className="dbody">{d.body.map((b, i) => <Block key={i} b={b} />)}</div>}
         {tryIt && <div className="btn-row">{tryIt}{storyboardBtn}</div>}
@@ -557,6 +563,11 @@ input:focus,textarea:focus{outline:0;border-color:var(--accent)}
 .dhero{width:100%;height:auto;max-height:640px;object-fit:contain;display:block;border:1px solid var(--line);border-radius:14px;margin-bottom:2.5rem}.dhero.ph{height:220px;max-height:none}
 .detail.sec{padding-top:0}
 .lead{font-size:1.3rem;color:var(--mute)}
+.glance{border:1px solid var(--line);border-radius:14px;padding:1.25rem 1.5rem;margin:1.75rem 0}
+.detail .glance h2{font-family:var(--mono);font-weight:300;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 .75rem}
+.glance dl{display:grid;grid-template-columns:max-content 1fr;gap:.55rem 1.5rem;margin:0}
+.glance dt{margin:0}.glance dd{margin:0}
+@media(max-width:520px){.glance dl{grid-template-columns:1fr;gap:0}.glance dd{margin-bottom:.6rem}}
 .detail h2{margin-top:3rem}.detail h3{margin-top:2rem;font-size:1.3rem}.detail li{margin:.3rem 0}
 .detail>:not(.dbody):not(.dhero):not(.embed),.dbody>:is(p,ul,ol,h2,h3,dl,blockquote,.tblwrap){max-width:720px}
 .dbody{display:block}
