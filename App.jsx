@@ -200,9 +200,12 @@ function ProjectPage() {
   const [active, setActive] = useState(null); // one skill at a time
   const [open, setOpen] = useState(false); // skill chips stay folded away so the projects lead the page
   const query = q.trim().toLowerCase();
-  const featured = SKILL_COUNTS.filter(([s, c]) => c >= 2 && !TOOLS.has(s)).map(([s]) => s);
-  const pool = query ? SKILL_COUNTS.map(([s]) => s).filter((s) => s.toLowerCase().includes(query)) : featured;
-  const chips = [...new Set([...(active ? [active] : []), ...pool])];
+  // Browsing shows skills used on 2+ projects, then every tool; typing searches all of both.
+  const pick = (isTool) => {
+    const all = SKILL_COUNTS.filter(([s, c]) => TOOLS.has(s) === isTool && (query ? s.toLowerCase().includes(query) : isTool || c >= 2)).map(([s]) => s);
+    return active && TOOLS.has(active) === isTool ? [...new Set([active, ...all])] : all;
+  };
+  const groups = [["Skills", pick(false)], ["Tools", pick(true)]].filter(([, list]) => list.length);
   const filtering = !!active || query.length > 0;
   const shown = PROJECTS.filter((p) =>
     active ? p.skillList.includes(active)
@@ -221,16 +224,21 @@ function ProjectPage() {
           <label className="srch"><span className="sr">Search skills and tools</span>
             <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search skills or tools, e.g. Storyline" />
           </label>
-          <button type="button" className="btn ghost sm" aria-expanded={open || !!query} aria-controls="sk-chips" onClick={() => setOpen(!open)}>{open ? "Hide skills" : "Browse skills"}</button>
+          <button type="button" className="btn ghost sm" aria-expanded={open || !!query} aria-controls="sk-chips" onClick={() => setOpen(!open)}>{open ? "Hide skills & tools" : "Browse skills & tools"}</button>
           {filtering && <button type="button" className="btn ghost sm" onClick={() => { setActive(null); setQ(""); }}>Clear</button>}
         </div>
-        <div id="sk-chips" className="chips" role="group" aria-label="Skills" hidden={!(open || query || active)}>
-          {chips.map((s) => (
-            <button key={s} type="button" className="chip" aria-pressed={active === s} onClick={() => toggle(s)}>
-              {s} <span>{count(s)}</span>
-            </button>
+        <div id="sk-chips" hidden={!(open || query || active)}>
+          {groups.map(([name, list]) => (
+            <div key={name} className="chips" role="group" aria-label={name}>
+              <span className="chips-h">{name}</span>
+              {list.map((s) => (
+                <button key={s} type="button" className="chip" aria-pressed={active === s} onClick={() => toggle(s)}>
+                  {s} <span>{count(s)}</span>
+                </button>
+              ))}
+            </div>
           ))}
-          {chips.length === 0 && <p>No skills match “{q}”.</p>}
+          {groups.length === 0 && <p>No skills or tools match “{q}”.</p>}
         </div>
         <p role="status" className="count">{filtering ? `${shown.length} of ${PROJECTS.length} projects` : ""}</p>
       </section>
@@ -553,7 +561,8 @@ h2{font-size:clamp(1.6rem,3vw,2.2rem)}
 .srch{flex:1 1 260px;max-width:420px}
 input,textarea{font:inherit;padding:.8rem 1rem;border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%}
 input:focus,textarea:focus{outline:0;border-color:var(--accent)}
-.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0}.chips[hidden]{display:none}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0}
+.chips-h{flex-basis:100%;font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
 .chip{font-size:.9rem;background:transparent;border:1px solid var(--line);border-radius:999px;padding:.35rem .9rem;cursor:pointer}
 .chip span{color:var(--mute);font-size:.8em;margin-left:.3em}
 .chip:hover{border-color:var(--accent)}
