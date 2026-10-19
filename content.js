@@ -240,7 +240,7 @@ export const DETAILS = {
 // "At a glance" box at the top of each case study, for reviewers who only skim.
 export const GLANCE = {
   "turning-shoppers-into-cardholders": { Audience: "Retail associates at a department store (fictional BroadLane brief)", Tools: "Articulate Storyline 360, Devlin.ai, Gemini Notebook, Canva", Timeline: "Approx. 8 hours", Deliverable: "Storyline course with an embedded AI customer simulation" },
-  "patient-information-confidentiality-policy-review": { Audience: "Front-desk and clinical staff at a health clinic (fictional Fernwood)", Tools: "Claude Code, JavaScript, Canva", Timeline: "Approx. 7 hours", Deliverable: "Browser game with a SCORM package, plus a storyboard and slide deck" },
+  "patient-information-confidentiality-policy-review": { Audience: "Front-desk and clinical staff at a health clinic (fictional Fernwood)", Tools: "Claude Code, JavaScript, Canva", Timeline: "Approx. 7 hours", Deliverable: "Browser game with a SCORM package, plus a slide deck" },
   "sending-a-professional-email": { Audience: "New workers (originally 10th-grade students)", Tools: "Articulate Storyline 360, Canva, DaVinci Resolve", Timeline: "Approx. 2 days", Deliverable: "Self-paced Storyline course with a captioned video and scenario-based questions" },
   "turning-payment-research-into-a-gemini-notebook": { Audience: "A startup's payment researcher and her team", Tools: "Gemini Notebook", Timeline: "Approx. 30 minutes", Deliverable: "Shared research notebook comparing Stripe, Braintree, and Adyen, with source citations" },
   "building-a-gemini-notebook": { Audience: "Anyone interested in making a Gemini Notebook", Tools: "Articulate Rise 360, Gemini Notebook", Timeline: "Approx. 1 hour", Deliverable: "Microlearning lesson" },
