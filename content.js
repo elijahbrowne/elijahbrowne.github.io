@@ -31,6 +31,7 @@ export const HIGHLIGHTS = [
 export const ABOUT = [
   "I’m an educator and instructional designer who enjoys bringing together education, technology, and creativity to create meaningful learning experiences.",
   "My experience as an educator has taught me to look at learning from the learner’s perspective—what makes something engaging, intuitive, accessible, and worth their time. I also have a background in instructional technology and multimedia, which allows me to approach design from both an educational and technical perspective.",
+  "One of my classroom assignments, the For-Against-Neutral Assignment, was featured in the 2024 EDUCAUSE Horizon Report: Teaching and Learning Edition.",
   "I’m passionate about designing experiences that don’t just deliver information, but help people understand, explore, and apply what they learn.",
 ];
 
