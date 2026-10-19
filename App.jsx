@@ -4,7 +4,7 @@ import {
   PROJECTS, RESOURCES, VIDEOS, DETAILS, SKILL_COUNTS, GLANCE, TOOLS,
 } from "./content";
 
-const HEADLINE = "I turn ideas into meaningful learning experiences.";
+const HEADLINE = "I turn problems into meaningful learning experiences.";
 let booted = false; // typing intro plays once per visit
 
 /* ---------- helpers ---------- */
