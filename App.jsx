@@ -337,7 +337,7 @@ function Block({ b }) {
   if (t === "fig") return <Fig f={v} />;
   if (t === "carousel") return <Carousel label={v} slides={w} {...(x || {})} />;
   if (t === "embed") return (
-    <div className="embed">
+    <div className="embed" id={x}>
       <iframe src={w} title={v} loading="lazy" allow="fullscreen" allowFullScreen />
       <a href={w} target="_blank" rel="noreferrer">Open in a new tab</a>
     </div>
@@ -348,23 +348,36 @@ function Block({ b }) {
 }
 function Detail({ slug }) {
   const d = DETAILS[slug];
+  // Embedded Rise courses call scrollIntoView as they load, which scrolls this page down to them.
+  // For the first 10 seconds, undo any scroll the visitor didn't cause (input inside the embeds counts as theirs).
+  useEffect(() => {
+    let user = false;
+    const y = scrollY, mark = () => { user = true; }, evs = ["wheel", "touchstart", "keydown", "pointerdown"];
+    const watch = (w) => evs.forEach((e) => w.addEventListener(e, mark, { passive: true, capture: true }));
+    watch(window);
+    document.querySelectorAll(".detail iframe").forEach((f) => {
+      const hook = () => { try { watch(f.contentWindow); } catch (e) {} };
+      hook(); f.addEventListener("load", hook);
+    });
+    const onScroll = () => { if (!user && scrollY !== y) scrollTo(0, y); };
+    addEventListener("scroll", onScroll);
+    const stop = setTimeout(() => removeEventListener("scroll", onScroll), 10000);
+    return () => { clearTimeout(stop); removeEventListener("scroll", onScroll); evs.forEach((e) => removeEventListener(e, mark, { capture: true })); };
+  }, [slug]);
   if (!d) return <div className="wrap sec top"><h1 className="pg">Not found</h1><Btn href="/project-page/">Project Page</Btn></div>;
   const alt = d.heroAlt || ALT[slug];
-  // Button at the end of the case study: scrolls back up to the embedded project ("top"), or opens it elsewhere.
+  // Try It: scrolls back up to the embedded project ("top"), or opens it elsewhere.
   const tryClick = () => track("event", "try_it_yourself", { project: d.title });
-  const toTop = () => { tryClick(); scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); };
   const jump = (id) => document.getElementById(id)?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   const storyboardBtn = <>
     {d.storyboard && <button type="button" className="btn ghost" onClick={() => jump(d.storyboard)}>Storyboard</button>}
     {d.slides && <button type="button" className="btn ghost" onClick={() => jump(d.slides)}>Slide Deck</button>}
   </>;
-  const tryIt = d.tryIt === "top" ? <button type="button" className="btn" onClick={toTop}>Try It</button>
+  const tryIt = d.tryIt === "top" ? <button type="button" className="btn" onClick={() => { tryClick(); jump("demo"); }}>Try It</button>
     : d.tryIt && <Btn href={d.tryIt} onClick={tryClick}>Try It</Btn>;
   return (
     <div className="top">
       <article className="wrap detail sec">
-        {d.embed ? <Block b={["embed", ...d.embed]} />
-          : d.img ? <Img className="dhero" src={d.img} alt={alt} /> : <div className="dhero ph" role="img" aria-label={alt}><span>Image placeholder</span></div>}
         <h1 className="pg">{d.title}</h1>
         <p className="lead">{d.sub}</p>
         <p className="skills">{d.skills}</p>
@@ -374,6 +387,8 @@ function Detail({ slug }) {
             <dl>{Object.entries(GLANCE[slug]).map(([k, v]) => [<dt key={k}>{k}</dt>, <dd key={k + "-v"}>{v}</dd>])}</dl>
           </section>
         )}
+        {d.embed ? <Block b={["embed", d.embed[0], d.embed[1], "demo"]} />
+          : d.img ? <Img className="dhero" src={d.img} alt={alt} /> : <div className="dhero ph" role="img" aria-label={alt}><span>Image placeholder</span></div>}
         {!d.embed && tryIt && <div className="btn-row">{tryIt}{storyboardBtn}</div>}
         {d.body && <div className="dbody">{d.body.map((b, i) => <Block key={i} b={b} />)}</div>}
         {tryIt && <div className="btn-row">{tryIt}{storyboardBtn}</div>}
@@ -608,7 +623,7 @@ th{font-family:var(--head);font-weight:500}
 .carousel{margin:2rem 0;max-width:900px;scroll-margin-top:6rem}
 .carousel.wide{max-width:min(100%,calc((100svh - 12rem) * 16 / 9));margin-left:auto;margin-right:auto} /* whole slide plus the arrows fit on screen */
 .btn-row{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
-.embed{margin:3rem 0}.detail>.embed{margin:0 0 2.5rem}
+.embed{margin:3rem 0;scroll-margin-top:6rem}.detail>.embed{margin:0 0 2.5rem}
 .embed iframe{display:block;width:100%;height:min(80vh,820px);min-height:520px;border:1px solid var(--line);border-radius:14px;background:#fff}
 .embed a{display:inline-block;margin-top:.75rem;font-size:.9rem}
 .car-stage{border:1px solid var(--line);border-radius:12px;overflow:hidden;aspect-ratio:16/9;background:var(--line)}

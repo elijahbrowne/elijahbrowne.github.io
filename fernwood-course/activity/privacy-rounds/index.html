@@ -1751,7 +1751,7 @@ function showReply(){
   placeTalk();
   mode = "beat";
   byId("hint-line").textContent = "Press Enter to carry on.";
-  byId("continue-btn").focus();
+  byId("continue-btn").focus({ preventScroll:true });
 }
 
 function closeTalk(){
@@ -1890,7 +1890,8 @@ function show(which){
     fit();
   }
   if (which === "title"){ mode = "title"; }
-  byId("screen-" + which).focus();
+  /* only when the game already has focus, so an embedding page is not scrolled or robbed of focus on load */
+  if (document.hasFocus()){ byId("screen-" + which).focus({ preventScroll:true }); }
   if (which === "title"){ send("screen", screenPayload("title", "Start")); }
   if (which === "end"){ send("screen", screenPayload("finish", "Your day")); }
 }
