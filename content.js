@@ -174,7 +174,7 @@ export const DETAILS = {
     storyboard: "storyboard",
     body: [
       ["h2", "Summary"],
-      ["p", "I originally created [Sending a Professional Email](https://na-9911.reach360.com/share/course/866f4f69-02bb-42ca-995f-7638f7d41b33) as a classroom assignment for 10th-grade students who struggled with the basics of writing professional emails. Students commonly omitted subject lines, incorrectly formatted the body of an email, or did not know how to create a professional email signature."],
+      ["p", "I originally created Sending a Professional Email as a classroom assignment for 10th-grade students who struggled with the basics of writing professional emails. Students commonly omitted subject lines, incorrectly formatted the body of an email, or did not know how to create a professional email signature."],
       ["p", "The original assignment was a four-page document that explained the components of a professional email before asking students to demonstrate their understanding by emailing their teacher."],
       ["p", "When I revisited the assignment, I saw an opportunity to transform the static resource into a more interactive learning experience while broadening the intended audience beyond high school students."],
       ["p", "I redesigned Sending a Professional Email in Articulate Storyline 360 for new workers developing professional communication skills."],
