@@ -34,7 +34,7 @@ ABOUT_FIRST = re.search(r'export const ABOUT = \[\s*"((?:[^"\\]|\\.)*)"', conten
 # Card order and cover image come from PROJECTS; title and sub from DETAILS.
 projects = []
 for slug, img in re.findall(r'\{ title: "[^"]+", slug: "([^"]+)", img: IMG\.(\w+)', content):
-    start = re.search(rf'(^  "{re.escape(slug)}": \{{|^DETAILS\["{re.escape(slug)}"\] = \{{)', content, re.M).end()
+    start = re.search(rf'(^  "{re.escape(slug)}": \{{$|^DETAILS\["{re.escape(slug)}"\] = \{{$)', content, re.M).end()
     block = content[start:start + 1500]
     title = re.search(r'^\s+title: "((?:[^"\\]|\\.)*)"', block, re.M).group(1)
     sub = re.search(r'^\s+sub: "((?:[^"\\]|\\.)*)"', block, re.M).group(1)
