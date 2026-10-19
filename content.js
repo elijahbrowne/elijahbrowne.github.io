@@ -18,7 +18,7 @@ export const IMG = {
 };
 
 // Home page short intro, shown above the "In this portfolio" cards.
-export const INTRO = "I’m an educator and instructional designer with three years of instructional design experience and three years of teaching high school. I design learning that starts with the learner: clear objectives, real-world practice, and technology used with purpose.";
+export const INTRO = "I’m an educator and instructional designer with three years of instructional design experience and three years of teaching high school. I design learning that starts with the learner: clear objectives, real-world practice, and technology used with purpose. One of my classroom assignments was featured in the 2024 EDUCAUSE Horizon Report: Teaching and Learning Edition.";
 
 // Home page "In this portfolio" cards.
 export const HIGHLIGHTS = [
