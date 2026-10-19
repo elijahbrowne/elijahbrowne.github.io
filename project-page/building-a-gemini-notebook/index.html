@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <base href="/" />
+  <!--meta:start-->
+  <title>Building a Gemini Notebook · Elijah Browne</title>
+  <meta name="description" content="A microlearning lesson on setting up a shared Gemini Notebook for team research" />
+  <link rel="canonical" href="https://elijahbrowne.github.io/project-page/building-a-gemini-notebook/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Elijah Browne" />
+  <meta property="og:url" content="https://elijahbrowne.github.io/project-page/building-a-gemini-notebook/" />
+  <meta property="og:title" content="Building a Gemini Notebook · Elijah Browne" />
+  <meta property="og:description" content="A microlearning lesson on setting up a shared Gemini Notebook for team research" />
+  <meta property="og:image" content="https://elijahbrowne.github.io/images/gemini-microlearning/cover.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!--meta:end-->
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+  <style>body{margin:0;background:#fff}@media(prefers-color-scheme:dark){body{background:#000}}</style>
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react"
+    }
+  }
+  </script>
+  <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+  <!-- Google Analytics. Page views are sent by App.jsx because the site changes pages without reloading. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MJVHQ802M"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-7MJVHQ802M", { send_page_view: false });
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <!--noscript:start--><noscript><h1>Building a Gemini Notebook</h1><p>A microlearning lesson on setting up a shared Gemini Notebook for team research</p><p>Email <a href="mailto:elijahbrowne48@gmail.com">elijahbrowne48@gmail.com</a> or see <a href="https://www.linkedin.com/in/elijahb0509/">LinkedIn</a>.</p></noscript><!--noscript:end-->
+  <!-- No build step: compile App.jsx in the browser, point its "./content" import at content.js, then mount.
+       Both files are fetched with cache: "no-cache" so visitors always get the latest version (unchanged files come back as a cheap 304). -->
+  <script type="module">
+    import { createElement } from "react";
+    import { createRoot } from "react-dom/client";
+    const root = document.getElementById("root");
+    const fresh = async (path) => (await fetch(path, { cache: "no-cache" })).text();
+    const moduleUrl = (js) => URL.createObjectURL(new Blob([js], { type: "text/javascript" }));
+    try {
+      const [src, contentSrc] = await Promise.all([fresh("./App.jsx"), fresh("./content.js")]);
+      const { code } = Babel.transform(src, { filename: "App.jsx", presets: [["react", { runtime: "automatic" }]] });
+      const content = moduleUrl(contentSrc);
+      const js = code.replace(/from\s*["']\.\/content(\.js)?["']/g, `from "${content}"`);
+      const { default: App } = await import(moduleUrl(js));
+      createRoot(root).render(createElement(App));
+    } catch (e) {
+      console.error(e);
+      root.innerHTML = '<p style="font-family:system-ui;padding:2rem">The site failed to load. If you opened index.html directly, serve the folder instead (e.g. <code>python3 -m http.server</code>).</p>';
+    }
+  </script>
+</body>
+</html>

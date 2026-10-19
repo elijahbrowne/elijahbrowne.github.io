@@ -115,7 +115,7 @@ const Entries = ({ title, items }) => (
   </section>
 );
 function Card({ p, big }) {
-  const href = p.slug ? `#/project-page/${p.slug}` : p.ext;
+  const href = p.slug ? `/project-page/${p.slug}/` : p.ext;
   return (
     <article className={"card" + (big ? " big" : "")}>
       {p.img ? <Img src={p.img} alt={ALT[p.slug || p.title] || `Cover image for ${p.title}`} loading="lazy" /> : <div className="ph" aria-hidden="true" />}
@@ -145,7 +145,7 @@ function Home() {
           <div className="hero-r">
             <Img className="hero-i" src={IMG.home} alt={ALT.home} />
             <div className="hero-btns">
-              <Btn href="#/project-page">Portfolio Projects</Btn>
+              <Btn href="/project-page/">Portfolio Projects</Btn>
               <a className="btn ghost" href={RESUME} download>Download Resume</a>
             </div>
           </div>
@@ -154,7 +154,7 @@ function Home() {
       <section className="wrap sec tight">
         <h2>About me</h2>
         <p className="intro">{INTRO}</p>
-        <a className="more" href="#/about">More about me</a>
+        <a className="more" href="/about/">More about me</a>
       </section>
       <section className="wrap sec">
         <h2>In this portfolio, you’ll find examples of:</h2>
@@ -170,7 +170,7 @@ function Home() {
       <section className="wrap sec">
         <h2>Selected work</h2>
         <div className="grid">{sel.map((p) => <Card key={p.title} p={{ ...p, blurb: undefined, skills: undefined }} />)}</div>
-        <p className="center"><Btn href="#/project-page" ghost>View Projects</Btn></p>
+        <p className="center"><Btn href="/project-page/" ghost>View Projects</Btn></p>
       </section>
     </div>
   );
@@ -336,7 +336,7 @@ function Block({ b }) {
 }
 function Detail({ slug }) {
   const d = DETAILS[slug];
-  if (!d) return <div className="wrap sec top"><h1 className="pg">Not found</h1><Btn href="#/project-page">Project Page</Btn></div>;
+  if (!d) return <div className="wrap sec top"><h1 className="pg">Not found</h1><Btn href="/project-page/">Project Page</Btn></div>;
   const alt = d.heroAlt || ALT[slug];
   // Button at the end of the case study: scrolls back up to the embedded project ("top"), or opens it elsewhere.
   const tryClick = () => track("event", "try_it_yourself", { project: d.title });
@@ -374,7 +374,7 @@ const initTheme = () => {
 const Sun = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>;
 const Moon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>;
 
-/* ---------- analytics: one page view per #/ route, plus Try it Yourself clicks ---------- */
+/* ---------- analytics: one page view per route, plus Try it Yourself clicks ---------- */
 const track = (...args) => { if (window.gtag) window.gtag(...args); };
 const pageName = (parts) => {
   if (!parts.length) return "Home";
@@ -387,38 +387,53 @@ const pageName = (parts) => {
 };
 
 export default function App() {
-  const [hash, setHash] = useState(() => location.hash.replace(/^#/, "") || "/");
+  const [path, setPath] = useState(() => {
+    // Old #/ links (shared before clean URLs) move to the matching real path.
+    if (location.hash.startsWith("#/")) history.replaceState(null, "", location.hash.slice(1).replace(/\/?$/, "/"));
+    return location.pathname;
+  });
   const [theme, setTheme] = useState(initTheme);
   const [menu, setMenu] = useState(false);
   useEffect(() => {
-    const f = () => { setHash(location.hash.replace(/^#/, "") || "/"); scrollTo(0, 0); };
-    addEventListener("hashchange", f);
-    return () => removeEventListener("hashchange", f);
+    const f = () => setPath(location.pathname);
+    addEventListener("popstate", f);
+    return () => removeEventListener("popstate", f);
   }, []);
+  // Links to app pages change the page without a reload; files, downloads, new tabs and other sites are left alone.
+  const navigate = (e) => {
+    const a = e.target.closest("a[href]");
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if ((a.target && a.target !== "_self") || a.hasAttribute("download") || a.origin !== location.origin) return;
+    if (!/^\/((about|project-page)(\/.*)?)?$/.test(a.pathname)) return;
+    e.preventDefault();
+    if (a.pathname !== location.pathname) history.pushState(null, "", a.pathname);
+    setPath(a.pathname);
+    scrollTo(0, 0);
+  };
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     try { localStorage.setItem("theme", theme); } catch (e) {}
   }, [theme]);
-  const parts = hash.split("/").filter(Boolean);
+  const parts = path.split("/").filter(Boolean);
   useEffect(() => {
     const name = pageName(parts);
     document.title = name === "Home" ? "Elijah Browne · Instructional Designer" : `${name} · Elijah Browne`;
     track("event", "page_view", { page_title: name, page_location: location.href, page_path: "/" + parts.join("/") });
-  }, [hash]);
+  }, [path]);
   let page = <Home />;
   if (parts[0] === "about") page = <About />;
   else if (parts[0] === "project-page") page = parts[1] ? <Detail slug={parts[1]} /> : <ProjectPage />;
   return (
-    <div className="site">
+    <div className="site" onClick={navigate}>
       <style>{CSS}</style>
       <a className="skip" href="#main" onClick={(e) => { e.preventDefault(); document.getElementById("main").focus(); }}>Skip to main content</a>
       <nav className="nav" aria-label="Main">
-        <a className="brand" href="#/">Elijah Browne</a>
+        <a className="brand" href="/">Elijah Browne</a>
         <div className="nav-r">
           <ul className={menu ? "open" : ""} onClick={() => setMenu(false)}>
-            <li><a href="#/">Home</a></li>
-            <li><a href="#/about">About Me</a></li>
-            <li><a href="#/project-page">Project Page</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about/">About Me</a></li>
+            <li><a href="/project-page/">Project Page</a></li>
           </ul>
           <button className="icon" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}>
             {theme === "dark" ? <Sun /> : <Moon />}
@@ -458,9 +473,9 @@ main:focus{outline:0}
 .sr,.skip:not(:focus){position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .skip:focus{position:fixed;top:.5rem;left:.5rem;z-index:100;background:var(--bg);padding:.6rem 1rem;border-radius:8px}
 .site a:not(.brand):not(.skip)::after{content:"↗";content:"↗" / "";display:inline-block;font-size:.75em;margin-left:.3em;text-decoration:none;transition:transform .2s}
-.site a[href^="#"]:not(.brand):not(.skip)::after{content:"→";content:"→" / ""}
+.site a[href^="/"]:not(.brand):not(.skip)::after{content:"→";content:"→" / ""}
 .site a:not(.brand):hover::after{transform:translate(2px,-2px)}
-.site a[href^="#"]:not(.brand):hover::after{transform:translateX(3px)}
+.site a[href^="/"]:not(.brand):hover::after{transform:translateX(3px)}
 .wrap{max-width:1120px;margin:0 auto;padding:0 clamp(1rem,4vw,2rem)}
 .sec{padding-top:4.5rem;padding-bottom:1rem}
 .sec.tight{padding-top:1rem}
