@@ -23,7 +23,7 @@ export const INTRO = "I’m an educator and instructional designer with three ye
 // Home page "In this portfolio" cards.
 export const HIGHLIGHTS = [
   { icon: "🎯", lead: "Scenario-based eLearning", text: "built in Articulate Storyline and Rise, where learners practice real decisions, from customer conversations to workplace email." },
-  { icon: "🤖", lead: "AI-assisted learning", text: "designed with intention: AI simulations and Gemini Notebooks that keep learners practicing and educators in control." },
+  { icon: "✨", lead: "AI-assisted learning", text: "designed with intention: AI simulations and Gemini Notebooks that keep learners practicing and educators in control." },
   { icon: "🏫", lead: "Classroom-tested curriculum", text: "shaped by years of teaching media literacy, life skills, and financial literacy to real students." },
   { icon: "🎬", lead: "Video and multimedia", text: "from award-winning documentary editing to video storytelling that brings ideas to life." },
 ];
