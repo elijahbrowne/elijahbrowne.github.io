@@ -348,6 +348,26 @@ function Block({ b }) {
 }
 function Detail({ slug }) {
   const d = DETAILS[slug];
+  // start_demo: clicking into an embedded demo moves focus into its iframe, which blurs this window.
+  // Rise courses also focus themselves while loading, so only count it when the pointer is over the
+  // demo or the visitor just pressed Tab. Once per page view.
+  useEffect(() => {
+    if (!d) return;
+    let sent = false, over = false, tabAt = 0;
+    const onOver = (e) => { over = !!e.target.closest?.(".embed iframe"); };
+    const onKey = (e) => { if (e.key === "Tab") tabAt = Date.now(); };
+    const onBlur = () => {
+      const f = document.activeElement;
+      if (sent || !f || f.tagName !== "IFRAME" || !f.closest(".embed")) return;
+      if (!over && Date.now() - tabAt > 1000) return;
+      sent = true;
+      track("event", "start_demo", { project: d.title, method: "embed" });
+    };
+    addEventListener("mouseover", onOver);
+    addEventListener("keydown", onKey);
+    addEventListener("blur", onBlur);
+    return () => { removeEventListener("mouseover", onOver); removeEventListener("keydown", onKey); removeEventListener("blur", onBlur); };
+  }, [slug]);
   // Embedded Rise courses call scrollIntoView as they load, which scrolls this page down to them.
   // For the first 10 seconds, undo any scroll the visitor didn't cause (input inside the embeds counts as theirs).
   useEffect(() => {
@@ -368,6 +388,8 @@ function Detail({ slug }) {
   const alt = d.heroAlt || ALT[slug];
   // Try It: scrolls back up to the embedded project ("top"), or opens it elsewhere.
   const tryClick = () => track("event", "try_it_yourself", { project: d.title });
+  // "Open in a new tab" under an embed (left or middle click)
+  const newTab = (e) => { if (e.button <= 1 && e.target.closest(".embed > a")) track("event", "start_demo", { project: d.title, method: "new_tab" }); };
   const jump = (id) => document.getElementById(id)?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   const storyboardBtn = <>
     {d.storyboard && <button type="button" className="btn ghost" onClick={() => jump(d.storyboard)}>Storyboard</button>}
@@ -377,7 +399,7 @@ function Detail({ slug }) {
     : d.tryIt && <Btn href={d.tryIt} onClick={tryClick}>Try It</Btn>;
   return (
     <div className="top">
-      <article className="wrap detail sec">
+      <article className="wrap detail sec" onClick={newTab} onAuxClick={newTab}>
         <h1 className="pg">{d.title}</h1>
         <p className="lead">{d.sub}</p>
         <p className="skills">{d.skills}</p>
@@ -450,8 +472,11 @@ export default function App() {
   const parts = path.split("/").filter(Boolean);
   useEffect(() => {
     const name = pageName(parts);
-    document.title = name === "Home" ? "Elijah Browne · Instructional Designer" : `${name} · Elijah Browne`;
-    track("event", "page_view", { page_title: name, page_location: location.href, page_path: "/" + parts.join("/") });
+    // Same string for the tab and the page_view, so GA4 doesn't split each page across two titles.
+    // The static pages written by tools/build_pages.py use this format too.
+    const title = name === "Home" ? "Elijah Browne · Instructional Designer" : `${name} · Elijah Browne`;
+    document.title = title;
+    track("event", "page_view", { page_title: title, page_location: location.href, page_path: "/" + parts.join("/") });
   }, [path]);
   let page = <Home />;
   if (parts[0] === "about") page = <About />;
