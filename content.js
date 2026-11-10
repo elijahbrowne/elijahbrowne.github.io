@@ -149,7 +149,7 @@ export const DETAILS = {
       ["p", "When the interaction ends, Storyline receives the result and displays:"],
       ["ul", ["Pass/fail status", "Score", "Specific feedback. (I chose to cap the character limit at 500)"]],
       ["p", "If the learner does not meet the required performance level, they can return to the learning experience and try again."],
-      ["p", "Devlin.ai lets the designer go in and review the learners session which is helpful for debugging the AI simulation."],
+      ["p", "Devlin.ai lets the designer go in and review the learner's sessions, which is helpful for debugging the AI simulation."],
       ["h3", "The Cost of AI Practice"],
       ["p", "The biggest discovery from this project was not technical. It was economic."],
       ["p", "My Devlin.ai account began with 1,500 free credits. During development, I observed an average usage of approximately 43.5 credits per completed training interaction."],
@@ -251,16 +251,16 @@ export const GLANCE = {
   "smartphone-content-creation": { Audience: "Beginners with little or no experience creating content on a smartphone", Tools: "Articulate Rise 360, Canva", Timeline: "Approx. 2 days", Deliverable: "Three-lesson, scenario-based Rise course" },
 };
 
-// Alt text. I could not view the photos, so these describe purpose/context — please check them against the real images.
+// Alt text, checked against the images (Nov 2026).
 export const ALT = {
   home: "Portrait of Elijah Browne",
-  "turning-shoppers-into-cardholders": "Title slide reading Broadlane: Turning Shoppers into Cardholders, beside a photo of a cashier bagging groceries at a checkout",
+  "turning-shoppers-into-cardholders": "Title slide reading BroadLane: Turning Shoppers into Cardholders, beside a photo of a cashier bagging items at a checkout",
   "sending-a-professional-email": "Title slide reading Sending a Professional Email, beside an illustration of a desktop computer with a keyboard and mouse",
   "turning-payment-research-into-a-gemini-notebook": "Gemini Notebook titled Payment Systems, with a source list on the left and a chat breaking down the Stripe and Braintree price formulas",
   "understanding-stuart-hall-gemini-notebook": "Gemini Notebook titled Understanding Reception Theory, with sources, a chat explaining a flashcard answer, and a Communication Flashcards panel",
   "task-monsters": "Task Monsters start screen with a task input, battle difficulty choices and a pixel-art ghost with 400 HP",
   "smartphone-content-creation": "Rise lesson with a smartphone camera screen framing a dog on a couch, with seven numbered callouts on the camera controls",
-  "patient-information-confidentiality-policy-review": "Patient Privacy Rounds game: on a pixel-art clinic floor, Priya at the front desk phones asks what to tell a son who wants his mom's lab results, with three numbered answers to choose from",
+  "patient-information-confidentiality-policy-review": "Patient Privacy Rounds game: on a pixel-art clinic floor, Priya, at the front desk phones, asks what to tell a son who wants his mom's lab results, with three numbered answers to choose from",
   "building-a-gemini-notebook": "Rise lesson card titled Studio Panel, explaining what the Gemini Notebook Studio Panel does, over a notebook screenshot",
 };
 
@@ -292,12 +292,12 @@ const F = (alt, cap, src) => ({ alt, cap, src });
 DETAILS["turning-payment-research-into-a-gemini-notebook"] = {
   img: IMG.payment,
   title: "Turning Payment Research Into a Gemini Notebook",
-  sub: "What if Gemini Notebook could streamline your business' research phase?",
-  heroAlt: "Screenshot of a Gemini Notebook titled Payment Systems, with a source list on the left, a chat comparing Stripe and Braintree pricing formulas in the center, and generated notes on the right",
+  sub: "What if Gemini Notebook could streamline your business's research phase?",
+  heroAlt: "Screenshot of a Gemini Notebook titled Payment Systems, with a source list on the left, a chat comparing Stripe and Braintree pricing formulas in the center, and a Studio panel of generated reports on the right",
   body: [
     ["h2", "The Challenge"],
     ["p", "Researching payment processors can quickly become overwhelming."],
-    ["p", "As the payment-streams researcher for a Startup, Rebecca Harris needed to research and compare Stripe, Braintree, and Adyen to help the team understand which solutions could support the project. Her research needed to cover practical considerations such as cost, advantages and disadvantages, and technical implementation."],
+    ["p", "As the payments researcher for a startup, Rebecca Harris needed to research and compare Stripe, Braintree, and Adyen to help the team understand which solutions could support the project. Her research needed to cover practical considerations such as cost, advantages and disadvantages, and technical implementation."],
     ["p", "The challenge wasn't simply finding information. There was too much of it."],
     ["p", "Payment processor websites contained valuable documentation alongside marketing material, making it difficult to quickly distinguish substantive information from advertisements and promotional content. Technical documentation was also spread across different formats and locations."],
     ["p", "She needed a way to bring these resources together, understand them efficiently, and give the rest of the team a reliable way to verify the information."],
@@ -334,7 +334,7 @@ DETAILS["turning-payment-research-into-a-gemini-notebook"] = {
   ],
 };
 attach("turning-payment-research-into-a-gemini-notebook", "Researching with the Sources", "right", F("Screenshot of a Gemini Notebook answering a question about documentation and technical support for the Stripe Ruby library, with numbered citations linking back to sources", 'Prompt: "What is the level of documentation and technical support."', "images/payment/docs.jpg"));
-attach("turning-payment-research-into-a-gemini-notebook", "From Research to Technical Understanding", "left", F("Screenshot of a Gemini Notebook showing a side-by-side table of Stripe and Braintree fees for sale amounts from $10 to $250", 'Prompt: "In a simple table, breakdown the price calculation for Stripe vs Brain Tree."', "images/payment/fee-table.jpg"));
+attach("turning-payment-research-into-a-gemini-notebook", "From Research to Technical Understanding", "left", F("Screenshot of a Gemini Notebook showing a side-by-side table of Stripe and Braintree fees for sale amounts from $10 to $250", 'Prompt: "In a simple table, break down the price calculation for Stripe vs Braintree."', "images/payment/fee-table.jpg"));
 
 DETAILS["smartphone-content-creation"] = {
   img: IMG.smartphone,
@@ -393,7 +393,7 @@ DETAILS["smartphone-content-creation"] = {
     ["p", "Most importantly, this project showed me that scenario-based learning is an area of instructional design I want to continue developing."],
   ],
 };
-attach("smartphone-content-creation", "Scenario-Based Learning", "right", F("Rise course lesson card titled Photo Mode, with a photo of two dogs sitting beside a stone column", "Rise lesson content in the Photo Mode section.", "images/smartphone/photo-mode.jpg"));
+attach("smartphone-content-creation", "Scenario-Based Learning", "right", F("Rise editor showing a lesson card titled Photo Mode, with a short description above a photo of two dogs beside a stone column", "Rise lesson content in the Photo Mode section.", "images/smartphone/photo-mode.jpg"));
 attach("smartphone-content-creation", "Building the Learning Experience", "right", F("Rise lesson showing a smartphone camera screen framing a dog, with seven numbered callouts, above a section titled Camera App Icons: Flashcards", "A labeled graphic leads into a flashcard activity.", "images/smartphone/flashcards.jpg"));
 attach("smartphone-content-creation", "Developing the Visuals", "left", F("Canva editor showing a slide of a phone camera screen framing Gary, with a row of slide thumbnails below", "Building the Gary visuals in Canva.", "images/smartphone/canva.jpg"));
 figAfter("smartphone-content-creation", "Developing the Visuals", ["figs", [
@@ -479,7 +479,7 @@ DETAILS["understanding-stuart-hall-gemini-notebook"] = {
   tryIt: "https://notebook.google.com/notebook/e34b57e2-1097-4182-9f3a-0708175f5843",
   body: [
     ["h2", "Summary"],
-    ["p", "Understanding Stuart Hall’s Reception Theory is an AI-supported learning experience designed to help learners explore Hall’s Encoding/Decoding Model and develop a deeper understanding of how audiences interpret media."],
+    ["p", "The Understanding Reception Theory Notebook is an AI-supported learning experience designed to help learners explore Stuart Hall’s Encoding/Decoding Model and develop a deeper understanding of how audiences interpret media."],
     ["p", "Built in Gemini Notebook, the experience uses a curated collection of sources as the foundation for an interactive, conversational learning environment. Rather than asking AI to replace instruction, the project explores how it can give learners another way to engage with material they have already encountered in the classroom."],
     ["h2", "Understanding the Learner"],
     ["p", "This experience is designed for learners who are being introduced to Stuart Hall’s Reception Theory within a media studies context."],
@@ -521,7 +521,7 @@ DETAILS["patient-information-confidentiality-policy-review"] = {
     ["p", "Staff sign an acknowledgment once a year. They scroll to the bottom, check the box, and go back to work. The policy exists, but it doesn't live on the floor."],
     ["h2", "Designing the Experience"],
     ["h3", "1. One shift, five calls"],
-    ["p", "The learner plays a supervisor on the clinic floor for one shift. Coworkers sit at their desks and call out when they need help: \"Jo, got a sec?\""],
+    ["p", "The learner plays a supervisor on the clinic floor for one shift. Coworkers sit at their desks and call out when they need help: \"Elijah, got a minute?\""],
     ["fig", F("Patient Privacy Rounds clinic floor in pixel art at 9:00: four offices along the top, a printer station, a conference table and a waiting area, with coworkers at their desks. A status bar reads Priya needs you. Walk over, or tap Priya.", "The clinic floor at 9:00. Coworkers call out when they need you.", "images/fernwood/floor.jpg")],
     ["p", "The learner walks over and hears the situation. Each call has three choices."],
     ["table", ["Call", "Coworker", "Situation", "Right call"], [
@@ -622,8 +622,8 @@ figAfter("sending-a-professional-email", "Storyboard", ["carousel", "Storyboard"
   Array.from({ length: 10 }, (_, i) => ({ src: `images/email/storyboard/${i + 1}.jpg`, alt: `Storyboard page ${i + 1} of 10` })),
   { id: "storyboard", wide: true }]);
 figAfter("sending-a-professional-email", "Scenario-Based Assessment", ["figs", [
-  F("Articulate Storyline editing the Anatomy of an Email slide, with a hotspot over each section of the email and the hover triggers listed on the right", "Behind the scenes: hotspots and hover triggers.", "images/email/storyline-hotspots.jpg"),
-  F("Articulate Storyline showing the base layer of the To, CC and BCC slide with the timeline of buttons below", "Behind the scenes: the button layers on the timeline.", "images/email/storyline-buttons.jpg"),
+  F("Articulate Storyline editing the Anatomy of an Email slide, with a hotspot over each section of the email and the hover triggers listed on the right", "Behind the scenes: hotspots and hover triggers.", "images/email/storyline-buttons.jpg"),
+  F("Articulate Storyline showing the base layer of the To, CC and BCC slide with the timeline of buttons below", "Behind the scenes: the button layers on the timeline.", "images/email/storyline-hotspots.jpg"),
 ]]);
 // Storyboard: its own section after the Summary; the "Storyboard" button jumps here.
 figAfter("turning-shoppers-into-cardholders", "Summary", ["h2", "Storyboard"]);
