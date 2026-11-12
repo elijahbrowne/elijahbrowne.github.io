@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   RESUME, EMAIL, LINKEDIN, TAGLINE, IMG, ALT, INTRO, HIGHLIGHTS, ABOUT, PUBLICATIONS, CERTS, AWARDS,
-  PROJECTS, RESOURCES, VIDEOS, DETAILS, SKILL_COUNTS, GLANCE, TOOLS,
+  PROJECTS, RESOURCES, VIDEOS, DETAILS, SKILL_COUNTS, GLANCE, TOOLS, SUMMARY, FEATURED,
 } from "./content";
 
 const HEADLINE = "I turn problems into meaningful learning experiences.";
@@ -141,6 +141,19 @@ function Home() {
           <div className="hero-t">
             <Typed Tag="p" className="eyebrow" text={TAGLINE} start={0} n={n} caret={caret} />
             <Typed Tag="h1" text={HEADLINE} start={TAGLINE.length} n={n} caret={caret} />
+            <section className="featured" aria-labelledby="feat-h">
+              <h2 id="feat-h">Featured work</h2>
+              {FEATURED.map((slug) => {
+                const d = DETAILS[slug];
+                return (
+                  <div className="feat" key={slug}>
+                    <h3><a href={`/project-page/${slug}/`}>{d.title}</a></h3>
+                    <p>{d.sub}</p>
+                    <a className="btn sm" href={`/project-page/${slug}/#demo`} onClick={() => track("event", "try_it_yourself", { project: d.title })}>Try the demo</a>
+                  </div>
+                );
+              })}
+            </section>
           </div>
           <div className="hero-r">
             <Img className="hero-i" src={IMG.home} alt={ALT.home} />
@@ -368,6 +381,12 @@ function Detail({ slug }) {
     addEventListener("blur", onBlur);
     return () => { removeEventListener("mouseover", onOver); removeEventListener("keydown", onKey); removeEventListener("blur", onBlur); };
   }, [slug]);
+  // "Try the demo" links from the home page arrive with #demo: start at the demo.
+  // (Runs before the scroll guard below, so the guard holds this position.)
+  useEffect(() => {
+    // "instant": a smooth scroll would be undone by the scroll guard.
+    if (location.hash === "#demo") document.getElementById("demo")?.scrollIntoView({ behavior: "instant" });
+  }, [slug]);
   // Embedded Rise courses call scrollIntoView as they load, which scrolls this page down to them.
   // For the first 10 seconds, undo any scroll the visitor didn't cause (input inside the embeds counts as theirs).
   useEffect(() => {
@@ -403,6 +422,12 @@ function Detail({ slug }) {
         <h1 className="pg">{d.title}</h1>
         <p className="lead">{d.sub}</p>
         <p className="skills">{d.skills}</p>
+        {d.tryTop && tryIt && <div className="btn-row">{tryIt}</div>}
+        {SUMMARY[slug] && (
+          <section className="glance summary" aria-label="Summary">
+            <dl>{Object.entries(SUMMARY[slug]).map(([k, v]) => [<dt key={k}>{k}</dt>, <dd key={k + "-v"}>{v}</dd>])}</dl>
+          </section>
+        )}
         {GLANCE[slug] && (
           <section className="glance" aria-labelledby="glance-h">
             <h2 id="glance-h">At a glance</h2>
@@ -419,6 +444,23 @@ function Detail({ slug }) {
   );
 }
 
+/* ---------- next step: closes every page ---------- */
+function NextStep({ parts }) {
+  const i = parts[0] === "project-page" && parts[1] ? PROJECTS.findIndex((p) => p.slug === parts[1]) : -1;
+  const next = i >= 0 ? PROJECTS[(i + 1) % PROJECTS.length] : null;
+  return (
+    <section className="wrap next" aria-labelledby="next-h">
+      <h2 id="next-h">Next step</h2>
+      <div className="btn-row">
+        <a className="btn" href={RESUME} download>Download resume</a>
+        <a className="btn ghost" href={EMAIL}>Email me</a>
+        {next ? <a className="btn ghost" href={`/project-page/${next.slug}/`}>Next project: {next.title}</a>
+          : <a className="btn ghost" href="/project-page/">View projects</a>}
+      </div>
+    </section>
+  );
+}
+
 /* ---------- app ---------- */
 const initTheme = () => {
   let t; try { t = localStorage.getItem("theme"); } catch (e) {}
@@ -429,8 +471,24 @@ const initTheme = () => {
 const Sun = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>;
 const Moon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>;
 
-/* ---------- analytics: one page view per route, plus Try it Yourself clicks ---------- */
-const track = (...args) => { if (window.gtag) window.gtag(...args); };
+/* ---------- analytics: one page view per route, plus demo, contact and download clicks ---------- */
+// Every hit is timestamped so a visitor returning after GA4's 30-minute session timeout gets a fresh page_view.
+const track = (...args) => { window.__lastHit = Date.now(); if (window.gtag) window.gtag(...args); };
+const pageView = (title) => track("event", "page_view", { page_title: title, page_location: location.origin + location.pathname + location.search });
+// One URL per page: app routes always end in "/" (/project-page/, never /project-page). Files keep their names.
+const withSlash = (p) => (p.endsWith("/") || /\.[a-z0-9]+$/i.test(p) ? p : p + "/");
+// Contact and download clicks, from any page.
+const trackLink = (a) => {
+  const linkedin = /(^|\.)linkedin\.com$/i.test(a.hostname);
+  if (a.protocol === "mailto:" || linkedin || /contact/i.test(a.textContent)) {
+    track("event", "contact_click", { link_type: a.protocol === "mailto:" ? "email" : linkedin ? "linkedin" : "other", link_url: a.href });
+  }
+  const file = a.origin === location.origin && /\.(pdf|docx?|pptx?|xlsx?|zip)$/i.test(a.pathname);
+  if (file) {
+    const name = decodeURIComponent(a.pathname.split("/").pop());
+    track("event", "file_download", { file_name: name, file_extension: name.split(".").pop().toLowerCase(), link_url: a.href, link_text: a.textContent.trim() });
+  }
+};
 const pageName = (parts) => {
   if (!parts.length) return "Home";
   if (parts[0] === "about") return "About Me";
@@ -445,8 +503,10 @@ export default function App() {
   const [path, setPath] = useState(() => {
     // Old #/ links (shared before clean URLs) move to the matching real path.
     if (location.hash.startsWith("#/")) history.replaceState(null, "", location.hash.slice(1).replace(/\/?$/, "/"));
+    else if (withSlash(location.pathname) !== location.pathname) history.replaceState(null, "", withSlash(location.pathname) + location.search + location.hash);
     return location.pathname;
   });
+  const firstView = useRef(true);
   const [theme, setTheme] = useState(initTheme);
   const [menu, setMenu] = useState(false);
   useEffect(() => {
@@ -457,13 +517,16 @@ export default function App() {
   // Links to app pages change the page without a reload; files, downloads, new tabs and other sites are left alone.
   const navigate = (e) => {
     const a = e.target.closest("a[href]");
-    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (!a) return;
+    trackLink(a);
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     if ((a.target && a.target !== "_self") || a.hasAttribute("download") || a.origin !== location.origin) return;
     if (!/^\/((about|project-page)(\/.*)?)?$/.test(a.pathname)) return;
     e.preventDefault();
-    if (a.pathname !== location.pathname) history.pushState(null, "", a.pathname);
-    setPath(a.pathname);
-    scrollTo(0, 0);
+    const to = withSlash(a.pathname);
+    if (to + a.hash !== location.pathname + location.hash) history.pushState(null, "", to + a.hash);
+    setPath(to);
+    if (!a.hash) scrollTo(0, 0);
   };
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -474,10 +537,18 @@ export default function App() {
     const name = pageName(parts);
     // Same string for the tab and the page_view, so GA4 doesn't split each page across two titles.
     // The static pages written by tools/build_pages.py use this format too.
-    const title = name === "Home" ? "Elijah Browne · Instructional Designer" : `${name} · Elijah Browne`;
+    const title = `${name === "Home" ? "Instructional Designer" : name} · Elijah Browne`;
     document.title = title;
-    track("event", "page_view", { page_title: title, page_location: location.href, page_path: "/" + parts.join("/") });
+    // index.html already sent the first page view as soon as the GA tag loaded; don't send it twice.
+    if (firstView.current) { firstView.current = false; if (window.__pv === location.pathname) return; }
+    pageView(title);
   }, [path]);
+  // Back after 30+ minutes away: GA4 starts a new session, so give it a landing page.
+  useEffect(() => {
+    const f = () => { if (document.visibilityState === "visible" && Date.now() - (window.__lastHit || 0) > 30 * 60 * 1000) pageView(document.title); };
+    document.addEventListener("visibilitychange", f);
+    return () => document.removeEventListener("visibilitychange", f);
+  }, []);
   let page = <Home />;
   if (parts[0] === "about") page = <About />;
   else if (parts[0] === "project-page") page = parts[1] ? <Detail slug={parts[1]} /> : <ProjectPage />;
@@ -499,7 +570,7 @@ export default function App() {
           <button className="burger pill" onClick={() => setMenu(!menu)} aria-expanded={menu}>Menu</button>
         </div>
       </nav>
-      <main id="main" tabIndex="-1">{page}</main>
+      <main id="main" tabIndex="-1">{page}<NextStep key={path} parts={parts} /></main>
       <footer className="foot">
         <DotGrid />
         <div className="wrap">
@@ -650,7 +721,7 @@ th{font-family:var(--head);font-weight:500}
 .btn-row{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
 .embed{margin:3rem 0;scroll-margin-top:6rem}.detail>.embed{margin:0 0 2.5rem}
 .embed iframe{display:block;width:100%;height:min(80vh,820px);min-height:520px;border:1px solid var(--line);border-radius:14px;background:#fff}
-.embed a{display:inline-block;margin-top:.75rem;font-size:.9rem}
+.embed a{display:inline-block;margin-top:.6rem;padding:.2rem 0;font-size:.9rem}
 .car-stage{border:1px solid var(--line);border-radius:12px;overflow:hidden;aspect-ratio:16/9;background:var(--line)}
 .car-stage img,.car-stage video{width:100%;height:100%;object-fit:contain;display:block;background:#fff}
 .car-bar .icon{font-size:.85rem}
@@ -658,9 +729,20 @@ th{font-family:var(--head);font-weight:500}
 .car-bar .icon{flex:none;font-size:1.1rem}
 .car-cap{flex:1;margin:0;text-align:center;font-family:var(--mono);font-weight:300;font-size:.85rem;color:var(--mute)}
 .car-cap span{color:var(--ink);margin-right:.5em}
-.car-dots{display:flex;justify-content:center;gap:.5rem;margin-top:.5rem}
-.car-dots button{width:10px;height:10px;padding:0;border-radius:50%;border:1px solid var(--mute);background:transparent;cursor:pointer}
-.car-dots button[aria-current="true"]{background:var(--accent);border-color:var(--accent)}
+.car-dots{display:flex;justify-content:center;flex-wrap:wrap;gap:0;margin-top:.25rem}
+.car-dots button{width:24px;height:24px;padding:0;border:0;background:transparent;cursor:pointer;display:grid;place-items:center} /* 24px tap area around a 10px dot */
+.car-dots button::before{content:"";width:10px;height:10px;border-radius:50%;border:1px solid var(--mute);box-sizing:border-box}
+.car-dots button[aria-current="true"]::before{background:var(--accent);border-color:var(--accent)}
+.more,.entry a,.feat h3 a{display:inline-block;padding:.15rem 0}
+.featured{display:grid;gap:.9rem;margin-top:1.75rem;max-width:580px}
+.featured h2,.next h2{font-family:var(--mono);font-weight:300;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
+.feat{border:1px solid var(--line);border-radius:12px;padding:.9rem 1.1rem;background:var(--bg)}
+.feat h3{font-size:1.15rem;margin:0 0 .25rem}.feat h3 a{color:var(--ink);text-decoration:none}.feat h3 a:hover{color:var(--accent)}
+.feat p{margin:0 0 .5rem;color:var(--mute);font-size:.95rem;line-height:1.45}
+.feat .btn{margin:0}
+.summary{margin-bottom:0}
+.next{margin-top:5rem;padding-top:2.5rem;border-top:1px solid var(--line)}
+.next .btn{margin:0}
 .foot>.wrap{position:relative;z-index:1}
 .foot{position:relative;overflow:hidden;margin-top:6rem;border-top:1px solid var(--line);padding:4rem 0;text-align:center}
 .foot p{color:var(--mute)}

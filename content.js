@@ -251,6 +251,21 @@ export const GLANCE = {
   "smartphone-content-creation": { Audience: "Beginners with little or no experience creating content on a smartphone", Tools: "Articulate Rise 360, Canva", Timeline: "Approx. 2 days", Deliverable: "Three-lesson, scenario-based Rise course" },
 };
 
+// Summary box at the top of each case study (Problem, What I built, Result). Replace each placeholder with one line.
+export const SUMMARY = {
+  "turning-shoppers-into-cardholders": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
+  "patient-information-confidentiality-policy-review": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
+  "sending-a-professional-email": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
+  "smartphone-content-creation": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
+  "building-a-gemini-notebook": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
+  "turning-payment-research-into-a-gemini-notebook": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
+  "understanding-stuart-hall-gemini-notebook": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
+  "task-monsters": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
+};
+
+// Home page "Featured work". Each card uses the project's sub as its one-line description.
+export const FEATURED = ["turning-shoppers-into-cardholders", "building-a-gemini-notebook"];
+
 // Alt text, checked against the images (Nov 2026).
 export const ALT = {
   home: "Portrait of Elijah Browne",
@@ -508,6 +523,7 @@ DETAILS["patient-information-confidentiality-policy-review"] = {
   img: IMG.fernwood,
   embed: ["Patient Privacy Rounds (browser game)", "fernwood-course/activity/privacy-rounds/index.html"],
   tryIt: "top",
+  tryTop: true, // Try It button sits in the first screen, above the summary
   storyboard: "storyboard",
   slides: "slides",
   body: [

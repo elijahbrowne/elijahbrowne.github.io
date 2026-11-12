@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <base href="/" />
   <!--meta:start-->
-  <title>Elijah Browne · Instructional Designer</title>
-  <meta name="description" content="I’m an educator and instructional designer with two-plus years of secondary teaching and a background in educational media. I design learning that starts with the learner: clear objectives, real-world practice, and technology used with purpose. One of my classroom assignments was featured in the 2024 EDUCAUSE Horizon Report: Teaching and Learning Edition." />
+  <title>Instructional Designer · Elijah Browne</title>
+  <meta name="description" content="Portfolio of Elijah Browne, instructional designer: scenario-based eLearning in Storyline and Rise, AI-assisted learning, and classroom-tested curriculum." />
   <link rel="canonical" href="https://elijahbrowne.github.io/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Elijah Browne" />
   <meta property="og:url" content="https://elijahbrowne.github.io/" />
-  <meta property="og:title" content="Elijah Browne · Instructional Designer" />
-  <meta property="og:description" content="I’m an educator and instructional designer with two-plus years of secondary teaching and a background in educational media. I design learning that starts with the learner: clear objectives, real-world practice, and technology used with purpose. One of my classroom assignments was featured in the 2024 EDUCAUSE Horizon Report: Teaching and Learning Edition." />
+  <meta property="og:title" content="Instructional Designer · Elijah Browne" />
+  <meta property="og:description" content="Portfolio of Elijah Browne, instructional designer: scenario-based eLearning in Storyline and Rise, AI-assisted learning, and classroom-tested curriculum." />
   <meta property="og:image" content="https://elijahbrowne.github.io/images/headshot.jpg" />
   <meta name="twitter:card" content="summary" />
   <!--meta:end-->
@@ -29,18 +29,26 @@
   }
   </script>
   <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
-  <!-- Google Analytics. Page views are sent by App.jsx because the site changes pages without reloading. -->
+  <!-- Google Analytics. The first page view goes out here, before Babel and the app load, so every
+       session has a landing page. App.jsx sends the page views for later in-app navigation. -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MJVHQ802M"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag("js", new Date());
     gtag("config", "G-7MJVHQ802M", { send_page_view: false });
+    (function () {
+      if (location.hash.indexOf("#/") === 0) return; // old #/ link: App.jsx moves it to the real path, then sends the view
+      var p = location.pathname;
+      if (!/\/$/.test(p) && !/\.[a-z0-9]+$/i.test(p)) { p += "/"; history.replaceState(null, "", p + location.search + location.hash); }
+      gtag("event", "page_view", { page_title: document.title, page_location: location.origin + p + location.search });
+      window.__pv = p; window.__lastHit = Date.now();
+    })();
   </script>
 </head>
 <body>
   <div id="root"></div>
-  <!--noscript:start--><noscript><h1>Elijah Browne</h1><p>I’m an educator and instructional designer with two-plus years of secondary teaching and a background in educational media. I design learning that starts with the learner: clear objectives, real-world practice, and technology used with purpose. One of my classroom assignments was featured in the 2024 EDUCAUSE Horizon Report: Teaching and Learning Edition.</p><h2>Projects</h2><ul><li><a href="/project-page/turning-shoppers-into-cardholders/">Turning Shoppers into Cardholders</a></li><li><a href="/project-page/patient-information-confidentiality-policy-review/">Patient Information Confidentiality Policy Review</a></li><li><a href="/project-page/sending-a-professional-email/">Sending a Professional Email</a></li><li><a href="/project-page/smartphone-content-creation/">Smartphone Content Creation: Mastering Framing and Audio</a></li><li><a href="/project-page/building-a-gemini-notebook/">Building a Gemini Notebook</a></li><li><a href="/project-page/turning-payment-research-into-a-gemini-notebook/">Turning Payment Research Into a Gemini Notebook</a></li><li><a href="/project-page/understanding-stuart-hall-gemini-notebook/">Understanding Reception Theory Notebook</a></li><li><a href="/project-page/task-monsters/">Task Monsters</a></li></ul><p>Email <a href="mailto:elijahbrowne48@gmail.com">elijahbrowne48@gmail.com</a> or see <a href="https://www.linkedin.com/in/elijahb0509/">LinkedIn</a>.</p></noscript><!--noscript:end-->
+  <!--noscript:start--><noscript><h1>Elijah Browne</h1><p>Portfolio of Elijah Browne, instructional designer: scenario-based eLearning in Storyline and Rise, AI-assisted learning, and classroom-tested curriculum.</p><h2>Projects</h2><ul><li><a href="/project-page/turning-shoppers-into-cardholders/">Turning Shoppers into Cardholders</a></li><li><a href="/project-page/patient-information-confidentiality-policy-review/">Patient Information Confidentiality Policy Review</a></li><li><a href="/project-page/sending-a-professional-email/">Sending a Professional Email</a></li><li><a href="/project-page/smartphone-content-creation/">Smartphone Content Creation: Mastering Framing and Audio</a></li><li><a href="/project-page/building-a-gemini-notebook/">Building a Gemini Notebook</a></li><li><a href="/project-page/turning-payment-research-into-a-gemini-notebook/">Turning Payment Research Into a Gemini Notebook</a></li><li><a href="/project-page/understanding-stuart-hall-gemini-notebook/">Understanding Reception Theory Notebook</a></li><li><a href="/project-page/task-monsters/">Task Monsters</a></li></ul><p>Email <a href="mailto:elijahbrowne48@gmail.com">elijahbrowne48@gmail.com</a> or see <a href="https://www.linkedin.com/in/elijahb0509/">LinkedIn</a>.</p></noscript><!--noscript:end-->
   <!-- No build step: compile App.jsx in the browser, point its "./content" import at content.js, then mount.
        Both files are fetched with cache: "no-cache" so visitors always get the latest version (unchanged files come back as a cheap 304). -->
   <script type="module">

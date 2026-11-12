@@ -6,13 +6,13 @@
   <base href="/" />
   <!--meta:start-->
   <title>Smartphone Content Creation: Mastering Framing and Audio · Elijah Browne</title>
-  <meta name="description" content="What if your smartphone could become the only content-creation tool you need?" />
+  <meta name="description" content="Smartphone Content Creation: Mastering Framing and Audio: scenario-based learning and backward design by Elijah Browne, instructional designer. What if your smartphone could become the only content-creation tool you need?" />
   <link rel="canonical" href="https://elijahbrowne.github.io/project-page/smartphone-content-creation/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Elijah Browne" />
   <meta property="og:url" content="https://elijahbrowne.github.io/project-page/smartphone-content-creation/" />
   <meta property="og:title" content="Smartphone Content Creation: Mastering Framing and Audio · Elijah Browne" />
-  <meta property="og:description" content="What if your smartphone could become the only content-creation tool you need?" />
+  <meta property="og:description" content="Smartphone Content Creation: Mastering Framing and Audio: scenario-based learning and backward design by Elijah Browne, instructional designer. What if your smartphone could become the only content-creation tool you need?" />
   <meta property="og:image" content="https://elijahbrowne.github.io/images/smartphone/cover.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <!--meta:end-->
@@ -29,18 +29,26 @@
   }
   </script>
   <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
-  <!-- Google Analytics. Page views are sent by App.jsx because the site changes pages without reloading. -->
+  <!-- Google Analytics. The first page view goes out here, before Babel and the app load, so every
+       session has a landing page. App.jsx sends the page views for later in-app navigation. -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7MJVHQ802M"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag("js", new Date());
     gtag("config", "G-7MJVHQ802M", { send_page_view: false });
+    (function () {
+      if (location.hash.indexOf("#/") === 0) return; // old #/ link: App.jsx moves it to the real path, then sends the view
+      var p = location.pathname;
+      if (!/\/$/.test(p) && !/\.[a-z0-9]+$/i.test(p)) { p += "/"; history.replaceState(null, "", p + location.search + location.hash); }
+      gtag("event", "page_view", { page_title: document.title, page_location: location.origin + p + location.search });
+      window.__pv = p; window.__lastHit = Date.now();
+    })();
   </script>
 </head>
 <body>
   <div id="root"></div>
-  <!--noscript:start--><noscript><h1>Smartphone Content Creation: Mastering Framing and Audio</h1><p>What if your smartphone could become the only content-creation tool you need?</p><p>Email <a href="mailto:elijahbrowne48@gmail.com">elijahbrowne48@gmail.com</a> or see <a href="https://www.linkedin.com/in/elijahb0509/">LinkedIn</a>.</p></noscript><!--noscript:end-->
+  <!--noscript:start--><noscript><h1>Smartphone Content Creation: Mastering Framing and Audio</h1><p>Smartphone Content Creation: Mastering Framing and Audio: scenario-based learning and backward design by Elijah Browne, instructional designer. What if your smartphone could become the only content-creation tool you need?</p><p>Email <a href="mailto:elijahbrowne48@gmail.com">elijahbrowne48@gmail.com</a> or see <a href="https://www.linkedin.com/in/elijahb0509/">LinkedIn</a>.</p></noscript><!--noscript:end-->
   <!-- No build step: compile App.jsx in the browser, point its "./content" import at content.js, then mount.
        Both files are fetched with cache: "no-cache" so visitors always get the latest version (unchanged files come back as a cheap 304). -->
   <script type="module">

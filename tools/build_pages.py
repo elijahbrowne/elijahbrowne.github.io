@@ -33,12 +33,12 @@ ABOUT_FIRST = re.search(r'export const ABOUT = \[\s*"((?:[^"\\]|\\.)*)"', conten
 
 # Card order and cover image come from PROJECTS; title and sub from DETAILS.
 projects = []
-for slug, img in re.findall(r'\{ title: "[^"]+", slug: "([^"]+)", img: IMG\.(\w+)', content):
+for slug, img, skills in re.findall(r'\{ title: "[^"]+", slug: "([^"]+)", img: IMG\.(\w+), skills: \[([^\]]*)\]', content):
     start = re.search(rf'(^  "{re.escape(slug)}": \{{$|^DETAILS\["{re.escape(slug)}"\] = \{{$)', content, re.M).end()
     block = content[start:start + 1500]
     title = re.search(r'^\s+title: "((?:[^"\\]|\\.)*)"', block, re.M).group(1)
     sub = re.search(r'^\s+sub: "((?:[^"\\]|\\.)*)"', block, re.M).group(1)
-    projects.append({"slug": slug, "title": title, "sub": sub, "img": IMG[img]})
+    projects.append({"slug": slug, "title": title, "sub": sub, "img": IMG[img], "skills": re.findall(r'"([^"]+)"', skills)})
 
 e = lambda s: html.escape(s.replace('\\"', '"'), quote=True)
 project_links = "".join(f'<li><a href="/project-page/{p["slug"]}/">{e(p["title"])}</a></li>' for p in projects)
@@ -68,20 +68,28 @@ def page(path, title, desc, img, heading, extra="", index=True):
     return out
 
 
-home_desc = const_string("INTRO")
+# Titles are "Page Name · Elijah Browne", the same strings App.jsx sets, so GA4 sees one title per page.
+# Each description names "instructional designer" and the skill the page shows.
+home_desc = f"Portfolio of {NAME}, instructional designer: scenario-based eLearning in Storyline and Rise, AI-assisted learning, and classroom-tested curriculum."
 pages = {
-    "index.html": page("/", f"{NAME} · Instructional Designer", home_desc, IMG["home"], NAME,
+    "index.html": page("/", f"Instructional Designer · {NAME}", home_desc, IMG["home"], NAME,
                        f"<h2>Projects</h2><ul>{project_links}</ul>"),
-    "about/index.html": page("/about/", f"About Me · {NAME}", ABOUT_FIRST, IMG["home"], f"About {NAME}"),
+    "about/index.html": page("/about/", f"About Me · {NAME}",
+                             f"About {NAME}, an instructional designer and educator who designs learner-centered experiences with two-plus years of secondary teaching and a background in educational media.",
+                             IMG["home"], f"About {NAME}"),
     "project-page/index.html": page("/project-page/", f"Projects · {NAME}",
-                                    f"Instructional design and eLearning projects by {NAME}.", IMG["home"], "Projects",
-                                    f"<ul>{project_links}</ul>"),
+                                    f"Projects by {NAME}, instructional designer: scenario-based learning, AI-assisted learning, microlearning, and gamification.",
+                                    IMG["home"], "Projects", f"<ul>{project_links}</ul>"),
     "404.html": page("/", f"Not found · {NAME}", home_desc, IMG["home"], "Page not found",
                      '<p><a href="/">Go to the home page</a></p>', index=False),
 }
 for p in projects:
+    low = lambda s: re.sub(r"[A-Za-z]+", lambda w: w.group() if w.group().isupper() else w.group().lower(), s)  # keeps AI, ADDIE
+    skill = " and ".join(low(s) for s in p["skills"][:2])
+    sub = p["sub"] if p["sub"][-1] in ".?!" else p["sub"] + "."
+    desc = f'{p["title"]}: {skill} by {NAME}, instructional designer. {sub}'
     pages[f'project-page/{p["slug"]}/index.html'] = page(
-        f'/project-page/{p["slug"]}/', f'{p["title"]} · {NAME}', p["sub"], p["img"], p["title"])
+        f'/project-page/{p["slug"]}/', f'{p["title"]} · {NAME}', desc, p["img"], p["title"])
 
 for rel, text in pages.items():
     f = ROOT / rel
