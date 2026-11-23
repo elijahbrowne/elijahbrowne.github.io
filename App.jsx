@@ -489,24 +489,6 @@ function Detail({ slug }) {
   );
 }
 
-/* ---------- next step: closes every page ---------- */
-function NextStep({ parts }) {
-  const i = parts[0] === "project-page" && parts[1] ? PROJECTS.findIndex((p) => p.slug === parts[1]) : -1;
-  const next = i >= 0 ? PROJECTS[(i + 1) % PROJECTS.length] : null;
-  if (parts[0] === "project-page" && DETAILS[parts[1]]?.nextStep === false) return null;
-  return (
-    <section className="wrap next" aria-labelledby="next-h">
-      <h2 id="next-h">Next step</h2>
-      <div className="btn-row">
-        <a className="btn" href={RESUME} download>Download resume</a>
-        <a className="btn ghost" href={EMAIL}>Email me</a>
-        {next ? <a className="btn ghost" href={`/project-page/${next.slug}/`}>Next project: {next.title}</a>
-          : <a className="btn ghost" href="/project-page/">View projects</a>}
-      </div>
-    </section>
-  );
-}
-
 /* ---------- app ---------- */
 const initTheme = () => {
   let t; try { t = localStorage.getItem("theme"); } catch (e) {}
@@ -630,7 +612,7 @@ export default function App() {
           <button className="burger pill" onClick={() => setMenu(!menu)} aria-expanded={menu}>Menu</button>
         </div>
       </nav>
-      <main id="main" tabIndex="-1">{page}<NextStep key={path} parts={parts} /></main>
+      <main id="main" tabIndex="-1">{page}</main>
       <footer className="foot">
         <DotGrid />
         <div className="wrap">
@@ -829,10 +811,7 @@ th{font-family:var(--head);font-weight:500}
  .steps li:not(:last-child)::after{content:"↓";content:"↓" / "";position:static}
 }
 @media(max-width:720px){.gtable{display:none}.gstack{display:grid;gap:1.5rem}}
-.next h2{font-family:var(--mono);font-weight:300;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
 .summary{margin-bottom:0}
-.next{margin-top:5rem;padding-top:2.5rem;border-top:1px solid var(--line)}
-.next .btn{margin:0}
 .foot>.wrap{position:relative;z-index:1}
 .foot{position:relative;overflow:hidden;margin-top:6rem;border-top:1px solid var(--line);padding:4rem 0;text-align:center}
 .foot p{color:var(--mute)}

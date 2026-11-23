@@ -308,7 +308,6 @@ const F = (alt, cap, src) => ({ alt, cap, src });
 DETAILS["designing-with-gemini-notebook"] = {
   title: "Designing With Gemini Notebook",
   sub: "What if a pile of trusted sources could become something you talk to? See two notebooks built for real learners, a classroom study companion and a workplace research partner, then take the microlearning lesson that shows you how to build one yourself.",
-  nextStep: false, // no Next step block at the bottom of this page
   // Three projects on one page. Each section keeps its original case study copy; "jump" is the label on its card button.
   sections: [
     {
