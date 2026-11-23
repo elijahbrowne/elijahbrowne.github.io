@@ -483,17 +483,16 @@ function Detail({ slug }) {
   );
 }
 
-/* ---------- next steps: closes every page. The project button leads in solid blue ---------- */
+/* ---------- next steps: closes every case study. The project button leads in solid blue ---------- */
 function NextSteps({ parts }) {
   const i = parts[0] === "project-page" && parts[1] ? PROJECTS.findIndex((p) => p.slug === parts[1]) : -1;
   const next = i >= 0 ? PROJECTS[(i + 1) % PROJECTS.length] : null;
-  const onProjects = parts[0] === "project-page" && !parts[1];
+  if (!next) return null; // case studies only: not on Home, About or the Projects page
   return (
     <section className="wrap next" aria-labelledby="next-h">
       <h2 id="next-h">Next steps</h2>
       <div className="btn-row">
-        {next ? <a className="btn" href={`/project-page/${next.slug}/`}>Next project: {next.title}</a>
-          : !onProjects && <a className="btn" href="/project-page/">View projects</a>}
+        <a className="btn" href={`/project-page/${next.slug}/`}>Next project: {next.title}</a>
         <a className="btn ghost" href={EMAIL}>Contact me</a>
         <a className="btn ghost" href={RESUME} download>Resume</a>
       </div>
