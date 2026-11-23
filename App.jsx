@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   RESUME, EMAIL, LINKEDIN, TAGLINE, IMG, ALT, INTRO, HIGHLIGHTS, ABOUT, PUBLICATIONS, CERTS, AWARDS,
-  PROJECTS, RESOURCES, VIDEOS, DETAILS, SKILL_COUNTS, GLANCE, TOOLS, SUMMARY, FEATURED,
+  PROJECTS, RESOURCES, VIDEOS, DETAILS, SKILL_COUNTS, GLANCE, TOOLS, SUMMARY, FEATURED, MOVED,
 } from "./content";
 
 const HEADLINE = "I turn problems into meaningful learning experiences.";
@@ -143,11 +143,11 @@ function Home() {
             <Typed Tag="h1" text={HEADLINE} start={TAGLINE.length} n={n} caret={caret} />
             <section className="featured" aria-labelledby="feat-h">
               <h2 id="feat-h">Featured work</h2>
-              {FEATURED.map((slug) => {
-                const d = DETAILS[slug];
+              {FEATURED.map(({ slug, section }) => {
+                const d = section ? DETAILS[slug].sections.find((s) => s.id === section) : DETAILS[slug];
                 return (
-                  <div className="feat" key={slug}>
-                    <h3><a href={`/project-page/${slug}/`}>{d.title}</a></h3>
+                  <div className="feat" key={slug + (section || "")}>
+                    <h3><a href={`/project-page/${slug}/${section ? "#" + section : ""}`}>{d.title}</a></h3>
                     <p>{d.sub}</p>
                     <a className="btn sm" href={`/project-page/${slug}/#demo`} onClick={() => track("event", "try_it_yourself", { project: d.title })}>Try the demo</a>
                   </div>
@@ -337,9 +337,19 @@ function Block({ b }) {
   const [t, v, w, x] = b;
   if (t === "h2") return <h2>{v}</h2>;
   if (t === "h3") return <h3>{v}</h3>;
+  if (t === "h4") return <h4>{v}</h4>;
   if (t === "ul") return <ul>{v.map((s) => <li key={s}>{s}</li>)}</ul>;
   if (t === "ol") return <ol>{v.map((s) => <li key={s}>{s}</li>)}</ol>;
-  if (t === "quote") return <blockquote className="quote">{v}</blockquote>;
+  if (t === "quote") return <blockquote className="quote">{v}{w && <footer>{w}</footer>}</blockquote>;
+  // Text with a boxed list beside it: ["aside", blocks, box heading, list items]
+  if (t === "aside") return (
+    <div className="aside-row">
+      <div className="side-t">{v.map((c, i) => <Block key={i} b={c} />)}</div>
+      <aside className="glance box"><h4>{w}</h4><ul>{x.map((s) => <li key={s}>{s}</li>)}</ul></aside>
+    </div>
+  );
+  // Numbered steps in a row, with arrows between them
+  if (t === "steps") return <ol className="steps">{v.map((s, i) => <li key={s}><span>{String(i + 1).padStart(2, "0")}</span>{s}</li>)}</ol>;
   if (t === "dl") return <dl>{v.map(([k, c]) => <div key={k}><dt>{k}</dt><dd>{c}</dd></div>)}</dl>;
   if (t === "table") return (
     <div className="tblwrap"><table>
@@ -359,8 +369,41 @@ function Block({ b }) {
   if (t === "side") return <div className={"side " + v}><div className="side-t">{x.map((c, i) => <Block key={i} b={c} />)}</div><Fig f={w} /></div>;
   return <p><Rich text={v} /></p>;
 }
+// At a glance for a page that covers several projects: one column each (stacked per project on phones).
+function GlanceTable({ g }) {
+  const rows = Object.entries(g).filter(([k]) => k !== "cols");
+  return (
+    <>
+      <table className="gtable">
+        <thead><tr><td />{g.cols.map((c) => <th key={c} scope="col">{c}</th>)}</tr></thead>
+        <tbody>{rows.map(([k, vals]) => <tr key={k}><th scope="row">{k}</th>{vals.map((v, i) => <td key={i}>{v}</td>)}</tr>)}</tbody>
+      </table>
+      <div className="gstack">
+        {g.cols.map((c, i) => (
+          <div key={c}><h3>{c}</h3><dl>{rows.map(([k, vals]) => [<dt key={k}>{k}</dt>, <dd key={k + "-v"}>{vals[i]}</dd>])}</dl></div>
+        ))}
+      </div>
+    </>
+  );
+}
+// One project on a multi-project page: label, title, subtitle, cover (like a case study's hero), copy, demo.
+function Section({ s }) {
+  return (
+    <section className="part" id={s.id} data-project={s.title} aria-labelledby={s.id + "-h"}>
+      <p className="label">{s.eyebrow}</p>
+      <h2 id={s.id + "-h"}>{s.title}</h2>
+      <p className="lead">{s.sub}</p>
+      {s.img && <Img className="dhero" src={s.img} alt={s.heroAlt} />}
+      {s.body.map((b, i) => <Block key={i} b={b} />)}
+      {s.embed && <Block b={["embed", s.embed[0], s.embed[1], "demo"]} />}
+      {s.tryIt && <div className="btn-row"><Btn href={s.tryIt} onClick={() => track("event", "try_it_yourself", { project: s.title })}>Try It</Btn></div>}
+    </section>
+  );
+}
 function Detail({ slug }) {
   const d = DETAILS[slug];
+  // On a page with sections, events name the section's project.
+  const projectOf = (el) => el.closest("[data-project]")?.dataset.project || d.title;
   // start_demo: clicking into an embedded demo moves focus into its iframe, which blurs this window.
   // Rise courses also focus themselves while loading, so only count it when the pointer is over the
   // demo or the visitor just pressed Tab. Once per page view.
@@ -374,18 +417,18 @@ function Detail({ slug }) {
       if (sent || !f || f.tagName !== "IFRAME" || !f.closest(".embed")) return;
       if (!over && Date.now() - tabAt > 1000) return;
       sent = true;
-      track("event", "start_demo", { project: d.title, method: "embed" });
+      track("event", "start_demo", { project: projectOf(f), method: "embed" });
     };
     addEventListener("mouseover", onOver);
     addEventListener("keydown", onKey);
     addEventListener("blur", onBlur);
     return () => { removeEventListener("mouseover", onOver); removeEventListener("keydown", onKey); removeEventListener("blur", onBlur); };
   }, [slug]);
-  // "Try the demo" links from the home page arrive with #demo: start at the demo.
+  // Links with a #section (home "Try the demo", forwarded old URLs) start at that section.
   // (Runs before the scroll guard below, so the guard holds this position.)
   useEffect(() => {
     // "instant": a smooth scroll would be undone by the scroll guard.
-    if (location.hash === "#demo") document.getElementById("demo")?.scrollIntoView({ behavior: "instant" });
+    if (location.hash.length > 1) document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView({ behavior: "instant" });
   }, [slug]);
   // Embedded Rise courses call scrollIntoView as they load, which scrolls this page down to them.
   // For the first 10 seconds, undo any scroll the visitor didn't cause (input inside the embeds counts as theirs).
@@ -408,7 +451,7 @@ function Detail({ slug }) {
   // Try It: scrolls back up to the embedded project ("top"), or opens it elsewhere.
   const tryClick = () => track("event", "try_it_yourself", { project: d.title });
   // "Open in a new tab" under an embed (left or middle click)
-  const newTab = (e) => { if (e.button <= 1 && e.target.closest(".embed > a")) track("event", "start_demo", { project: d.title, method: "new_tab" }); };
+  const newTab = (e) => { if (e.button <= 1 && e.target.closest(".embed > a")) track("event", "start_demo", { project: projectOf(e.target), method: "new_tab" }); };
   const jump = (id) => document.getElementById(id)?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   const storyboardBtn = <>
     {d.storyboard && <button type="button" className="btn ghost" onClick={() => jump(d.storyboard)}>Storyboard</button>}
@@ -430,12 +473,26 @@ function Detail({ slug }) {
           </section>
         )}
         {GLANCE[slug] && (
-          <section className="glance" aria-labelledby="glance-h">
+          <section className={"glance" + (GLANCE[slug].cols ? " wide" : "")} aria-labelledby="glance-h">
             <h2 id="glance-h">At a glance</h2>
-            <dl>{Object.entries(GLANCE[slug]).map(([k, v]) => [<dt key={k}>{k}</dt>, <dd key={k + "-v"}>{v}</dd>])}</dl>
+            {GLANCE[slug].cols ? <GlanceTable g={GLANCE[slug]} />
+              : <dl>{Object.entries(GLANCE[slug]).map(([k, v]) => [<dt key={k}>{k}</dt>, <dd key={k + "-v"}>{v}</dd>])}</dl>}
           </section>
         )}
-        {d.embed ? <Block b={["embed", d.embed[0], d.embed[1], "demo"]} />
+        {d.sections ? (
+          <>
+            <nav className="jumps" aria-label="Projects on this page">
+              {d.sections.map((s) => (
+                <div className="jump" key={s.id}>
+                  <p className="label">{s.eyebrow}</p>
+                  <h2>{s.title}</h2>
+                  <a className="btn sm down" href={`/project-page/${slug}/#${s.id}`}>{s.jump}</a>
+                </div>
+              ))}
+            </nav>
+            {d.sections.map((s) => <Section key={s.id} s={s} />)}
+          </>
+        ) : d.embed ? <Block b={["embed", d.embed[0], d.embed[1], "demo"]} />
           : d.img ? <Img className="dhero" src={d.img} alt={alt} /> : <div className="dhero ph" role="img" aria-label={alt}><span>Image placeholder</span></div>}
         {!d.embed && tryIt && <div className="btn-row">{tryIt}{storyboardBtn}</div>}
         {d.body && <div className="dbody">{d.body.map((b, i) => <Block key={i} b={b} />)}</div>}
@@ -449,6 +506,7 @@ function Detail({ slug }) {
 function NextStep({ parts }) {
   const i = parts[0] === "project-page" && parts[1] ? PROJECTS.findIndex((p) => p.slug === parts[1]) : -1;
   const next = i >= 0 ? PROJECTS[(i + 1) % PROJECTS.length] : null;
+  if (parts[0] === "project-page" && DETAILS[parts[1]]?.nextStep === false) return null;
   return (
     <section className="wrap next" aria-labelledby="next-h">
       <h2 id="next-h">Next step</h2>
@@ -478,6 +536,11 @@ const track = (...args) => { window.__lastHit = Date.now(); if (window.gtag) win
 const pageView = (title) => track("event", "page_view", { page_title: title, page_location: location.origin + location.pathname + location.search });
 // One URL per page: app routes always end in "/" (/project-page/, never /project-page). Files keep their names.
 const withSlash = (p) => (p.endsWith("/") || /\.[a-z0-9]+$/i.test(p) ? p : p + "/");
+// Case studies that were merged into another page: old path -> new path#section (null if not moved).
+const movedTo = (p) => {
+  const m = p.match(/^\/project-page\/([^/]+)\/$/), to = m && MOVED[m[1]];
+  return to ? `/project-page/${to.replace("#", "/#")}` : null;
+};
 // Contact and download clicks, from any page.
 const trackLink = (a) => {
   const linkedin = /(^|\.)linkedin\.com$/i.test(a.hostname);
@@ -505,6 +568,8 @@ export default function App() {
     // Old #/ links (shared before clean URLs) move to the matching real path.
     if (location.hash.startsWith("#/")) history.replaceState(null, "", location.hash.slice(1).replace(/\/?$/, "/"));
     else if (withSlash(location.pathname) !== location.pathname) history.replaceState(null, "", withSlash(location.pathname) + location.search + location.hash);
+    const moved = movedTo(location.pathname);
+    if (moved) history.replaceState(null, "", moved);
     return location.pathname;
   });
   const firstView = useRef(true);
@@ -524,10 +589,17 @@ export default function App() {
     if ((a.target && a.target !== "_self") || a.hasAttribute("download") || a.origin !== location.origin) return;
     if (!/^\/((about|project-page)(\/.*)?)?$/.test(a.pathname)) return;
     e.preventDefault();
-    const to = withSlash(a.pathname);
-    if (to + a.hash !== location.pathname + location.hash) history.pushState(null, "", to + a.hash);
+    const moved = movedTo(withSlash(a.pathname));
+    const to = moved ? moved.split("#")[0] : withSlash(a.pathname), hash = moved ? "#" + moved.split("#")[1] : a.hash;
+    // A #section on the page you're already on: scroll there.
+    if (to === location.pathname && hash) {
+      history.pushState(null, "", to + hash);
+      document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      return;
+    }
+    if (to + hash !== location.pathname + location.hash) history.pushState(null, "", to + hash);
     setPath(to);
-    if (!a.hash) scrollTo(0, 0);
+    if (!hash) scrollTo(0, 0);
   };
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -695,7 +767,7 @@ input:focus,textarea:focus{outline:0;border-color:var(--accent)}
 .glance dt{margin:0}.glance dd{margin:0}
 @media(max-width:520px){.glance dl{grid-template-columns:1fr;gap:0}.glance dd{margin-bottom:.6rem}}
 .detail h2{margin-top:3rem}.detail h3{margin-top:2rem;font-size:1.3rem}.detail li{margin:.3rem 0}
-.detail>:not(.dbody):not(.dhero):not(.embed),.dbody>:is(p,ul,ol,h2,h3,dl,blockquote,.tblwrap){max-width:720px}
+.detail>:not(.dbody):not(.dhero):not(.embed):not(.part):not(.jumps):not(.wide),.dbody>:is(p,ul,ol,h2,h3,dl,blockquote,.tblwrap){max-width:720px}
 .dbody{display:block}
 .side{display:grid;grid-template-columns:1.15fr 1fr;gap:2.5rem;align-items:start;margin:1.5rem 0}
 .side.left .fig{order:-1}
@@ -735,6 +807,41 @@ th{font-family:var(--head);font-weight:500}
 .car-dots button::before{content:"";width:10px;height:10px;border-radius:50%;border:1px solid var(--mute);box-sizing:border-box}
 .car-dots button[aria-current="true"]::before{background:var(--accent);border-color:var(--accent)}
 .more,.entry a,.feat h3 a{display:inline-block;padding:.15rem 0}
+/* pages that combine several projects (sections) */
+.label{font-family:var(--mono);font-weight:300;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem}
+.jumps{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.75rem}
+.jump{border:1px solid var(--line);border-radius:14px;padding:1.25rem 1.4rem;display:flex;flex-direction:column;align-items:flex-start;gap:.75rem}
+.detail .jump h2{font-size:1.2rem;margin:0}
+.jump .btn{margin:auto 0 0}
+.site a.down[href]:not(.brand):not(.skip)::after{content:"↓";content:"↓" / ""}
+.site a.down[href]:not(.brand):hover::after{transform:translateY(2px)}
+.part{margin-top:5rem;padding-top:3rem;border-top:1px solid var(--line);scroll-margin-top:4.5rem}
+.detail .part>h2{margin-top:0}
+.part>:is(p,ul,ol,h3,h4,dl,blockquote){max-width:720px}
+.part>.steps{max-width:none}
+.part>.dhero{margin-top:1.5rem}
+.quote footer{font-size:.95rem;color:var(--mute);margin-top:.6rem}
+.aside-row{display:grid;grid-template-columns:1.15fr 1fr;gap:2.5rem;align-items:start;margin-top:2rem}
+.aside-row .box{margin:0}
+.detail .box h4{font-family:var(--mono);font-weight:300;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 .75rem}
+.box ul{margin:0;padding-left:1.1rem}
+.steps{list-style:none;margin:1.25rem 0;padding:.9rem 0 0;display:grid;grid-template-columns:repeat(7,1fr);gap:.75rem;border-top:2px solid var(--accent)}
+.detail .steps li{position:relative;margin:0;padding-right:1.25rem;font-family:var(--head);font-weight:500}
+.steps span{display:block;font-family:var(--mono);font-weight:300;font-size:.75rem;color:var(--accent)}
+.steps li:not(:last-child)::after{content:"→";content:"→" / "";position:absolute;right:0;top:0;color:var(--accent)}
+.gtable th,.gtable td{border:0;border-top:1px solid var(--line);padding:.65rem 1.25rem .65rem 0}
+.gtable thead :is(th,td){border-top:0;padding-top:0}
+.gtable tbody th{font-family:var(--body);font-weight:700;white-space:nowrap}
+.gstack{display:none}
+.detail .gstack h3{font-size:1rem;margin:0 0 .4rem}
+.gstack dl{margin:0}
+@media(max-width:860px){
+ .jumps,.aside-row{grid-template-columns:1fr}
+ .steps{grid-template-columns:1fr;gap:.35rem}
+ .detail .steps li{display:flex;gap:.75rem;align-items:baseline;padding:0}
+ .steps li:not(:last-child)::after{content:"↓";content:"↓" / "";position:static}
+}
+@media(max-width:720px){.gtable{display:none}.gstack{display:grid;gap:1.5rem}}
 .featured{display:grid;gap:.9rem;margin-top:1.75rem;max-width:580px}
 .featured h2,.next h2{font-family:var(--mono);font-weight:300;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
 .feat{border:1px solid var(--line);border-radius:12px;padding:.9rem 1.1rem;background:var(--bg)}

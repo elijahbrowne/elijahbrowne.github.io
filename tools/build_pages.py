@@ -91,6 +91,35 @@ for p in projects:
     pages[f'project-page/{p["slug"]}/index.html'] = page(
         f'/project-page/{p["slug"]}/', f'{p["title"]} · {NAME}', desc, p["img"], p["title"])
 
+# Merged case studies: GitHub Pages can't redirect, so each old address gets a tiny page that forwards
+# to the new page's section (and tells search engines the new page is the real one).
+moved = dict(re.findall(r'^  "([a-z0-9-]+)": "([a-z0-9-]+#[a-z0-9-]+)",$',
+                        re.search(r"export const MOVED = \{(.*?)\n\};", content, re.S).group(1), re.M))
+by_slug = {p["slug"]: p for p in projects}
+for old, target in moved.items():
+    new_slug, section = target.split("#")
+    p = by_slug[new_slug]
+    to = f"/project-page/{new_slug}/#{section}"
+    pages[f"project-page/{old}/index.html"] = f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{e(p["title"])} · {NAME}</title>
+  <link rel="canonical" href="{ORIGIN}/project-page/{new_slug}/" />
+  <meta name="robots" content="noindex" />
+  <meta property="og:url" content="{ORIGIN}/project-page/{new_slug}/" />
+  <meta property="og:title" content="{e(p["title"])} · {NAME}" />
+  <meta property="og:image" content="{ORIGIN}/{p["img"]}" />
+  <meta http-equiv="refresh" content="0; url={to}" />
+  <script>location.replace("{to}");</script>
+</head>
+<body>
+  <p>This project moved to <a href="{to}">{e(p["title"])}</a>.</p>
+</body>
+</html>
+"""
+
 for rel, text in pages.items():
     f = ROOT / rel
     f.parent.mkdir(parents=True, exist_ok=True)

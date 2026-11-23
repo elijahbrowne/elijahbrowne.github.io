@@ -64,9 +64,7 @@ export const PROJECTS = [
   { title: "Patient Information Confidentiality Policy Review", slug: "patient-information-confidentiality-policy-review", img: IMG.fernwood, skills: ["Scenario-Based Learning", "Action Mapping", "Gamification", "Feedback Design", "Storyboarding"], tools: ["Claude Code", "JavaScript", "Canva", "SCORM"], cta: "Read More" },
   { title: "Sending a Professional Email", slug: "sending-a-professional-email", img: IMG.email, skills: ["Scenario-Based Learning", "Assessment Design", "Accessibility", "Video Production", "Storyboarding"], tools: ["Articulate Storyline 360", "Canva", "DaVinci Resolve"], cta: "Read More" },
   { title: "Smartphone Content Creation: Mastering Framing and Audio", slug: "smartphone-content-creation", img: IMG.smartphone, skills: ["Scenario-Based Learning", "Backward Design", "Assessment Design", "Video Production", "ADDIE"], tools: ["Articulate Rise 360", "Canva"], cta: "Read More" },
-  { title: "Building a Gemini Notebook Microlearning Lesson", slug: "building-a-gemini-notebook", img: IMG.microlearning, skills: ["Microlearning", "AI-Assisted Learning", "Prompt Design", "eLearning Development"], tools: ["Articulate Rise 360", "Gemini Notebook"], cta: "Read More" },
-  { title: "Turning Payment Research Into a Gemini Notebook", slug: "turning-payment-research-into-a-gemini-notebook", img: IMG.payment, skills: ["AI-Assisted Learning", "Performance Support", "Stakeholder Collaboration"], tools: ["Gemini Notebook"], cta: "Read More" },
-  { title: "Understanding Reception Theory Notebook", slug: "understanding-stuart-hall-gemini-notebook", img: IMG.stuartHall, skills: ["AI-Assisted Learning", "Blended Learning", "Curriculum Design", "Media Literacy"], tools: ["Gemini Notebook"], cta: "Read More" },
+  { title: "Designing With Gemini Notebook", slug: "designing-with-gemini-notebook", img: IMG.stuartHall, skills: ["Microlearning", "AI-Assisted Learning", "Blended Learning", "Performance Support", "Prompt Design", "Curriculum Design", "Stakeholder Collaboration", "eLearning Development", "Media Literacy"], tools: ["Articulate Rise 360", "Gemini Notebook"], cta: "Read More" },
   { title: "Task Monsters", slug: "task-monsters", img: IMG.taskMonsters, skills: ["Gamification", "Interaction Design", "User-Centered Design", "Prototyping", "AI-Assisted Design"], tools: ["Base44", "Figma", "JavaScript"], cta: "Read More" },
 ];
 export const RESOURCES = [
@@ -244,9 +242,13 @@ export const GLANCE = {
   "turning-shoppers-into-cardholders": { Audience: "Retail associates at a department store (fictional BroadLane brief)", Tools: "Articulate Storyline 360, Devlin.ai, Gemini Notebook, Canva", Timeline: "Approx. 8 hours", Deliverable: "Storyline course with an embedded AI customer simulation" },
   "patient-information-confidentiality-policy-review": { Audience: "Front-desk and clinical staff at a health clinic (fictional Fernwood)", Tools: "Claude Code, JavaScript, Canva", Timeline: "Approx. 7 hours", Deliverable: "Browser game with a SCORM package, plus a slide deck" },
   "sending-a-professional-email": { Audience: "New workers (originally 10th-grade students)", Tools: "Articulate Storyline 360, Canva, DaVinci Resolve", Timeline: "Approx. 2 days", Deliverable: "Self-paced Storyline course with a captioned video and scenario-based questions" },
-  "turning-payment-research-into-a-gemini-notebook": { Audience: "A startup's payment researcher and her team", Tools: "Gemini Notebook", Timeline: "Approx. 30 minutes", Deliverable: "Shared research notebook comparing Stripe, Braintree, and Adyen, with source citations" },
-  "building-a-gemini-notebook": { Audience: "Anyone interested in making a Gemini Notebook", Tools: "Articulate Rise 360, Gemini Notebook", Timeline: "Approx. 1 hour", Deliverable: "Microlearning lesson" },
-  "understanding-stuart-hall-gemini-notebook": { Audience: "Media studies students being introduced to Stuart Hall's Reception Theory", Tools: "Gemini Notebook", Timeline: "Approx. 1 hour", Deliverable: "Gemini Notebook study environment the teacher uses alongside class" },
+  "designing-with-gemini-notebook": { // one column per project
+    cols: ["01 · Understanding Reception Theory Notebook", "02 · Turning Payment Research Into a Gemini Notebook", "03 · Building a Gemini Notebook"],
+    Audience: ["Media studies students being introduced to Stuart Hall's Reception Theory", "A startup's payment researcher and her team", "Anyone interested in making a Gemini Notebook"],
+    Tools: ["Gemini Notebook", "Gemini Notebook", "Articulate Rise 360, Gemini Notebook"],
+    Timeline: ["Approx. 1 hour", "Approx. 30 minutes", "Approx. 1 hour"],
+    Deliverable: ["Gemini Notebook study environment the teacher uses alongside class", "Shared research notebook comparing Stripe, Braintree, and Adyen, with source citations", "Microlearning lesson"],
+  },
   "task-monsters": { Audience: "People who struggle to start and stay on tasks", Tools: "Base44, Figma", Timeline: "Approx. 3 days", Deliverable: "Working web app prototype" },
   "smartphone-content-creation": { Audience: "Beginners with little or no experience creating content on a smartphone", Tools: "Articulate Rise 360, Canva", Timeline: "Approx. 2 days", Deliverable: "Three-lesson, scenario-based Rise course" },
 };
@@ -257,26 +259,31 @@ export const SUMMARY = {
   "patient-information-confidentiality-policy-review": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
   "sending-a-professional-email": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
   "smartphone-content-creation": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
-  "building-a-gemini-notebook": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
-  "turning-payment-research-into-a-gemini-notebook": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
-  "understanding-stuart-hall-gemini-notebook": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
   "task-monsters": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
 };
 
-// Home page "Featured work". Each card uses the project's sub as its one-line description.
-export const FEATURED = ["turning-shoppers-into-cardholders", "building-a-gemini-notebook"];
+// Home page "Featured work". Each card uses its project's (or section's) title and sub; "Try the demo" opens the page at its #demo embed.
+export const FEATURED = [
+  { slug: "turning-shoppers-into-cardholders" },
+  { slug: "designing-with-gemini-notebook", section: "lesson" },
+];
+
+// Old case study URLs and where they live now. tools/build_pages.py writes a forwarding page at each old address.
+export const MOVED = {
+  "understanding-stuart-hall-gemini-notebook": "designing-with-gemini-notebook#reception",
+  "turning-payment-research-into-a-gemini-notebook": "designing-with-gemini-notebook#payment",
+  "building-a-gemini-notebook": "designing-with-gemini-notebook#lesson",
+};
 
 // Alt text, checked against the images (Nov 2026).
 export const ALT = {
   home: "Portrait of Elijah Browne",
   "turning-shoppers-into-cardholders": "Title slide reading BroadLane: Turning Shoppers into Cardholders, beside a photo of a cashier bagging items at a checkout",
   "sending-a-professional-email": "Title slide reading Sending a Professional Email, beside an illustration of a desktop computer with a keyboard and mouse",
-  "turning-payment-research-into-a-gemini-notebook": "Gemini Notebook titled Payment Systems, with a source list on the left and a chat breaking down the Stripe and Braintree price formulas",
-  "understanding-stuart-hall-gemini-notebook": "Gemini Notebook titled Understanding Reception Theory, with sources, a chat explaining a flashcard answer, and a Communication Flashcards panel",
+  "designing-with-gemini-notebook": "Gemini Notebook titled Understanding Reception Theory, with sources, a chat explaining a flashcard answer, and a Communication Flashcards panel",
   "task-monsters": "Task Monsters start screen with a task input, battle difficulty choices and a pixel-art ghost with 400 HP",
   "smartphone-content-creation": "Rise lesson with a smartphone camera screen framing a dog on a couch, with seven numbered callouts on the camera controls",
   "patient-information-confidentiality-policy-review": "Patient Privacy Rounds game: on a pixel-art clinic floor, Priya, at the front desk phones, asks what to tell a son who wants his mom's lab results, with three numbered answers to choose from",
-  "building-a-gemini-notebook": "Rise lesson card titled Studio Panel, explaining what the Gemini Notebook Studio Panel does, over a notebook screenshot",
 };
 
 // Each project's skills are listed once (in PROJECTS); cards and case studies both display them.
@@ -304,52 +311,98 @@ function figAfter(slug, heading, block) { // add a full-width block at the end o
 }
 const F = (alt, cap, src) => ({ alt, cap, src });
 
-DETAILS["turning-payment-research-into-a-gemini-notebook"] = {
-  img: IMG.payment,
-  title: "Turning Payment Research Into a Gemini Notebook",
-  sub: "What if Gemini Notebook could streamline your business's research phase?",
-  heroAlt: "Screenshot of a Gemini Notebook titled Payment Systems, with a source list on the left, a chat comparing Stripe and Braintree pricing formulas in the center, and a Studio panel of generated reports on the right",
-  body: [
-    ["h2", "The Challenge"],
-    ["p", "Researching payment processors can quickly become overwhelming."],
-    ["p", "As the payments researcher for a startup, Rebecca Harris needed to research and compare Stripe, Braintree, and Adyen to help the team understand which solutions could support the project. Her research needed to cover practical considerations such as cost, advantages and disadvantages, and technical implementation."],
-    ["p", "The challenge wasn't simply finding information. There was too much of it."],
-    ["p", "Payment processor websites contained valuable documentation alongside marketing material, making it difficult to quickly distinguish substantive information from advertisements and promotional content. Technical documentation was also spread across different formats and locations."],
-    ["p", "She needed a way to bring these resources together, understand them efficiently, and give the rest of the team a reliable way to verify the information."],
-    ["p", "When I noticed that she was struggling to organize and analyze the research, I helped her build a Gemini Notebook around the project. My role was to support the setup of the research environment and help structure the sources so she could use the notebook more effectively."],
-    ["quote", "“Before this notebook, I would have spent hours, or even days, gathering and analyzing these resources. This notebook summarized the information for me and provided precise citations, so I could easily go back and verify the source.”"],
-    ["h2", "Researching with the Sources"],
-    ["p", "Once the notebook was established, Rebecca used it as an interactive research partner."],
-    ["p", "Rather than manually reading through every document to find an answer, she could ask targeted questions about the payment processors and have Gemini Notebook synthesize information across the collected sources."],
-    ["p", "The important difference was traceability."],
-    ["p", "When Gemini Notebook provided an answer, it could point back to the relevant source so she could verify the information herself."],
-    ["p", "This allowed her to move between two levels of research:"],
-    ["dl", [["Synthesis:", "Understand the answer without manually searching through every document."], ["Verification:", "Return to the original source and check the information when necessary."]]],
-    ["p", "That combination was especially useful when researching technical implementation details, where an unsupported or inaccurate answer could create additional work for the development team."],
-    ["h2", "From Research to Technical Understanding"],
-    ["p", "The Gemini Notebook became more than a comparison tool."],
-    ["p", "Rebecca used it to better understand how the payment systems worked and how their APIs could be implemented. It helped break down technical documentation and answer questions that arose during the research process."],
-    ["p", "The Gemini Notebook could also compare cost structures across the payment processors, helping organize information that would otherwise require manually moving between multiple sources."],
-    ["p", "It even helped surface less obvious edge cases that might not have been considered during the initial research."],
-    ["p", "This shifted the role of the Gemini Notebook from simply summarizing documents to helping the researcher interrogate the research itself."],
-    ["h2", "The Learning Experience"],
-    ["p", "The value of the Gemini Notebook wasn't simply that it made information faster to find."],
-    ["p", "It changed how the researcher interacted with information."],
-    ["p", "Rather than navigating dozens of sources individually, Rebecca could ask questions across a curated collection, compare information, investigate technical details, and verify answers against the original documentation."],
-    ["p", "The experience followed a continuous cycle:"],
-    ["p", "Gather → Curate → Question → Synthesize → Verify → Share → Build Upon"],
-    ["p", "This made the research process more repeatable and gave the team a shared foundation for continuing their investigation."],
-    ["h2", "Reflection"],
-    ["p", "This project demonstrated that AI can be most useful in a corporate research environment when it isn't treated as the source of truth."],
-    ["p", "My contribution was not to replace Rebecca's research expertise, but to help her create a more effective environment for carrying out that research. I noticed that she needed help managing the volume and variety of information, helped build the notebook, and supported the organization of the sources so she could use the Gemini Notebook as a practical research tool."],
-    ["p", "Rebecca still decided which sources mattered, which additional sources to approve, what questions to ask, and when an answer needed to be verified."],
-    ["p", "The Gemini Notebook handled much of the work involved in organizing and synthesizing information, while Rebecca remained responsible for evaluating the information and determining how it should be used."],
-    ["p", "The result was not just a faster way to research Stripe, Braintree, and Adyen."],
-    ["p", "It became a shared, source-grounded knowledge system that could support the team's research, technical understanding, and onboarding as the app project continued to evolve."],
+DETAILS["designing-with-gemini-notebook"] = {
+  title: "Designing With Gemini Notebook",
+  sub: "What if a pile of trusted sources could become something you talk to? See two notebooks built for real learners, a classroom study companion and a workplace research partner, then take the microlearning lesson that shows you how to build one yourself.",
+  nextStep: false, // no Next step block at the bottom of this page
+  // Three projects on one page. Each section keeps its original case study copy; "jump" is the label on its card button.
+  sections: [
+    {
+      id: "reception", eyebrow: "01 · Learn with it", jump: "Blended learning",
+      title: "Understanding Reception Theory Notebook",
+      sub: "What if students could have a conversation with the theory instead of just reading about it?",
+      img: IMG.stuartHall,
+      heroAlt: "Gemini Notebook titled Understanding Reception Theory, with a source list, a chat explaining why a true-or-false question about Stuart Hall's Encoding/Decoding model is false, and a Communication Flashcards panel",
+      tryIt: "https://notebook.google.com/notebook/e34b57e2-1097-4182-9f3a-0708175f5843",
+      body: [
+      ["h3", "Summary"],
+      ["p", "The Understanding Reception Theory Notebook is an AI-supported learning experience designed to help learners explore Stuart Hall’s Encoding/Decoding Model and develop a deeper understanding of how audiences interpret media."],
+      ["p", "Built in Gemini Notebook, the experience uses a curated collection of sources as the foundation for an interactive, conversational learning environment. Rather than asking AI to replace instruction, the project explores how it can give learners another way to engage with material they have already encountered in the classroom."],
+      ["aside", [
+        ["h3", "Understanding the Learner"],
+        ["p", "This experience is designed for learners who are being introduced to Stuart Hall’s Reception Theory within a media studies context."],
+        ["p", "The learner is not expected to encounter the Gemini Notebook as their first introduction to the theory. Instead, the educator provides the learner with the source materials in advance and uses class time to introduce and discuss each source in depth before the learner interacts with the AI tool."],
+        ["p", "This distinction is intentional. Gemini Notebook is not designed to replace the educator or serve as the learner’s initial source of instruction. The educator establishes the foundational knowledge, context, and expectations first. The tool then provides an additional environment where learners can revisit and explore that material independently."],
+      ], "Assumptions of the User", ["The learner has been introduced to the basic concepts of Stuart Hall’s Reception Theory.", "The learner has access to the source materials used in the Gemini Notebook project.", "The learner has participated in educator-led discussion of the sources.", "The learner is capable of independently asking questions and exploring unfamiliar concepts."]],
+      ["h3", "Reflection"],
+      ["p", "I am most proud of taking an existing lesson and rethinking how learners could interact with the material. I previously taught Stuart Hall’s Reception Theory and enjoyed using scholarly articles to help students practice research and analysis skills. However, the language and structure of those articles were often written far above a high school reading level, creating a barrier between the learner and the ideas I wanted them to explore."],
+      ["p", "This project allowed me to rethink that barrier without removing the scholarly material itself. My goal was to give learners a way to engage with complex sources at a level they could understand, freeing up more time to move beyond simply understanding the theory and into deeper analysis and application."],
+      ["p", "One of the most important design decisions was keeping the educator at the center of the experience. Gemini Notebook can respond to questions and generate resources dynamically, but it cannot understand the individual learners in a classroom the way an educator can. A teacher can recognize when a student needs a different explanation, adjust instruction based on the class, and provide context that an AI tool cannot fully replicate."],
+      ["p", "Rather than treating AI as the learning experience itself, I see it as a tool that can extend an intentionally designed learning experience. Gemini Notebook's ability to dynamically create resources from a limited, educator-selected source base makes it particularly useful for this purpose while keeping the educator in control of the content learners engage with."],
+      ["p", "Ultimately, this project demonstrated that AI does not have to replace an existing lesson to make it better. Sometimes, the most valuable use of a new tool is to take something that already works and create new opportunities for learners to engage with it."],
+      ],
+    },
+    {
+      id: "payment", eyebrow: "02 · Work with it", jump: "Performance support",
+      title: "Turning Payment Research Into a Gemini Notebook",
+      sub: "What if Gemini Notebook could streamline your business's research phase?",
+      img: IMG.payment,
+      heroAlt: "Screenshot of a Gemini Notebook titled Payment Systems, with a source list on the left, a chat comparing Stripe and Braintree pricing formulas in the center, and a Studio panel of generated reports on the right",
+      body: [
+      ["h3", "The Challenge"],
+      ["p", "Researching payment processors can quickly become overwhelming."],
+      ["p", "As the payments researcher for a startup, Rebecca Harris needed to research and compare Stripe, Braintree, and Adyen to help the team understand which solutions could support the project. Her research needed to cover practical considerations such as cost, advantages and disadvantages, and technical implementation."],
+      ["p", "The challenge wasn't simply finding information. There was too much of it."],
+      ["p", "Payment processor websites contained valuable documentation alongside marketing material, making it difficult to quickly distinguish substantive information from advertisements and promotional content. Technical documentation was also spread across different formats and locations."],
+      ["p", "She needed a way to bring these resources together, understand them efficiently, and give the rest of the team a reliable way to verify the information."],
+      ["p", "When I noticed that she was struggling to organize and analyze the research, I helped her build a Gemini Notebook around the project. My role was to support the setup of the research environment and help structure the sources so she could use the notebook more effectively."],
+      ["quote", "“Before this notebook, I would have spent hours, or even days, gathering and analyzing these resources. This notebook summarized the information for me and provided precise citations, so I could easily go back and verify the source.”", "Rebecca Harris, Product Owner"],
+      ["h3", "Researching with the Sources"],
+      ["side", "right", F("Screenshot of a Gemini Notebook answering a question about documentation and technical support for the Stripe Ruby library, with numbered citations linking back to sources", 'Prompt: "What is the level of documentation and technical support."', "images/payment/docs.jpg"), [
+        ["p", "Once the notebook was established, Rebecca used it as an interactive research partner."],
+        ["p", "Rather than manually reading through every document to find an answer, she could ask targeted questions about the payment processors and have Gemini Notebook synthesize information across the collected sources."],
+        ["p", "The important difference was traceability."],
+        ["p", "When Gemini Notebook provided an answer, it could point back to the relevant source so she could verify the information herself."],
+        ["p", "This allowed her to move between two levels of research:"],
+        ["dl", [["Synthesis:", "Understand the answer without manually searching through every document."], ["Verification:", "Return to the original source and check the information when necessary."]]],
+        ["p", "That combination was especially useful when researching technical implementation details, where an unsupported or inaccurate answer could create additional work for the development team."],
+      ]],
+      ["h3", "From Research to Technical Understanding"],
+      ["side", "left", F("Screenshot of a Gemini Notebook showing a side-by-side table of Stripe and Braintree fees for sale amounts from $10 to $250", 'Prompt: "In a simple table, break down the price calculation for Stripe vs Braintree."', "images/payment/fee-table.jpg"), [
+        ["p", "The Gemini Notebook became more than a comparison tool."],
+        ["p", "Rebecca used it to better understand how the payment systems worked and how their APIs could be implemented. It helped break down technical documentation and answer questions that arose during the research process."],
+        ["p", "The Gemini Notebook could also compare cost structures across the payment processors, helping organize information that would otherwise require manually moving between multiple sources."],
+        ["p", "It even helped surface less obvious edge cases that might not have been considered during the initial research."],
+        ["p", "This shifted the role of the Gemini Notebook from simply summarizing documents to helping the researcher interrogate the research itself."],
+      ]],
+      ["h3", "The Learning Experience"],
+      ["p", "The value of the Gemini Notebook wasn't simply that it made information faster to find."],
+      ["p", "It changed how the researcher interacted with information."],
+      ["p", "Rather than navigating dozens of sources individually, Rebecca could ask questions across a curated collection, compare information, investigate technical details, and verify answers against the original documentation."],
+      ["p", "The experience followed a continuous cycle:"],
+      ["steps", ["Gather", "Curate", "Question", "Synthesize", "Verify", "Share", "Build Upon"]],
+      ["p", "This made the research process more repeatable and gave the team a shared foundation for continuing their investigation."],
+      ["h3", "Reflection"],
+      ["p", "This project demonstrated that AI can be most useful in a corporate research environment when it isn't treated as the source of truth."],
+      ["p", "My contribution was not to replace Rebecca's research expertise, but to help her create a more effective environment for carrying out that research. I noticed that she needed help managing the volume and variety of information, helped build the notebook, and supported the organization of the sources so she could use the Gemini Notebook as a practical research tool."],
+      ["p", "Rebecca still decided which sources mattered, which additional sources to approve, what questions to ask, and when an answer needed to be verified."],
+      ["p", "The Gemini Notebook handled much of the work involved in organizing and synthesizing information, while Rebecca remained responsible for evaluating the information and determining how it should be used."],
+      ["p", "The result was not just a faster way to research Stripe, Braintree, and Adyen."],
+      ["p", "It became a shared, source-grounded knowledge system that could support the team's research, technical understanding, and onboarding as the app project continued to evolve."],
+      ],
+    },
+    {
+      id: "lesson", eyebrow: "03 · Teach it", jump: "Microlearning lesson",
+      title: "Building a Gemini Notebook",
+      sub: "A microlearning lesson on setting up a shared Gemini Notebook for team research",
+      body: [
+        ["p", "Both projects above started with the same step: building the notebook. This short Rise 360 lesson teaches that step, so anyone on a team can set up a shared notebook of their own."],
+      ],
+      embed: ["Building a Gemini Notebook (Rise 360 lesson)", "Building%20a%20Gemini%20Notebook/index.html"],
+    },
   ],
 };
-attach("turning-payment-research-into-a-gemini-notebook", "Researching with the Sources", "right", F("Screenshot of a Gemini Notebook answering a question about documentation and technical support for the Stripe Ruby library, with numbered citations linking back to sources", 'Prompt: "What is the level of documentation and technical support."', "images/payment/docs.jpg"));
-attach("turning-payment-research-into-a-gemini-notebook", "From Research to Technical Understanding", "left", F("Screenshot of a Gemini Notebook showing a side-by-side table of Stripe and Braintree fees for sale amounts from $10 to $250", 'Prompt: "In a simple table, break down the price calculation for Stripe vs Braintree."', "images/payment/fee-table.jpg"));
+
 
 DETAILS["smartphone-content-creation"] = {
   img: IMG.smartphone,
@@ -485,37 +538,6 @@ figAfter("task-monsters", "User Interaction Model", ["carousel", "Task Monsters 
   F("Task Monsters battle screen for the task Write the case study!, showing a pixel-art ghost at 328 of 400 HP, a 06:50 timer, and Round 1 of 4 marked Focus", "Focus round: the monster loses health as you work.", "images/task-monsters/focus.jpg"),
   F("Task Monsters battle screen during a break, with a blue background, the ghost at 300 of 400 HP, a 04:58 timer, and Round 2 of 4 marked Break", "Break round: the background changes color to signal the switch.", "images/task-monsters/break.jpg"),
 ], { auto: true }]);
-
-DETAILS["understanding-stuart-hall-gemini-notebook"] = {
-  img: IMG.stuartHall,
-  title: "Understanding Reception Theory Notebook",
-  sub: "What if students could have a conversation with the theory instead of just reading about it?",
-  heroAlt: "Gemini Notebook titled Understanding Reception Theory, with a source list, a chat explaining why a true-or-false question about Stuart Hall's Encoding/Decoding model is false, and a Communication Flashcards panel",
-  tryIt: "https://notebook.google.com/notebook/e34b57e2-1097-4182-9f3a-0708175f5843",
-  body: [
-    ["h2", "Summary"],
-    ["p", "The Understanding Reception Theory Notebook is an AI-supported learning experience designed to help learners explore Stuart Hall’s Encoding/Decoding Model and develop a deeper understanding of how audiences interpret media."],
-    ["p", "Built in Gemini Notebook, the experience uses a curated collection of sources as the foundation for an interactive, conversational learning environment. Rather than asking AI to replace instruction, the project explores how it can give learners another way to engage with material they have already encountered in the classroom."],
-    ["h2", "Understanding the Learner"],
-    ["p", "This experience is designed for learners who are being introduced to Stuart Hall’s Reception Theory within a media studies context."],
-    ["p", "The learner is not expected to encounter the Gemini Notebook as their first introduction to the theory. Instead, the educator provides the learner with the source materials in advance and uses class time to introduce and discuss each source in depth before the learner interacts with the AI tool."],
-    ["p", "This distinction is intentional. Gemini Notebook is not designed to replace the educator or serve as the learner’s initial source of instruction. The educator establishes the foundational knowledge, context, and expectations first. The tool then provides an additional environment where learners can revisit and explore that material independently."],
-    ["h3", "Assumptions of the User"],
-    ["ul", ["The learner has been introduced to the basic concepts of Stuart Hall’s Reception Theory.", "The learner has access to the source materials used in the Gemini Notebook project.", "The learner has participated in educator-led discussion of the sources.", "The learner is capable of independently asking questions and exploring unfamiliar concepts."]],
-    ["h2", "Reflection"],
-    ["p", "I am most proud of taking an existing lesson and rethinking how learners could interact with the material. I previously taught Stuart Hall’s Reception Theory and enjoyed using scholarly articles to help students practice research and analysis skills. However, the language and structure of those articles were often written far above a high school reading level, creating a barrier between the learner and the ideas I wanted them to explore."],
-    ["p", "This project allowed me to rethink that barrier without removing the scholarly material itself. My goal was to give learners a way to engage with complex sources at a level they could understand, freeing up more time to move beyond simply understanding the theory and into deeper analysis and application."],
-    ["p", "One of the most important design decisions was keeping the educator at the center of the experience. Gemini Notebook can respond to questions and generate resources dynamically, but it cannot understand the individual learners in a classroom the way an educator can. A teacher can recognize when a student needs a different explanation, adjust instruction based on the class, and provide context that an AI tool cannot fully replicate."],
-    ["p", "Rather than treating AI as the learning experience itself, I see it as a tool that can extend an intentionally designed learning experience. Gemini Notebook's ability to dynamically create resources from a limited, educator-selected source base makes it particularly useful for this purpose while keeping the educator in control of the content learners engage with."],
-    ["p", "Ultimately, this project demonstrated that AI does not have to replace an existing lesson to make it better. Sometimes, the most valuable use of a new tool is to take something that already works and create new opportunities for learners to engage with it."],
-  ],
-};
-
-DETAILS["building-a-gemini-notebook"] = {
-  embed: ["Building a Gemini Notebook (Rise 360 lesson)", "Building%20a%20Gemini%20Notebook/index.html"],
-  title: "Building a Gemini Notebook",
-  sub: "A microlearning lesson on setting up a shared Gemini Notebook for team research",
-};
 
 DETAILS["patient-information-confidentiality-policy-review"] = {
   title: "Patient Information Confidentiality Policy Review",
