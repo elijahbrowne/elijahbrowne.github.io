@@ -392,7 +392,7 @@ DETAILS["designing-with-gemini-notebook"] = {
       ],
     },
     {
-      id: "lesson", eyebrow: "03 · Teach it", jump: "Microlearning lesson",
+      id: "lesson", eyebrow: "03 · Build it", jump: "Microlearning lesson",
       title: "Building a Gemini Notebook",
       sub: "A microlearning lesson on setting up a shared Gemini Notebook for team research",
       body: [
