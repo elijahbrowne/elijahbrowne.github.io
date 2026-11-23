@@ -262,12 +262,6 @@ export const SUMMARY = {
   "task-monsters": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
 };
 
-// Home page "Featured work". Each card uses its project's (or section's) title and sub; "Try the demo" opens the page at its #demo embed.
-export const FEATURED = [
-  { slug: "turning-shoppers-into-cardholders" },
-  { slug: "designing-with-gemini-notebook", section: "lesson" },
-];
-
 // Old case study URLs and where they live now. tools/build_pages.py writes a forwarding page at each old address.
 export const MOVED = {
   "understanding-stuart-hall-gemini-notebook": "designing-with-gemini-notebook#reception",

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   RESUME, EMAIL, LINKEDIN, TAGLINE, IMG, ALT, INTRO, HIGHLIGHTS, ABOUT, PUBLICATIONS, CERTS, AWARDS,
-  PROJECTS, RESOURCES, VIDEOS, DETAILS, SKILL_COUNTS, GLANCE, TOOLS, SUMMARY, FEATURED, MOVED,
+  PROJECTS, RESOURCES, VIDEOS, DETAILS, SKILL_COUNTS, GLANCE, TOOLS, SUMMARY, MOVED,
 } from "./content";
 
 const HEADLINE = "I turn problems into meaningful learning experiences.";
@@ -141,19 +141,6 @@ function Home() {
           <div className="hero-t">
             <Typed Tag="p" className="eyebrow" text={TAGLINE} start={0} n={n} caret={caret} />
             <Typed Tag="h1" text={HEADLINE} start={TAGLINE.length} n={n} caret={caret} />
-            <section className="featured" aria-labelledby="feat-h">
-              <h2 id="feat-h">Featured work</h2>
-              {FEATURED.map(({ slug, section }) => {
-                const d = section ? DETAILS[slug].sections.find((s) => s.id === section) : DETAILS[slug];
-                return (
-                  <div className="feat" key={slug + (section || "")}>
-                    <h3><a href={`/project-page/${slug}/${section ? "#" + section : ""}`}>{d.title}</a></h3>
-                    <p>{d.sub}</p>
-                    <a className="btn sm" href={`/project-page/${slug}/#demo`} onClick={() => track("event", "try_it_yourself", { project: d.title })}>Try the demo</a>
-                  </div>
-                );
-              })}
-            </section>
           </div>
           <div className="hero-r">
             <Img className="hero-i" src={IMG.home} alt={ALT.home} />
@@ -806,7 +793,7 @@ th{font-family:var(--head);font-weight:500}
 .car-dots button{width:24px;height:24px;padding:0;border:0;background:transparent;cursor:pointer;display:grid;place-items:center} /* 24px tap area around a 10px dot */
 .car-dots button::before{content:"";width:10px;height:10px;border-radius:50%;border:1px solid var(--mute);box-sizing:border-box}
 .car-dots button[aria-current="true"]::before{background:var(--accent);border-color:var(--accent)}
-.more,.entry a,.feat h3 a{display:inline-block;padding:.15rem 0}
+.more,.entry a{display:inline-block;padding:.15rem 0}
 /* pages that combine several projects (sections) */
 .label{font-family:var(--mono);font-weight:300;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem}
 .jumps{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.75rem}
@@ -842,12 +829,7 @@ th{font-family:var(--head);font-weight:500}
  .steps li:not(:last-child)::after{content:"↓";content:"↓" / "";position:static}
 }
 @media(max-width:720px){.gtable{display:none}.gstack{display:grid;gap:1.5rem}}
-.featured{display:grid;gap:.9rem;margin-top:1.75rem;max-width:580px}
-.featured h2,.next h2{font-family:var(--mono);font-weight:300;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
-.feat{border:1px solid var(--line);border-radius:12px;padding:.9rem 1.1rem;background:var(--bg)}
-.feat h3{font-size:1.15rem;margin:0 0 .25rem}.feat h3 a{color:var(--ink);text-decoration:none}.feat h3 a:hover{color:var(--accent)}
-.feat p{margin:0 0 .5rem;color:var(--mute);font-size:.95rem;line-height:1.45}
-.feat .btn{margin:0}
+.next h2{font-family:var(--mono);font-weight:300;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
 .summary{margin-bottom:0}
 .next{margin-top:5rem;padding-top:2.5rem;border-top:1px solid var(--line)}
 .next .btn{margin:0}
