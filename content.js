@@ -253,14 +253,6 @@ export const GLANCE = {
   "smartphone-content-creation": { Audience: "Beginners with little or no experience creating content on a smartphone", Tools: "Articulate Rise 360, Canva", Timeline: "Approx. 2 days", Deliverable: "Three-lesson, scenario-based Rise course" },
 };
 
-// Summary box at the top of each case study (Problem, What I built, Result). Replace each placeholder with one line.
-export const SUMMARY = {
-  "turning-shoppers-into-cardholders": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
-  "patient-information-confidentiality-policy-review": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
-  "sending-a-professional-email": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
-  "smartphone-content-creation": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
-  "task-monsters": { Problem: "Placeholder: the problem, in one line.", "What I built": "Placeholder: what you built, in one line.", Result: "Placeholder: the result, in one line." },
-};
 
 // Old case study URLs and where they live now. tools/build_pages.py writes a forwarding page at each old address.
 export const MOVED = {
@@ -538,7 +530,7 @@ DETAILS["patient-information-confidentiality-policy-review"] = {
   img: IMG.fernwood,
   embed: ["Patient Privacy Rounds (browser game)", "fernwood-course/activity/privacy-rounds/index.html"],
   tryIt: "top",
-  tryTop: true, // Try It button sits in the first screen, above the summary
+  tryTop: true, // Try It button sits in the first screen, under the skills line
   storyboard: "storyboard",
   slides: "slides",
   body: [

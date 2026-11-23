@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   RESUME, EMAIL, LINKEDIN, TAGLINE, IMG, ALT, INTRO, HIGHLIGHTS, ABOUT, PUBLICATIONS, CERTS, AWARDS,
-  PROJECTS, RESOURCES, VIDEOS, DETAILS, SKILL_COUNTS, GLANCE, TOOLS, SUMMARY, MOVED,
+  PROJECTS, RESOURCES, VIDEOS, DETAILS, SKILL_COUNTS, GLANCE, TOOLS, MOVED,
 } from "./content";
 
 const HEADLINE = "I turn problems into meaningful learning experiences.";
@@ -453,12 +453,6 @@ function Detail({ slug }) {
         <p className="lead">{d.sub}</p>
         <p className="skills">{d.skills}</p>
         {d.tryTop && tryIt && <div className="btn-row">{tryIt}</div>}
-        {/* Hidden until every line is filled in: never show placeholder text on the live site. */}
-        {SUMMARY[slug] && !Object.values(SUMMARY[slug]).some((v) => !v || /^placeholder/i.test(v)) && (
-          <section className="glance summary" aria-label="Summary">
-            <dl>{Object.entries(SUMMARY[slug]).map(([k, v]) => [<dt key={k}>{k}</dt>, <dd key={k + "-v"}>{v}</dd>])}</dl>
-          </section>
-        )}
         {GLANCE[slug] && (
           <section className={"glance" + (GLANCE[slug].cols ? " wide" : "")} aria-labelledby="glance-h">
             <h2 id="glance-h">At a glance</h2>
@@ -811,7 +805,6 @@ th{font-family:var(--head);font-weight:500}
  .steps li:not(:last-child)::after{content:"↓";content:"↓" / "";position:static}
 }
 @media(max-width:720px){.gtable{display:none}.gstack{display:grid;gap:1.5rem}}
-.summary{margin-bottom:0}
 .foot>.wrap{position:relative;z-index:1}
 .foot{position:relative;overflow:hidden;margin-top:6rem;border-top:1px solid var(--line);padding:4rem 0;text-align:center}
 .foot p{color:var(--mute)}
