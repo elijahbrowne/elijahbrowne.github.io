@@ -423,7 +423,8 @@ function Detail({ slug }) {
         <p className="lead">{d.sub}</p>
         <p className="skills">{d.skills}</p>
         {d.tryTop && tryIt && <div className="btn-row">{tryIt}</div>}
-        {SUMMARY[slug] && (
+        {/* Hidden until every line is filled in: never show placeholder text on the live site. */}
+        {SUMMARY[slug] && !Object.values(SUMMARY[slug]).some((v) => !v || /^placeholder/i.test(v)) && (
           <section className="glance summary" aria-label="Summary">
             <dl>{Object.entries(SUMMARY[slug]).map(([k, v]) => [<dt key={k}>{k}</dt>, <dd key={k + "-v"}>{v}</dd>])}</dl>
           </section>
